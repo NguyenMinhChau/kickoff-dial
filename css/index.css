@@ -166,8 +166,10 @@ body {
 .theme--red {
 	background-image: url(../assets/og/VQMM_SGx_2024.gif);
 	color: var(--color-text-light);
+	/* background-position: center 0%; */
 	background-repeat: no-repeat;
-	background-position: center 0%;
+	background-size: 100% 100%;
+	background-position: center;
 }
 
 .theme--purple {
