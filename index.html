@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Chương Trình Quay Số Trúng Thưởng</title>
+		<link rel="icon" href="./assets/favicon-16x16.png" type="image/png" />
+		<meta property="og:image" content="./assets/image_og.png" />
+		<meta
+			name="description"
+			content="FPT Telecom - Chương Trình Quay Số Trúng Thưởng"
+		/>
+
+		<!-- import cs/js -->
+		<link rel="stylesheet" href="./css/index.css" />
+		<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+			integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<script
+			src="./js/constants/pianoKeys.constant.js"
+			crossorigin="anonymous"
+		></script>
+		<script src="./js/Slot.js" crossorigin="anonymous"></script>
+		<script src="./js/SoundEffects.js" crossorigin="anonymous"></script>
+		<script type="module" src="./js/app.js" crossorigin="anonymous"></script>
+
+		<!-- Google Tag Manager -->
+		<script>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({
+					'gtm.start': new Date().getTime(),
+					event: 'gtm.js',
+				});
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s),
+					dl = l != 'dataLayer' ? '&l=' + l : '';
+				j.async = true;
+				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, 'script', 'dataLayer', 'GTM-54B6D4G');
+		</script>
+	</head>
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript>
+			<iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-54B6D4G"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden"
+			></iframe>
+		</noscript>
+
+		<div id="app" class="theme--red">
+			<div class="control-group">
+				<button id="fullscreen-button" class="icon-button icon-button--small">
+					<i class="fas fa-expand"></i>
+				</button>
+				<button id="settings-button" class="icon-button icon-button--small">
+					<i class="fas fa-cog"></i>
+				</button>
+			</div>
+
+			<canvas id="confetti-canvas" class="confetti"></canvas>
+
+			<div id="lucky-draw">
+				<div class="persion-lucky">
+					<div id="middle" class="hiddenElement">
+						<div class="bar bar1"></div>
+						<div class="bar bar2"></div>
+						<div class="bar bar3"></div>
+						<div class="bar bar4"></div>
+						<div class="bar bar5"></div>
+						<div class="bar bar6"></div>
+						<div class="bar bar7"></div>
+						<div class="bar bar8"></div>
+						<div class="bar bar9"></div>
+						<div class="bar bar10"></div>
+						<div class="bar bar11"></div>
+						<div class="bar bar12"></div>
+						<div class="bar bar13"></div>
+						<div class="bar bar14"></div>
+						<div class="bar bar15"></div>
+						<div class="bar bar16"></div>
+						<div class="bar bar17"></div>
+						<div class="bar bar18"></div>
+						<div class="bar bar19"></div>
+						<div class="bar bar20"></div>
+						<div class="bar bar21"></div>
+						<div class="bar bar22"></div>
+						<div class="bar bar23"></div>
+						<div class="bar bar24"></div>
+						<div class="bar bar25"></div>
+						<div class="bar bar26"></div>
+						<div class="bar bar27"></div>
+						<div class="bar bar28"></div>
+						<div class="bar bar29"></div>
+						<div class="bar bar30"></div>
+						<div class="bar bar31"></div>
+						<div class="bar bar32"></div>
+						<div class="bar bar33"></div>
+						<div class="bar bar34"></div>
+						<div class="bar bar35"></div>
+						<div class="bar bar36"></div>
+						<div class="bar bar37"></div>
+						<div class="bar bar38"></div>
+						<div class="bar bar39"></div>
+						<div class="bar bar40"></div>
+					</div>
+
+					<div id="name-persion-lucky" class="hiddenElement">---</div>
+				</div>
+
+				<div class="slot">
+					<div class="slot__outer">
+						<div class="slot__inner">
+							<div class="slot__shadow"></div>
+							<div id="reel" class="reel"></div>
+						</div>
+					</div>
+
+					<div id="sunburst" class="sunburst">
+						<img src="./assets/sunburst.svg" alt="sunburst" />
+					</div>
+				</div>
+
+				<button id="draw-button" class="solid-button">Quay số</button>
+			</div>
+
+			<div id="settings" class="settings">
+				<div id="settings-panel" class="settings__panel">
+					<div class="settings__panel__group">
+						<h1 class="settings__title">Cài đặt</h1>
+						<div class="input-group">
+							<label class="input-label" for="name-list"
+								>Danh sách người tham gia</label
+							>
+							<textarea
+								class="input-field input-field--textarea"
+								rows="8"
+								placeholder="Nhập tên người tham gia, mỗi tên là 1 dòng"
+								id="name-list"
+							></textarea>
+						</div>
+
+						<div class="input-group input-group--2-column">
+							<label class="input-label" for="remove-from-list"
+								>Xóa người trúng thưởng khỏi danh sách</label
+							>
+							<div class="input--switch switch-remove-from-list">
+								<input
+									type="checkbox"
+									id="remove-from-list"
+									checked="true"
+									id="remove-from-list"
+								/>
+								<span class="slider slider-remove-from-list"></span>
+							</div>
+						</div>
+
+						<div class="input-group input-group--2-column">
+							<label class="input-label" for="enable-sound"
+								>Bật hiệu ứng âm thanh</label
+							>
+							<div class="input--switch switch-enable-sound">
+								<input
+									type="checkbox"
+									id="enable-sound"
+									checked="true"
+									id="enable-sound"
+								/>
+								<span class="slider slider-enable-sound"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="settings__panel__group">
+						<button id="settings-save" class="solid-button solid-button">
+							Lưu lại
+						</button>
+						<button
+							id="settings-close"
+							class="solid-button solid-button--danger"
+						>
+							Loại bỏ và đóng
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

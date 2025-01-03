@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="language" content="English" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, user-scalable=no"
+		/>
+		<meta
+			name="format-detection"
+			content="telephone=no, date=no, address=no, email=no"
+		/>
+		<meta name="msapplication-tap-highlight" content="no" />
+
+		<!-- SEO -->
+		<meta name="description" content="Chương Trình KickOff" />
+		<meta name="keywords" content="Chương Trình KickOff - FPT Telecom" />
+		<meta name="title" content="Chương Trình KickOff" />
+
+		<!-- Open Graph -->
+		<meta property="og:description" content="Chương Trình KickOff" />
+		<meta property="og:title" content="Chương Trình KickOff" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="./assets/image_og.png" />
+		<meta property="og:image" content="./assets/image_og.png" />
+		<meta property="og:image:secure_url" content="./assets/image_og.png" />
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Chương Trình KickOff" />
+		<meta property="og:site_name" content="Chương Trình KickOff" />
+
+		<!-- PWA -->
+		<link rel="manifest" href="manifest.json" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="theme-color" content="#f20c49" />
+		<meta name="mobile-web-app-capable" content="yes" />
+
+		<!-- Touch Icons -->
+		<link rel="icon" href="./assets/favicon-16x16.png" type="image/png" />
+		<link rel="apple-touch-icon" href="./assets/favicon-16x16.png" />
+		<link
+			rel="shortcut icon"
+			href="./assets/favicon-16x16.png"
+			type="image/x-icon"
+		/>
+
+		<title>Chương Trình Quay Số Trúng Thưởng</title>
+
+		<!-- Google Tag Manager -->
+		<script>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({
+					'gtm.start': new Date().getTime(),
+					event: 'gtm.js',
+				});
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s),
+					dl = l != 'dataLayer' ? '&l=' + l : '';
+				j.async = true;
+				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, 'script', 'dataLayer', 'GTM-54B6D4G');
+		</script>
+	</head>
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript>
+			<iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-54B6D4G"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden"
+			></iframe>
+		</noscript>
+
+		<div id="app" class="theme--red">
+			<div class="main">
+				<div class="control-group">
+					<button id="fullscreen-button" class="icon-button icon-button--small">
+						<svg class="red big">
+							<!-- Fullscreen icon SVG content -->
+						</svg>
+					</button>
+					<button id="settings-button" class="icon-button icon-button--small">
+						<svg class="red big">
+							<!-- Settings icon SVG content -->
+						</svg>
+					</button>
+				</div>
+				<canvas id="confetti-canvas" class="confetti"></canvas>
+
+				<div id="lucky-draw">
+					<div class="persion-lucky">
+						<div id="middle" class="hiddenElement">
+							<!-- Bars -->
+							<div class="bar bar1"></div>
+							<div class="bar bar2"></div>
+							<!-- Add more bars up to 40 -->
+						</div>
+						<div id="name-persion-lucky" class="hiddenElement">
+							Lê Tăng Có - P.KTHT
+						</div>
+					</div>
+					<div class="slot">
+						<div class="slot__outer">
+							<div class="slot__inner">
+								<div class="slot__shadow"></div>
+								<div id="reel" class="reel"></div>
+							</div>
+						</div>
+						<div id="sunburst" class="sunburst">
+							<img src="./assets/sunburst.svg" alt="sunburst" />
+						</div>
+					</div>
+					<button id="draw-button" class="solid-button">Quay Số</button>
+				</div>
+			</div>
+
+			<div id="settings" class="settings">
+				<div id="settings-panel" class="settings__panel">
+					<div class="settings__panel__group">
+						<h1 class="settings__title">Cài đặt</h1>
+						<div class="input-group">
+							<label class="input-label" for="name-list"
+								>Danh sách người tham gia</label
+							>
+							<textarea
+								class="input-field input-field--textarea"
+								rows="8"
+								placeholder="Separate each name by line break"
+								id="name-list"
+							></textarea>
+						</div>
+						<div class="input-group input-group--2-column">
+							<label class="input-label" for="remove-from-list"
+								>Xóa người trúng thưởng ra khỏi danh sách</label
+							>
+							<label class="input--switch">
+								<input type="checkbox" checked="true" id="remove-from-list" />
+								<span class="slider"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer">
+			<span>© KTHT - INFMN 2025</span>
+		</footer>
+	</body>
+</html>
