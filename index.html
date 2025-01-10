@@ -135,8 +135,25 @@
 
 			<div id="settings" class="settings">
 				<div id="settings-panel" class="settings__panel">
-					<div class="settings__panel__group">
-						<h1 class="settings__title">Cài đặt</h1>
+					<div class="settings__panel__group" style="overflow: auto">
+						<div
+							style="
+								display: flex;
+								flex-direction: row;
+								gap: 5px;
+								align-items: flex-start;
+							"
+						>
+							<div style="flex: 1">
+								<h1 class="settings__title">Cài đặt</h1>
+							</div>
+							<div
+								id="settings-close"
+								style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+							>
+								<i class="far fa-window-close" style="font-size: 2.3rem"></i>
+							</div>
+						</div>
 						<div class="input-group">
 							<label class="input-label" for="name-list"
 								>Danh sách người tham gia</label
@@ -181,14 +198,12 @@
 					</div>
 
 					<div class="settings__panel__group">
-						<button id="settings-save" class="solid-button solid-button">
-							Lưu lại
-						</button>
 						<button
-							id="settings-close"
-							class="solid-button solid-button--danger"
+							id="settings-save"
+							style="background-color: #dc2626"
+							class="solid-button"
 						>
-							Loại bỏ và đóng
+							LƯU LẠI
 						</button>
 					</div>
 				</div>

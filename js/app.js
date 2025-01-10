@@ -167,7 +167,8 @@
 	};
 
 	/** To close the setting page */
-	const onSettingsClose = () => {
+	const onSettingsClose = (e) => {
+		e.stopPropagation();
 		settingsContent.scrollTop = 0;
 		settingsWrapper.style.display = 'none';
 	};
@@ -207,7 +208,8 @@
 	settingsButton.addEventListener('click', onSettingsOpen);
 
 	// Click handler for "Save" button for setting page
-	settingsSaveButton.addEventListener('click', () => {
+	settingsSaveButton.addEventListener('click', (e) => {
+		e.stopPropagation();
 		slot.names = nameListTextArea.value
 			? nameListTextArea.value
 					.split(/\n/)
@@ -223,9 +225,20 @@
 		slot.shouldRemoveWinnerFromNameList = removeNameFromListCheckbox.checked;
 		soundEffects.mute = !enableSoundCheckbox.checked;
 		optionsMuteSound = soundEffects.mute;
-		onSettingsClose();
+		onSettingsClose(e);
 	});
 
 	// Click handler for "Discard and close" button for setting page
 	settingsCloseButton.addEventListener('click', onSettingsClose);
+
+	// Click SETTINGS
+	settingsWrapper.addEventListener('click', (e) => {
+		e.stopPropagation();
+		settingsWrapper.style.display = 'none';
+	});
+
+	settingsContent.addEventListener('click', (e) => {
+		e.stopPropagation();
+		settingsWrapper.style.display = 'block';
+	});
 })();
