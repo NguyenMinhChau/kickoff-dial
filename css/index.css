@@ -239,6 +239,7 @@ a:active {
 	text-align: center;
 	animation: blink 3s infinite;
 	-webkit-animation: blink 3s infinite;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .hiddenElement {
@@ -938,6 +939,7 @@ button:disabled:hover {
 
 .reel {
 	width: 100%;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .reel > div {
@@ -962,6 +964,7 @@ button:disabled:hover {
 	margin: var(--draw-button-margin-top) 0 0;
 	position: relative;
 	z-index: var(--z-index-draw-button);
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @media (max-width: 768px) {
