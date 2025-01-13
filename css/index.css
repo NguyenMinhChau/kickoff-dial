@@ -1043,6 +1043,7 @@ button:disabled:hover {
 	margin: 1.875rem 0 0 0;
 	display: block;
 	width: 100%;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .theme--red .settings__panel {
