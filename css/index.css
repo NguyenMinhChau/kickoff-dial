@@ -163,8 +163,15 @@ body {
 	}
 }
 
+#prizes {
+	background-image: url(../assets/og/YEP_HNI.gif);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: center;
+}
+
 .theme--red {
-	background-image: url(../assets/og/VQMM_SGx_2024.gif);
+	background-image: url(../assets/og/YEP_GIF.gif);
 	color: var(--color-text-light);
 	/* background-position: center 0%; */
 	background-repeat: no-repeat;
@@ -697,6 +704,7 @@ button:disabled:hover {
 
 .input-group--2-column {
 	display: flex;
+	flex-wrap: nowrap !important;
 	justify-content: space-between;
 	align-items: center;
 }
@@ -997,12 +1005,14 @@ button:disabled:hover {
 	}
 }
 
-#settings {
+#settings,
+#prizes {
 	display: none; /* Ẩn mặc định */
-  animation: fadeInModal 0.3s ease-in-out;
+	animation: fadeInModal 0.3s ease-in-out;
 }
 
-.settings {
+.settings,
+.prizes {
 	position: fixed;
 	z-index: 9999;
 	background-color: rgba(0, 0, 0, 0.3);
@@ -1014,7 +1024,8 @@ button:disabled:hover {
 	/* display: none; */
 }
 
-.settings__panel {
+.settings__panel,
+.prizes__panel {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -1029,7 +1040,13 @@ button:disabled:hover {
 	/* overflow: auto; */
 }
 
-.settings__title {
+.prizes__panel {
+	max-width: 100%;
+	/* background-color: #ffffff; */
+}
+
+.settings__title,
+.prizes__title {
 	margin: 0 0 1.875rem 0;
 	font-size: 2rem;
 	font-weight: bold;
@@ -1039,7 +1056,8 @@ button:disabled:hover {
 }
 
 #settings-save,
-#settings-close {
+#settings-close,
+#prizes-close {
 	margin: 1.875rem 0 0 0;
 	display: block;
 	width: 100%;
@@ -1100,15 +1118,19 @@ button:disabled:hover {
 body::-webkit-scrollbar,
 #settings-panel::-webkit-scrollbar,
 .settings__panel__group::-webkit-scrollbar,
+#prizes-panel::-webkit-scrollbar,
+.prizes__panel__group::-webkit-scrollbar,
 .input-field::-webkit-scrollbar {
 	display: none;
 }
 body::-webkit-scrollbar-track,
-#settings-panel::-webkit-scrollbar-track {
+#settings-panel::-webkit-scrollbar-track,
+#prizes-panel::-webkit-scrollbar-track {
 	background: #ffffff5a;
 }
 body::-webkit-scrollbar-thumb,
-#settings-panel::-webkit-scrollbar-thumb {
+#settings-panel::-webkit-scrollbar-thumb,
+#prizes-panel::-webkit-scrollbar-thumb {
 	background: #ffffff9a;
 	border-radius: 10px;
 }

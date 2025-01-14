@@ -1,3 +1,23 @@
+const fetchAPI = async ({
+	method = 'POST',
+	url,
+	body,
+	onSuccess = () => {},
+	onError = () => {},
+}) => {
+	return await fetch(url, {
+		method: method,
+		body: JSON.stringify(body),
+	})
+		.then((res) => res.json())
+		.then((res) => {
+			onSuccess(res);
+		})
+		.catch((err) => {
+			onError(err);
+		});
+};
+
 class Slot {
 	/** List of names to draw from */
 	nameList = [];
@@ -28,6 +48,8 @@ class Slot {
 
 	luckyNumber;
 
+	ENDPOINT_BACKEND;
+
 	/**
 	 * Constructor of Slot
 	 * @param {Object} config Configuration object
@@ -36,16 +58,30 @@ class Slot {
 		maxReelItems = 110,
 		removeWinner = true,
 		reelContainerSelector,
+		selectProgramContainer,
+		usernameElementContainer,
+		passwordElementContainer,
 		onSpinStart,
 		onSpinEnd,
 		onNameListChanged,
+		ENDPOINT_BACKEND,
 	}) {
 		this.reelContainer = document.querySelector(reelContainerSelector);
+		this.selectProgramContainer = document.querySelector(
+			selectProgramContainer,
+		);
+		this.usernameElementContainer = document.querySelector(
+			usernameElementContainer,
+		);
+		this.passwordElementContainer = document.querySelector(
+			passwordElementContainer,
+		);
 		this.maxReelItems = maxReelItems;
 		this.shouldRemoveWinner = removeWinner;
 		this.onSpinStart = onSpinStart;
 		this.onSpinEnd = onSpinEnd;
 		this.onNameListChanged = onNameListChanged;
+		this.ENDPOINT_BACKEND = ENDPOINT_BACKEND;
 		this.luckyNumber = 'aaa';
 
 		// Create reel animation
@@ -149,64 +185,157 @@ class Slot {
 			return false;
 		}
 
-		// Shuffle names and create reel items
-		let randomNames = Slot.shuffleNames(this.nameList);
+		fetch(
+			`${this.ENDPOINT_BACKEND}/admin-quay-so-may-man/${this.selectProgramContainer.value}?username=${this.usernameElementContainer.value}&password=${this.passwordElementContainer.value}`,
+			{
+				method: 'GET',
+			},
+		)
+			.then((data) => {
+				return data.json();
+			})
+			.then(async (data) => {
+				const { userPrize } = { ...data.payload };
 
-		while (randomNames.length && randomNames.length < this.maxReelItems) {
-			randomNames = [...randomNames, ...randomNames];
-		}
+				// Shuffle names and create reel items
+				let randomNames = Slot.shuffleNames(this.nameList);
 
-		randomNames = randomNames.slice(
-			0,
-			this.maxReelItems - Number(this.havePreviousWinner),
-		);
+				while (randomNames.length && randomNames.length < this.maxReelItems) {
+					randomNames = [...randomNames, ...randomNames];
+				}
 
-		const fragment = document.createDocumentFragment();
+				randomNames = randomNames.slice(
+					0,
+					this.maxReelItems - Number(this.havePreviousWinner),
+				);
 
-		randomNames.forEach((name) => {
-			const newReelItem = document.createElement('div');
-			newReelItem.innerHTML = name;
-			fragment.appendChild(newReelItem);
-		});
+				const fragment = document.createDocumentFragment();
 
-		reelContainer.appendChild(fragment);
+				// ! IMPORTANT
+				randomNames[randomNames.length - 1] = userPrize?.email;
 
-		console.log('Displayed items: ', randomNames);
-		console.log('Winner: ', randomNames[randomNames.length - 1]);
-		console.log('Remaining: ', randomNames.length);
-		this.luckyNumber = randomNames[randomNames.length - 1];
+				randomNames.forEach((name) => {
+					const newReelItem = document.createElement('div');
+					newReelItem.innerHTML = name;
+					fragment.appendChild(newReelItem);
+				});
 
-		// Remove winner form name list if necessary
-		if (shouldRemoveWinner) {
-			this.nameList.splice(
-				this.nameList.findIndex(
-					(name) => name === randomNames[randomNames.length - 1],
-				),
-				1,
-			);
-		}
+				reelContainer.appendChild(fragment);
+
+				this.luckyNumber = userPrize?.email;
+
+				// Remove winner form name list if necessary
+				if (shouldRemoveWinner) {
+					this.nameList.splice(
+						this.nameList.findIndex((name) => name === userPrize?.email),
+						1,
+					);
+				}
+				const animationPromise = new Promise((resolve) => {
+					reelAnimation.onfinish = resolve;
+				});
+
+				reelAnimation.play();
+
+				await animationPromise;
+
+				// Sets the current playback time to the end of the animation
+				reelAnimation.finish();
+
+				Array.from(reelContainer.children)
+					.slice(0, reelContainer.children.length - 1)
+					.forEach((element) => element.remove());
+
+				this.havePreviousWinner = true;
+
+				if (this.onSpinEnd) {
+					this.onSpinEnd();
+				}
+				return true;
+			})
+			.catch((err) => {
+				alert('An error occurred');
+			});
 
 		// Play the spin animation
-		const animationPromise = new Promise((resolve) => {
-			reelAnimation.onfinish = resolve;
-		});
-
-		reelAnimation.play();
-
-		await animationPromise;
-
-		// Sets the current playback time to the end of the animation
-		reelAnimation.finish();
-
-		Array.from(reelContainer.children)
-			.slice(0, reelContainer.children.length - 1)
-			.forEach((element) => element.remove());
-
-		this.havePreviousWinner = true;
-
-		if (this.onSpinEnd) {
-			this.onSpinEnd();
-		}
-		return true;
 	}
+	/**
+	 * Function for spinning the slot
+	 * @returns {Promise<boolean>} Whether the spin is completed successfully
+	 */
+	// async spin() {
+	// 	if (!this.nameList.length) {
+	// 		console.error('Name List is empty. Cannot start spinning.');
+	// 		return false;
+	// 	}
+
+	// 	if (this.onSpinStart) {
+	// 		this.onSpinStart();
+	// 	}
+
+	// 	const { reelContainer, reelAnimation, shouldRemoveWinner } = this;
+	// 	if (!reelContainer || !reelAnimation) {
+	// 		return false;
+	// 	}
+
+	// 	// Shuffle names and create reel items
+	// 	let randomNames = Slot.shuffleNames(this.nameList);
+
+	// 	while (randomNames.length && randomNames.length < this.maxReelItems) {
+	// 		randomNames = [...randomNames, ...randomNames];
+	// 	}
+
+	// 	randomNames = randomNames.slice(
+	// 		0,
+	// 		this.maxReelItems - Number(this.havePreviousWinner),
+	// 	);
+
+	// 	const fragment = document.createDocumentFragment();
+
+	// 	randomNames.forEach((name) => {
+	// 		const newReelItem = document.createElement('div');
+	// 		newReelItem.innerHTML = name;
+	// 		fragment.appendChild(newReelItem);
+	// 	});
+
+	// 	reelContainer.appendChild(fragment);
+
+	// 	console.log('Displayed items: ', randomNames);
+	// 	console.log('Winner: ', randomNames[randomNames.length - 1]);
+	// 	console.log('Remaining: ', randomNames.length);
+	// 	this.luckyNumber = randomNames[randomNames.length - 1];
+
+	// 	// Remove winner form name list if necessary
+	// 	if (shouldRemoveWinner) {
+	// 		this.nameList.splice(
+	// 			this.nameList.findIndex(
+	// 				(name) => name === randomNames[randomNames.length - 1],
+	// 			),
+	// 			1,
+	// 		);
+	// 	}
+
+	// 	// Play the spin animation
+	// 	const animationPromise = new Promise((resolve) => {
+	// 		reelAnimation.onfinish = resolve;
+	// 	});
+
+	// 	reelAnimation.play();
+
+	// 	await animationPromise;
+
+	// 	// Sets the current playback time to the end of the animation
+	// 	reelAnimation.finish();
+
+	// 	Array.from(reelContainer.children)
+	// 		.slice(0, reelContainer.children.length - 1)
+	// 		.forEach((element) => element.remove());
+
+	// 	this.havePreviousWinner = true;
+
+	// 	if (this.onSpinEnd) {
+	// 		this.onSpinEnd();
+	// 	}
+	// 	return true;
+	// }
 }

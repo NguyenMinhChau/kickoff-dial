@@ -21,6 +21,12 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+			crossorigin="anonymous"
+		/>
 		<script
 			src="./js/constants/pianoKeys.constant.js"
 			crossorigin="anonymous"
@@ -28,6 +34,11 @@
 		<script src="./js/Slot.js" crossorigin="anonymous"></script>
 		<script src="./js/SoundEffects.js" crossorigin="anonymous"></script>
 		<script type="module" src="./js/app.js" crossorigin="anonymous"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+			crossorigin="anonymous"
+		></script>
 
 		<!-- Google Tag Manager -->
 		<script>
@@ -61,6 +72,9 @@
 			<div class="control-group">
 				<button id="fullscreen-button" class="icon-button icon-button--small">
 					<i class="fas fa-expand"></i>
+				</button>
+				<button id="prizes-button" class="icon-button icon-button--small">
+					<i class="fa-solid fa-gift"></i>
 				</button>
 				<button id="settings-button" class="icon-button icon-button--small">
 					<i class="fas fa-cog"></i>
@@ -133,6 +147,29 @@
 				<button id="draw-button" class="solid-button">BẮT ĐẦU</button>
 			</div>
 
+			<div id="prizes" class="prizes">
+				<div id="prizes-panel" class="prizes__panel">
+					<div class="prizes__panel__group" style="overflow: auto">
+						<div
+							style="
+								display: flex;
+								flex-direction: row;
+								gap: 5px;
+								align-items: flex-end;
+								justify-content: flex-end;
+							"
+						>
+							<div
+								id="prizes-close"
+								style="flex: 0; color: #ffffff; margin: 0; cursor: pointer"
+							>
+								<i class="far fa-window-close" style="font-size: 3rem"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div id="settings" class="settings">
 				<div id="settings-panel" class="settings__panel">
 					<div class="settings__panel__group" style="overflow: auto">
@@ -154,25 +191,59 @@
 								<i class="far fa-window-close" style="font-size: 2.3rem"></i>
 							</div>
 						</div>
+
+						<select
+							class="form-select mb-3"
+							aria-label="PROGRAM SELECTED"
+							id="program_select_list"
+						></select>
+
+						<div class="input-group mb-3 flex-nowrap">
+							<span class="input-group-text" id="addon-wrapping">@</span>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Username"
+								aria-label="Username"
+								aria-describedby="addon-wrapping"
+								id="username"
+							/>
+						</div>
+						<div class="input-group mb-3 flex-nowrap">
+							<span class="input-group-text" id="addon-wrapping">***</span>
+							<input
+								type="password"
+								class="form-control"
+								placeholder="Password"
+								aria-label="Password"
+								aria-describedby="addon-wrapping"
+								id="password"
+							/>
+						</div>
+
 						<div class="input-group">
 							<label class="input-label" for="name-list"
-								>Danh sách người tham gia</label
+								>Danh sách nhân sự tham gia</label
 							>
 							<textarea
 								readonly
 								class="input-field input-field--textarea"
 								rows="8"
-								placeholder="Nhập tên người tham gia, mỗi tên là 1 dòng"
+								placeholder="Nhập tên nhân sự tham gia, mỗi tên là 1 dòng"
 								id="name-list"
 							></textarea>
 						</div>
 
-						<label class="input-group input-group--2-column" for="remove-from-list">
+						<label
+							class="input-group input-group--2-column"
+							for="remove-from-list"
+						>
 							<label class="input-label" for="remove-from-list"
-								>Xóa người trúng thưởng khỏi danh sách</label
+								>Xóa nhân sự trúng thưởng khỏi danh sách</label
 							>
 							<div class="input--switch switch-remove-from-list">
 								<input
+									disabled
 									type="checkbox"
 									id="remove-from-list"
 									checked="true"
@@ -188,6 +259,7 @@
 							>
 							<div class="input--switch switch-enable-sound">
 								<input
+									disabled
 									type="checkbox"
 									id="enable-sound"
 									checked="true"
@@ -200,12 +272,11 @@
 
 					<div class="settings__panel__group">
 						<button
-							disabled
 							id="settings-save"
 							style="background-color: #dc2626"
 							class="solid-button"
 						>
-							LƯU LẠI
+							LƯU LẠI CÀI ĐẶT
 						</button>
 					</div>
 				</div>
