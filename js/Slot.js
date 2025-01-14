@@ -1,23 +1,3 @@
-const fetchAPI = async ({
-	method = 'POST',
-	url,
-	body,
-	onSuccess = () => {},
-	onError = () => {},
-}) => {
-	return await fetch(url, {
-		method: method,
-		body: JSON.stringify(body),
-	})
-		.then((res) => res.json())
-		.then((res) => {
-			onSuccess(res);
-		})
-		.catch((err) => {
-			onError(err);
-		});
-};
-
 class Slot {
 	/** List of names to draw from */
 	nameList = [];
@@ -176,26 +156,31 @@ class Slot {
 			return false;
 		}
 
-		if (this.onSpinStart) {
-			this.onSpinStart();
-		}
-
-		const { reelContainer, reelAnimation, shouldRemoveWinner } = this;
-		if (!reelContainer || !reelAnimation) {
-			return false;
-		}
-
-		fetch(
+		await fetch(
 			`${this.ENDPOINT_BACKEND}/admin-quay-so-may-man/${this.selectProgramContainer.value}?username=${this.usernameElementContainer.value}&password=${this.passwordElementContainer.value}`,
 			{
 				method: 'GET',
 			},
 		)
-			.then((data) => {
-				return data.json();
+			.then((response) => {
+				return response.json();
 			})
 			.then(async (data) => {
+				const { success, errors } = { ...data };
+				if (!success) {
+					alert(errors?.[0]?.message || 'Thao tác không thành công');
+					return;
+				}
 				const { userPrize } = { ...data.payload };
+
+				if (this.onSpinStart) {
+					this.onSpinStart();
+				}
+
+				const { reelContainer, reelAnimation, shouldRemoveWinner } = this;
+				if (!reelContainer || !reelAnimation) {
+					return false;
+				}
 
 				// Shuffle names and create reel items
 				let randomNames = Slot.shuffleNames(this.nameList);
@@ -252,9 +237,6 @@ class Slot {
 					this.onSpinEnd();
 				}
 				return true;
-			})
-			.catch((err) => {
-				alert('An error occurred');
 			});
 
 		// Play the spin animation

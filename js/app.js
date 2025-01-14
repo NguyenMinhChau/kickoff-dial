@@ -10,26 +10,6 @@ const programSelectList = document.getElementById('program_select_list');
 const userNameElement = document.getElementById('username');
 const passwordElement = document.getElementById('password');
 
-const fetchAPI = async ({
-	method = 'POST',
-	url,
-	body,
-	onSuccess = () => {},
-	onError = () => {},
-}) => {
-	return await fetch(url, {
-		method: method,
-		body: JSON.stringify(body),
-	})
-		.then((res) => res.json())
-		.then((res) => {
-			onSuccess(res);
-		})
-		.catch((err) => {
-			onError(err);
-		});
-};
-
 const start = () => {
 	const drawButton = document.getElementById('draw-button');
 	const fullscreenButton = document.getElementById('fullscreen-button');
@@ -122,10 +102,15 @@ const start = () => {
 		await fetch(`${ENDPOINT_BACKEND}/create-program`, {
 			method: 'GET',
 		})
-			.then((data) => {
-				return data.json();
+			.then((response) => {
+				return response.json();
 			})
 			.then(async (data) => {
+				const { success, errors } = { ...data };
+				if (!success) {
+					alert(errors?.[0]?.message || 'Thao tác không thành công');
+					return;
+				}
 				programSelectList.innerHTML = '<option value="">Đang tải...</option>';
 
 				try {
@@ -159,10 +144,15 @@ const start = () => {
 			await fetch(`${ENDPOINT_BACKEND}/get-users-by-program/${PROGRAM_ID}`, {
 				method: 'GET',
 			})
-				.then((data) => {
-					return data.json();
+				.then((response) => {
+					return response.json();
 				})
 				.then((data) => {
+					const { success, errors } = { ...data };
+					if (!success) {
+						alert(errors?.[0]?.message || 'Thao tác không thành công');
+						return;
+					}
 					const DATA_NO_PRIZE = data?.payload
 						?.map((item) => {
 							if (item?.status !== 'PRIZED') {
@@ -188,10 +178,15 @@ const start = () => {
 		await fetch(`${ENDPOINT_BACKEND}/get-users-by-program/${PROGRAM_ID}`, {
 			method: 'GET',
 		})
-			.then((data) => {
-				return data.json();
+			.then((response) => {
+				return response.json();
 			})
 			.then((data) => {
+				const { success, errors } = { ...data };
+				if (!success) {
+					alert(errors?.[0]?.message || 'Thao tác không thành công');
+					return;
+				}
 				const DATA_NO_PRIZE = data?.payload
 					?.map((item) => {
 						if (item?.status !== 'PRIZED') {
@@ -293,13 +288,18 @@ const start = () => {
 		// 	});
 		// !!!!
 
-		fetch(`${ENDPOINT_BACKEND}/get-users-by-program/${PROGRAM_ID}`, {
+		await fetch(`${ENDPOINT_BACKEND}/get-users-by-program/${PROGRAM_ID}`, {
 			method: 'GET',
 		})
-			.then((data) => {
-				return data.json();
+			.then((response) => {
+				return response.json();
 			})
 			.then((data) => {
+				const { success, errors } = { ...data };
+				if (!success) {
+					alert(errors?.[0]?.message || 'Thao tác không thành công');
+					return;
+				}
 				const dataJSON = formatSlotJSON(data?.payload);
 				const _userPrize = data?.payload?.filter(
 					(x) => x.email === luckyNumber,
