@@ -6,21 +6,59 @@ var PROGRAM_ID = '';
 var USER_NAME = '';
 var PASSWORD = '';
 
+let MAX_REEL_ITEMS = 111; // ! THỜI GIAN CỦA VÒNG QUAY
+const CONFETTI_COLORS = [
+	'#26ccff',
+	'#a25afd',
+	'#ff5e7e',
+	'#88ff5a',
+	'#fcff42',
+	'#ffa62d',
+	'#ff36ff',
+];
+
 const programSelectList = document.getElementById('program_select_list');
 const userNameElement = document.getElementById('username');
 const passwordElement = document.getElementById('password');
+const durationDrawElement = document.getElementById('duration');
+
+function calculateReelDuration(maxReelItems) {
+	const timePerItem = 45; // 100ms cho 1 item => 45ms/item
+	const totalDurationMs = maxReelItems * timePerItem; // Tổng thời gian quay (ms)
+	const totalDurationSeconds = Math.ceil(totalDurationMs / 1000); // Chuyển đổi sang giây
+	return Number(totalDurationSeconds);
+}
+
+function calculateMaxReelItems(durationInSeconds) {
+	const timePerItem = 45; // 45ms cho mỗi item
+	const totalDurationMs = durationInSeconds * 1000; // Chuyển giây sang mili giây
+	const maxReelItems = Math.floor(totalDurationMs / timePerItem); // Làm tròn xuống số item
+	return Number(maxReelItems);
+}
+
+durationDrawElement.value = calculateReelDuration(MAX_REEL_ITEMS);
 
 const start = () => {
 	const drawButton = document.getElementById('draw-button');
 	const fullscreenButton = document.getElementById('fullscreen-button');
 	const settingsButton = document.getElementById('settings-button');
 	const prizesButton = document.getElementById('prizes-button');
+	const userPrizesButton = document.getElementById('user-prizes-button');
+	const userJoinButton = document.getElementById('user-join-button');
 	const settingsWrapper = document.getElementById('settings');
 	const prizesWrapper = document.getElementById('prizes');
+	const userPrizesWrapper = document.getElementById('user-prizes');
+	const userJoinWrapper = document.getElementById('user-join');
 	const settingsContent = document.getElementById('settings-panel');
 	const prizesContent = document.getElementById('prizes-panel');
+	const userPrizesContent = document.getElementById('user-prizes-panel');
+	const userJoinContent = document.getElementById('user-join-panel');
 	const settingsSaveButton = document.getElementById('settings-save');
 	const settingsCloseButton = document.getElementById('settings-close');
+	const userSettingsCloseButton = document.getElementById(
+		'user-settings-close',
+	);
+	const userJoinCloseButton = document.getElementById('user-join-close');
 	const prizesCloseButton = document.getElementById('prizes-close');
 	const sunburstSvg = document.getElementById('sunburst');
 	const confettiCanvas = document.getElementById('confetti-canvas');
@@ -31,24 +69,27 @@ const start = () => {
 
 	const elementLoading = document.getElementById('middle');
 	const elementResult = document.getElementById('name-persion-lucky');
+	const tabelUserPrizeBody = document.getElementById('table_user_prize_body');
+	const tabelUserJoinBody = document.getElementById('table_user_join_body');
+	const tabelUserJoinPrizeJoinBody = document.getElementById(
+		'table_user_join_prize_body',
+	);
 	// const programSelectList = document.getElementById('program_select_list');
 	let optionsMuteSound = false;
 
 	// Graceful exit if necessary elements are not found
 	if (
-		!(drawButton && fullscreenButton && settingsButton && prizesButton,
-		settingsWrapper && prizesWrapper,
-		settingsContent && prizesContent,
-		settingsSaveButton &&
-			settingsCloseButton &&
-			prizesCloseButton &&
+		!(
+			drawButton &&
+			fullscreenButton &&
 			sunburstSvg &&
 			confettiCanvas &&
 			nameListTextArea &&
 			removeNameFromListCheckbox &&
 			enableSoundCheckbox &&
 			elementLoading &&
-			elementResult)
+			elementResult
+		)
 	) {
 		console.error('One or more Element ID is invalid. This is possibly a bug.');
 		return;
@@ -65,18 +106,6 @@ const start = () => {
 	let sound = new Audio('../assets/Ring_Spin_2024.mp3');
 	let soundWinner = new Audio('../assets/Win.mp3');
 
-	// Thời gian chạy random
-
-	const MAX_REEL_ITEMS = 365;
-	const CONFETTI_COLORS = [
-		'#26ccff',
-		'#a25afd',
-		'#ff5e7e',
-		'#88ff5a',
-		'#fcff42',
-		'#ffa62d',
-		'#ff36ff',
-	];
 	let confettiAnimationId;
 
 	/** Confetti animation instance */
@@ -160,6 +189,56 @@ const start = () => {
 							}
 						})
 						?.filter((x) => x);
+
+					const DATA_PRIZE = data?.payload
+						?.map((item) => {
+							if (item?.status === 'PRIZED') {
+								return item;
+							}
+						})
+						?.filter((x) => x);
+
+					// !TABLE USER PRIZE BODY
+					const htmlTableBody = data.payload
+						.map((item, _idx) => {
+							const { email, fullName, phongBan } = { ...item };
+							return `
+								<tr>
+										<th scope="row">${_idx + 1}</th>
+										<td>${email || '-'}</td>
+										<td>${fullName || '-'}</td>
+										<td>${phongBan || '-'}</td>
+									</tr>
+							`;
+						})
+						.join('');
+					// !TABLE USER JOIN PRIZE BODY
+					const htmlTableBodyJoinPrize = DATA_NO_PRIZE.map((item, _idx) => {
+						const { email, fullName, phongBan } = { ...item };
+						return `
+								<tr>
+										<th scope="row">${_idx + 1}</th>
+										<td>${email || '-'}</td>
+										<td>${fullName || '-'}</td>
+										<td>${phongBan || '-'}</td>
+									</tr>
+							`;
+					}).join('');
+
+					tabelUserJoinBody.innerHTML =
+						data.payload.length > 0
+							? htmlTableBody
+							: `<tr style="text-align: center">
+									<td style="padding: 12px" colspan="4">Không có dữ liệu</td>
+							</tr>`;
+
+					tabelUserJoinPrizeJoinBody.innerHTML =
+						DATA_NO_PRIZE.length > 0
+							? htmlTableBodyJoinPrize
+							: `<tr style="text-align: center">
+									<td style="padding: 12px" colspan="4">Không có dữ liệu</td>
+							</tr>`;
+					// !
 
 					slot.names = nameListTextArea.value
 						? nameListTextArea.value
@@ -254,6 +333,8 @@ const start = () => {
 		drawButton.style.display = 'none';
 		settingsButton.disabled = true;
 		prizesButton.disabled = true;
+		userPrizesButton.disabled = true;
+		userJoinButton.disabled = true;
 		// soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
 	};
 
@@ -269,6 +350,8 @@ const start = () => {
 		drawButton.style.display = 'inline-block';
 		settingsButton.disabled = false;
 		prizesButton.disabled = false;
+		userPrizesButton.disabled = false;
+		userJoinButton.disabled = false;
 		console.log('Done spin');
 
 		// Remove loading
@@ -318,12 +401,17 @@ const start = () => {
 		PASSWORD = e.target.value;
 	});
 
+	durationDrawElement.addEventListener('input', (e) => {
+		MAX_REEL_ITEMS = calculateMaxReelItems(e.target.value);
+	});
+
 	/** Slot instance */
 	const slot = new Slot({
 		reelContainerSelector: '#reel',
 		selectProgramContainer: '#program_select_list',
 		usernameElementContainer: '#username',
 		passwordElementContainer: '#password',
+		durationElementContainer: '#duration',
 		maxReelItems: MAX_REEL_ITEMS,
 		onSpinStart,
 		onSpinEnd,
@@ -349,6 +437,56 @@ const start = () => {
 		prizesWrapper.style.display = 'block';
 	};
 
+	const onUserPrizesOpen = async () => {
+		if (PROGRAM_ID) {
+			await fetch(`${ENDPOINT_BACKEND}/get-users-by-program/${PROGRAM_ID}`, {
+				method: 'GET',
+			})
+				.then((response) => {
+					return response.json();
+				})
+				.then((data) => {
+					const { success, errors } = { ...data };
+					if (!success) {
+						alert(errors?.[0]?.message || 'Thao tác không thành công');
+						return;
+					}
+
+					const DATA_PRIZE = data?.payload
+						?.map((item) => {
+							if (item?.status === 'PRIZED') {
+								return item;
+							}
+						})
+						?.filter((x) => x);
+
+					// !TABLE USER PRIZE BODY
+					const htmlTableBody = DATA_PRIZE.map((item, _idx) => {
+						const { email, fullName, phongBan } = { ...item };
+						return `<tr>
+										<th scope="row">${_idx + 1}</th>
+										<td>${email || '-'}</td>
+										<td>${fullName || '-'}</td>
+										<td>${phongBan || '-'}</td>
+									</tr>
+							`;
+					}).join('');
+					tabelUserPrizeBody.innerHTML =
+						DATA_PRIZE.length > 0
+							? htmlTableBody
+							: `<tr style="text-align: center">
+									<td style="padding: 12px" colspan="4">Không có dữ liệu</td>
+							</tr>`;
+					// !
+				});
+		}
+		userPrizesWrapper.style.display = 'block';
+	};
+
+	const onUserJoinOpen = () => {
+		userJoinWrapper.style.display = 'block';
+	};
+
 	/** To close the setting page */
 	const onSettingsClose = (e) => {
 		e.stopPropagation();
@@ -360,6 +498,18 @@ const start = () => {
 		e.stopPropagation();
 		prizesContent.scrollTop = 0;
 		prizesWrapper.style.display = 'none';
+	};
+
+	const onUserPrizesClose = (e) => {
+		e.stopPropagation();
+		userPrizesContent.scrollTop = 0;
+		userPrizesWrapper.style.display = 'none';
+	};
+
+	const onUserJoinClose = (e) => {
+		e.stopPropagation();
+		userJoinContent.scrollTop = 0;
+		userJoinWrapper.style.display = 'none';
 	};
 
 	// Click handler for "Draw" button
@@ -403,6 +553,8 @@ const start = () => {
 	// Click handler for "Settings" button
 	settingsButton.addEventListener('click', onSettingsOpen);
 	prizesButton.addEventListener('click', onPrizesOpen);
+	userPrizesButton.addEventListener('click', onUserPrizesOpen);
+	userJoinButton.addEventListener('click', onUserJoinOpen);
 
 	// Click handler for "Save" button for setting page
 	settingsSaveButton.addEventListener('click', (e) => {
@@ -432,6 +584,8 @@ const start = () => {
 	// Click handler for "Discard and close" button for setting page
 	settingsCloseButton.addEventListener('click', onSettingsClose);
 	prizesCloseButton.addEventListener('click', onPrizesClose);
+	userSettingsCloseButton.addEventListener('click', onUserPrizesClose);
+	userJoinCloseButton.addEventListener('click', onUserJoinClose);
 
 	// Click SETTINGS
 	settingsWrapper.addEventListener('click', (e) => {
@@ -444,6 +598,16 @@ const start = () => {
 		prizesWrapper.style.display = 'none';
 	});
 
+	userPrizesWrapper.addEventListener('click', (e) => {
+		e.stopPropagation();
+		userPrizesWrapper.style.display = 'none';
+	});
+
+	userJoinWrapper.addEventListener('click', (e) => {
+		e.stopPropagation();
+		userJoinWrapper.style.display = 'none';
+	});
+
 	settingsContent.addEventListener('click', (e) => {
 		e.stopPropagation();
 		settingsWrapper.style.display = 'block';
@@ -452,6 +616,16 @@ const start = () => {
 	prizesContent.addEventListener('click', (e) => {
 		e.stopPropagation();
 		prizesWrapper.style.display = 'block';
+	});
+
+	userPrizesContent.addEventListener('click', (e) => {
+		e.stopPropagation();
+		userPrizesWrapper.style.display = 'block';
+	});
+
+	userJoinContent.addEventListener('click', (e) => {
+		e.stopPropagation();
+		userJoinWrapper.style.display = 'block';
 	});
 };
 

@@ -1,3 +1,9 @@
+function calculateMaxReelItems(durationInSeconds) {
+	const timePerItem = 45; // 45ms cho mỗi item
+	const totalDurationMs = durationInSeconds * 1000; // Chuyển giây sang mili giây
+	const maxReelItems = Math.floor(totalDurationMs / timePerItem); // Làm tròn xuống số item
+	return Number(maxReelItems);
+}
 class Slot {
 	/** List of names to draw from */
 	nameList = [];
@@ -41,6 +47,7 @@ class Slot {
 		selectProgramContainer,
 		usernameElementContainer,
 		passwordElementContainer,
+		durationElementContainer,
 		onSpinStart,
 		onSpinEnd,
 		onNameListChanged,
@@ -56,6 +63,9 @@ class Slot {
 		this.passwordElementContainer = document.querySelector(
 			passwordElementContainer,
 		);
+		this.durationElementContainer = document.querySelector(
+			durationElementContainer,
+		);
 		this.maxReelItems = maxReelItems;
 		this.shouldRemoveWinner = removeWinner;
 		this.onSpinStart = onSpinStart;
@@ -70,12 +80,16 @@ class Slot {
 				{ transform: 'none', filter: 'blur(0)' },
 				{ filter: 'blur(1px)', offset: 0.5 },
 				{
-					transform: `translateY(-${(this.maxReelItems - 1) * (7.5 * 16)}px)`,
+					transform: `translateY(-${
+						(calculateMaxReelItems(this.durationElementContainer.value) - 1) *
+						(7.5 * 16)
+					}px)`,
 					filter: 'blur(0)',
 				},
 			],
 			{
-				duration: this.maxReelItems * 45, // 100ms for 1 item
+				duration:
+					calculateMaxReelItems(this.durationElementContainer.value) * 45, // 100ms for 1 item
 				easing: 'ease-in-out',
 				iterations: 1,
 			},
@@ -156,6 +170,27 @@ class Slot {
 			return false;
 		}
 
+		// !SET TIME ANIMATION
+		this.reelAnimation = this.reelContainer?.animate(
+			[
+				{ transform: 'none', filter: 'blur(0)' },
+				{ filter: 'blur(1px)', offset: 0.5 },
+				{
+					transform: `translateY(-${
+						(calculateMaxReelItems(this.durationElementContainer.value) - 1) *
+						(7.5 * 16)
+					}px)`,
+					filter: 'blur(0)',
+				},
+			],
+			{
+				duration:
+					calculateMaxReelItems(this.durationElementContainer.value) * 45, // 100ms for 1 item
+				easing: 'ease-in-out',
+				iterations: 1,
+			},
+		);
+
 		await fetch(
 			`${this.ENDPOINT_BACKEND}/admin-quay-so-may-man/${this.selectProgramContainer.value}?username=${this.usernameElementContainer.value}&password=${this.passwordElementContainer.value}`,
 			{
@@ -185,13 +220,18 @@ class Slot {
 				// Shuffle names and create reel items
 				let randomNames = Slot.shuffleNames(this.nameList);
 
-				while (randomNames.length && randomNames.length < this.maxReelItems) {
+				while (
+					randomNames.length &&
+					randomNames.length <
+						calculateMaxReelItems(this.durationElementContainer.value)
+				) {
 					randomNames = [...randomNames, ...randomNames];
 				}
 
 				randomNames = randomNames.slice(
 					0,
-					this.maxReelItems - Number(this.havePreviousWinner),
+					calculateMaxReelItems(this.durationElementContainer.value) -
+						Number(this.havePreviousWinner),
 				);
 
 				const fragment = document.createDocumentFragment();

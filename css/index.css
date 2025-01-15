@@ -107,7 +107,7 @@
 	--draw-button-width: 22.5rem;
 
 	/* Settings */
-	--setting-panel-max-width: 33.125rem; /* 530px */
+	--setting-panel-max-width: 40rem;
 
 	/* Switch */
 	--switch-handle-diameter: 24px;
@@ -121,8 +121,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
 
 *:not(input, textarea, select) {
-	-webkit-user-select: none;
-	-webkit-touch-callout: none;
+	/* -webkit-user-select: none;
+	-webkit-touch-callout: none; */
 }
 
 * {
@@ -896,12 +896,16 @@ button:disabled:hover {
 }
 
 .control-group .icon-button {
-	padding: 12px 22px;
+	padding: 10px 12px;
 	border-radius: 12px;
 	background-color: #fff;
 	border: none;
 	cursor: pointer;
 	color: #dc2626;
+}
+
+.icon-button--small {
+	font-size: 1rem !important;
 }
 
 .slot {
@@ -1006,13 +1010,17 @@ button:disabled:hover {
 }
 
 #settings,
-#prizes {
+#prizes,
+#user-prizes,
+#user-join {
 	display: none; /* Ẩn mặc định */
 	animation: fadeInModal 0.3s ease-in-out;
 }
 
 .settings,
-.prizes {
+.prizes,
+.user-prizes,
+.user-join {
 	position: fixed;
 	z-index: 9999;
 	background-color: rgba(0, 0, 0, 0.3);
@@ -1025,14 +1033,16 @@ button:disabled:hover {
 }
 
 .settings__panel,
-.prizes__panel {
+.prizes__panel,
+.user-prizes__panel,
+.user-join__panel {
 	position: fixed;
 	top: 0;
 	right: 0;
 	z-index: var(--z-index-setting);
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 	height: 100%;
 	width: 100%;
 	max-width: var(--setting-panel-max-width);
@@ -1046,7 +1056,9 @@ button:disabled:hover {
 }
 
 .settings__title,
-.prizes__title {
+.prizes__title,
+.user-prizes__title,
+.user-join__title {
 	margin: 0 0 1.875rem 0;
 	font-size: 2rem;
 	font-weight: bold;
@@ -1057,7 +1069,9 @@ button:disabled:hover {
 
 #settings-save,
 #settings-close,
-#prizes-close {
+#prizes-close,
+#user-prizes-close,
+#user-join-close {
 	margin: 1.875rem 0 0 0;
 	display: block;
 	width: 100%;
@@ -1110,7 +1124,9 @@ button:disabled:hover {
 
 /* !! */
 
-#settings-panel {
+#settings-panel,
+#user-prizes-panel,
+#user-join-panel {
 	border-top-left-radius: 13px;
 	border-bottom-left-radius: 13px;
 }
@@ -1120,17 +1136,45 @@ body::-webkit-scrollbar,
 .settings__panel__group::-webkit-scrollbar,
 #prizes-panel::-webkit-scrollbar,
 .prizes__panel__group::-webkit-scrollbar,
+#user-prizes-panel::-webkit-scrollbar,
+.user-prizes__panel__group::-webkit-scrollbar,
+#user-join-panel::-webkit-scrollbar,
+.user-join__panel__group::-webkit-scrollbar,
 .input-field::-webkit-scrollbar {
 	display: none;
 }
 body::-webkit-scrollbar-track,
 #settings-panel::-webkit-scrollbar-track,
-#prizes-panel::-webkit-scrollbar-track {
+#prizes-panel::-webkit-scrollbar-track,
+#user-prizes-panel::-webkit-scrollbar-track,
+#user-join-panel::-webkit-scrollbar-track {
 	background: #ffffff5a;
 }
 body::-webkit-scrollbar-thumb,
 #settings-panel::-webkit-scrollbar-thumb,
-#prizes-panel::-webkit-scrollbar-thumb {
+#prizes-panel::-webkit-scrollbar-thumb,
+#user-prizes-panel::-webkit-scrollbar-thumb,
+#user-join-panel::-webkit-scrollbar-thumb {
 	background: #ffffff9a;
 	border-radius: 10px;
+}
+
+#modal_user_prize_container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 24px;
+	margin: 24px 0;
+	overflow-y: scroll;
+}
+
+#modal_user_prize_container::-webkit-scrollbar,
+.table_scroll::-webkit-scrollbar {
+	display: none;
+}
+
+.table_scroll {
+	width: 100%;
+	overflow: auto;
+	max-height: 500px;
 }
