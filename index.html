@@ -191,7 +191,9 @@
 						"
 					>
 						<div style="flex: 1">
-							<h1 class="settings__title">Nhân sự trúng thưởng</h1>
+							<h1 class="settings__title">
+								Nhân sự trúng thưởng <span id="user-prizes-count"></span>
+							</h1>
 						</div>
 						<div
 							id="user-settings-close"
@@ -233,7 +235,9 @@
 						"
 					>
 						<div style="flex: 1">
-							<h1 class="settings__title">Nhân sự tham gia</h1>
+							<h1 class="settings__title">
+								Nhân sự tham gia <span id="user-join-count"></span>
+							</h1>
 						</div>
 						<div
 							id="user-join-close"
@@ -308,13 +312,24 @@
 						</div>
 						<div class="input-group mb-3 flex-nowrap">
 							<span class="input-group-text" id="addon-wrapping">Mật khẩu</span>
+							<!-- TYPOE: PASSWORD -->
 							<input
-								type="password"
+								type="text"
 								class="form-control"
 								placeholder="Nhập mật khẩu"
 								aria-label="Nhập mật khẩu"
 								aria-describedby="addon-wrapping"
 								id="password"
+								autocomplete="off"
+							/>
+							<!-- !ADD INPUT HIDDEN -->
+							<input
+								id="realPassword"
+								type="hidden"
+								class="form-control"
+								placeholder="Nhập mật khẩu"
+								aria-label="Nhập mật khẩu"
+								aria-describedby="addon-wrapping"
 								autocomplete="off"
 							/>
 						</div>
@@ -337,8 +352,9 @@
 
 						<div class="input-group">
 							<label class="input-label" for="name-list"
-								>Danh sách nhân sự quay thưởng còn lại</label
-							>
+								>Danh sách nhân sự quay thưởng còn lại
+								<span id="table_user_join_prize_count"></span
+							></label>
 							<textarea
 								readonly
 								class="input-field input-field--textarea"

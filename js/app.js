@@ -20,6 +20,7 @@ const CONFETTI_COLORS = [
 const programSelectList = document.getElementById('program_select_list');
 const userNameElement = document.getElementById('username');
 const passwordElement = document.getElementById('password');
+const realPasswordElement = document.getElementById('realPassword');
 const durationDrawElement = document.getElementById('duration');
 
 function calculateReelDuration(maxReelItems) {
@@ -48,7 +49,9 @@ const start = () => {
 	const settingsWrapper = document.getElementById('settings');
 	const prizesWrapper = document.getElementById('prizes');
 	const userPrizesWrapper = document.getElementById('user-prizes');
+	const userPrizesCount = document.getElementById('user-prizes-count');
 	const userJoinWrapper = document.getElementById('user-join');
+	const userJoinCount = document.getElementById('user-join-count');
 	const settingsContent = document.getElementById('settings-panel');
 	const prizesContent = document.getElementById('prizes-panel');
 	const userPrizesContent = document.getElementById('user-prizes-panel');
@@ -70,6 +73,9 @@ const start = () => {
 	const elementLoading = document.getElementById('middle');
 	const elementResult = document.getElementById('name-persion-lucky');
 	const tabelUserPrizeBody = document.getElementById('table_user_prize_body');
+	const tabelUserJoinPrizeCount = document.getElementById(
+		'table_user_join_prize_count',
+	);
 	const tabelUserJoinBody = document.getElementById('table_user_join_body');
 	const tabelUserJoinPrizeJoinBody = document.getElementById(
 		'table_user_join_prize_body',
@@ -190,14 +196,6 @@ const start = () => {
 						})
 						?.filter((x) => x);
 
-					const DATA_PRIZE = data?.payload
-						?.map((item) => {
-							if (item?.status === 'PRIZED') {
-								return item;
-							}
-						})
-						?.filter((x) => x);
-
 					// !TABLE USER PRIZE BODY
 					const htmlTableBody = data.payload
 						.map((item, _idx) => {
@@ -225,6 +223,10 @@ const start = () => {
 							`;
 					}).join('');
 
+					userJoinCount.innerHTML =
+						data.payload.length > 0
+							? `(${data.payload.length.toLocaleString()})`
+							: '';
 					tabelUserJoinBody.innerHTML =
 						data.payload.length > 0
 							? htmlTableBody
@@ -232,6 +234,10 @@ const start = () => {
 									<td style="padding: 12px" colspan="4">Không có dữ liệu</td>
 							</tr>`;
 
+					tabelUserJoinPrizeCount.innerHTML =
+						DATA_NO_PRIZE.length > 0
+							? `(${DATA_NO_PRIZE.length.toLocaleString()})`
+							: '';
 					tabelUserJoinPrizeJoinBody.innerHTML =
 						DATA_NO_PRIZE.length > 0
 							? htmlTableBodyJoinPrize
@@ -397,9 +403,30 @@ const start = () => {
 		USER_NAME = e.target.value;
 	});
 
+	// !!! WARNING
 	passwordElement.addEventListener('input', (e) => {
-		PASSWORD = e.target.value;
+		// !! ADD HIDDEN INPUT
+		const value = e.target.value;
+
+		// So sánh giá trị mới nhập và cập nhật giá trị thực
+		if (value.length > PASSWORD.length) {
+			// Người dùng thêm ký tự
+			PASSWORD += value.slice(PASSWORD.length);
+		} else if (value.length < PASSWORD.length) {
+			// Người dùng xóa ký tự
+			PASSWORD = PASSWORD.slice(0, value.length);
+		}
+
+		// Hiển thị dấu *
+		passwordElement.value = '*'.repeat(value.length);
+		realPasswordElement.value = PASSWORD;
+		// !!!
+
+		// !COMMENT
+		// PASSWORD = e.target.value;
+		// !
 	});
+	//!!!!!!
 
 	durationDrawElement.addEventListener('input', (e) => {
 		MAX_REEL_ITEMS = calculateMaxReelItems(e.target.value);
@@ -410,7 +437,7 @@ const start = () => {
 		reelContainerSelector: '#reel',
 		selectProgramContainer: '#program_select_list',
 		usernameElementContainer: '#username',
-		passwordElementContainer: '#password',
+		passwordElementContainer: '#realPassword', //#password
 		durationElementContainer: '#duration',
 		maxReelItems: MAX_REEL_ITEMS,
 		onSpinStart,
@@ -471,6 +498,11 @@ const start = () => {
 									</tr>
 							`;
 					}).join('');
+
+					userPrizesCount.innerHTML =
+						DATA_PRIZE.length > 0
+							? `(${DATA_PRIZE?.length.toLocaleString()})`
+							: '';
 					tabelUserPrizeBody.innerHTML =
 						DATA_PRIZE.length > 0
 							? htmlTableBody
@@ -529,9 +561,6 @@ const start = () => {
 		slot.spin();
 	});
 
-	// Hide fullscreen button when it is not supported
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore - for older browsers support
 	if (
 		!(document.documentElement.requestFullscreen && document.exitFullscreen)
 	) {
