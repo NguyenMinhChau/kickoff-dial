@@ -44,6 +44,21 @@ function calculateMaxReelItems(durationInSeconds) {
 	return Number(maxReelItems);
 }
 
+function setOgImage(imageUrl) {
+	// Tìm thẻ meta `og:image` nếu đã tồn tại
+	let metaTag = document.querySelector('meta[property="og:image"]');
+
+	if (!metaTag) {
+		// Nếu không tồn tại, tạo mới
+		metaTag = document.createElement('meta');
+		metaTag.setAttribute('property', 'og:image');
+		document.head.appendChild(metaTag); // Thêm vào phần <head>
+	}
+
+	// Cập nhật URL hình ảnh
+	metaTag.setAttribute('content', imageUrl);
+}
+
 durationDrawElement.value = calculateReelDuration(MAX_REEL_ITEMS);
 
 const start = () => {
@@ -89,7 +104,10 @@ const start = () => {
 		'table_user_join_prize_body',
 	);
 
-	// set backgroundImage
+	// ! SET IMAGE OG
+	setOgImage('./assets/image_og.png');
+
+	// !SET BACKGROUND IMAGE
 	themeRedElement[0].style.backgroundImage =
 		'url(../../../assets/og/YEP_VTU.png)';
 
