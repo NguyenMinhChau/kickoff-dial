@@ -1,3 +1,10 @@
+//? DATA LIST: ../js/constants/dataSG1Kickoff.json
+// {
+// 	"HCM.Hoanglm18": "SG01B1",
+// 	"HCM.Hoanglm18": "SG01B1",
+// 	...
+// }
+// ?
 // Initialize slot machine
 const ENDPOINT_BACKEND =
 	'https://icdpmobile.fpt.net/v1/icdp-backend-mobile/ct-tat-nien';
