@@ -47,6 +47,7 @@ function calculateMaxReelItems(durationInSeconds) {
 durationDrawElement.value = calculateReelDuration(MAX_REEL_ITEMS);
 
 const start = () => {
+	const themeRedElement = document.getElementsByClassName('theme--red');
 	const drawButton = document.getElementById('draw-button');
 	const fullscreenButton = document.getElementById('fullscreen-button');
 	const settingsButton = document.getElementById('settings-button');
@@ -87,6 +88,11 @@ const start = () => {
 	const tabelUserJoinPrizeJoinBody = document.getElementById(
 		'table_user_join_prize_body',
 	);
+
+	// set backgroundImage
+	themeRedElement[0].style.backgroundImage =
+		'url(../../../assets/og/YEP_VTU.png)';
+
 	// const programSelectList = document.getElementById('program_select_list');
 	let optionsMuteSound = false;
 
