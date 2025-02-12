@@ -67,6 +67,7 @@ const start = () => {
 		'chart-statistical-button',
 	);
 	const userPrizesButton = document.getElementById('user-prizes-button');
+	const imageQrCodeElement = document.getElementById('prizes-qrcode');
 	const userJoinButton = document.getElementById('user-join-button');
 	const settingsWrapper = document.getElementById('settings');
 	const prizesWrapper = document.getElementById('prizes');
@@ -129,9 +130,13 @@ const start = () => {
 	// !SET BACKGROUND IMAGE
 	themeRedElement[0].style.backgroundImage =
 		'url(../../../assets/og/KICKOFF_SG_GIF.gif)';
-	backgroundHeaderFormIndex.src = '../assets/og/KICKOFF_V5.png';
+	backgroundHeaderFormIndex.src = '../assets/og//BG_CHECKIN.png';
 	formIndexMainWrapper.style.backgroundImage =
 		'url(../../../assets/og/YEP_VTU.png)';
+	if (imageQrCodeElement) {
+		imageQrCodeElement.src = '../assets/og/QR_CODE_CHECKIN.png';
+	}
+
 	// !
 
 	// const programSelectList = document.getElementById('program_select_list');

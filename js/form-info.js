@@ -1,6 +1,21 @@
 const ENDPOINT_BACKEND =
 	'https://icdpmobile.fpt.net/icdp-mobile-staging/v1/icdp-backend-mobile/ct-tat-nien';
 
+const checkIpWiFi = async () => {
+	return await fetch('https://api64.ipify.org?format=json')
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.ip.startsWith('58.188')) {
+				return data.ip;
+			} else {
+				return data.ip;
+			}
+		})
+		.catch((error) => {
+			return '';
+		});
+};
+
 var DATA_PAYLOAD = [];
 const startForm = () => {
 	const backgroundHeaderForm = document.getElementById(
@@ -43,54 +58,64 @@ const startForm = () => {
 
 	// ! SUBMIT FORM
 	const submitForm = async (body) => {
-		await getProgram().then(async (id) => {
-			if (id) {
-				// modalLoading.style.display = 'flex';
-				await fetch(`${ENDPOINT_BACKEND}/submit-form-check-in/${id}`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(body),
-				})
-					.then((response) => {
-						return response.json();
-					})
-					.then(async (data) => {
-						const { success, errors, payload } = { ...data };
-						if (!success) {
-							messageFormElement.innerHTML =
-								errors?.[0]?.message ||
-								errors?.[0]?.msg ||
-								'Thao tác không thành công';
-							return;
-						}
-						formStepOneElement.style.display = 'none';
-						formStepTwoElement.style.display = 'block';
-						if (payload.fullName && document.getElementById('res_fullName')) {
-							document.getElementById('res_fullName').innerText =
-								payload.fullName || '-';
-							document.getElementById('res_maNV').innerText =
-								payload.maNV || '-';
-							document.getElementById('res_phongBan').innerText =
-								payload.phongBan || '-';
-							document.getElementById('res_group').innerText =
-								payload.group || '-';
-							document.getElementById('res_chiNhanh').innerText =
-								payload.donVi || '-';
-							document.getElementById('res_timeCheckin').innerText =
-								moment(payload.timeCheckIn)
-									.add(7, 'hours')
-									.format('DD/MM/YYYY HH:mm:ss') || '-';
-						}
-					});
+		checkIpWiFi().then(async (res) => {
+			if (res) {
+				alert(res);
+				await getProgram().then(async (id) => {
+					if (id) {
+						// modalLoading.style.display = 'flex';
+						await fetch(`${ENDPOINT_BACKEND}/submit-form-check-in/${id}`, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(body),
+						})
+							.then((response) => {
+								return response.json();
+							})
+							.then(async (data) => {
+								const { success, errors, payload } = { ...data };
+								if (!success) {
+									messageFormElement.innerHTML =
+										errors?.[0]?.message ||
+										errors?.[0]?.msg ||
+										'Thao tác không thành công';
+									return;
+								}
+								formStepOneElement.style.display = 'none';
+								formStepTwoElement.style.display = 'block';
+								if (
+									payload.fullName &&
+									document.getElementById('res_fullName')
+								) {
+									document.getElementById('res_fullName').innerText =
+										payload.fullName || '-';
+									document.getElementById('res_maNV').innerText =
+										payload.maNV || '-';
+									document.getElementById('res_phongBan').innerText =
+										payload.phongBan || '-';
+									document.getElementById('res_group').innerText =
+										payload.group || '-';
+									document.getElementById('res_chiNhanh').innerText =
+										payload.donVi || '-';
+									document.getElementById('res_timeCheckin').innerText =
+										moment(payload.timeCheckIn)
+											.add(7, 'hours')
+											.format('DD/MM/YYYY HH:mm:ss') || '-';
+								}
+							});
+					}
+				});
+			} else {
+				alert('VUI LÒNG KẾT NỐI MẠNG TRONG SẢNH ĐỂ TIẾN HÀNH CHECKIN');
 			}
 		});
 	};
 
 	// ! SET NBACKGROUND IMAGE
 	if (backgroundHeaderForm) {
-		backgroundHeaderForm.src = '../assets/og/KICKOFF_V5.png';
+		backgroundHeaderForm.src = '../assets/og/BG_CHECKIN.png';
 	}
 	formMainWrapper.style.backgroundImage = 'url(../../../assets/og/YEP_VTU.png)';
 
@@ -119,17 +144,16 @@ const startForm = () => {
 								return;
 							}
 
-							DATA_PAYLOAD = payload
-							const { status } = { ...payload?.[0] }
+							DATA_PAYLOAD = payload;
+							const { status } = { ...payload?.[0] };
 
-							if(status === 'CHECKED_IN' || status === 'PRIZED'){
+							if (status === 'CHECKED_IN' || status === 'PRIZED') {
 								formCheckInfoElement.style.display = 'none';
-								formSubmitElement.style.display = 'none'
-							} else{
+								formSubmitElement.style.display = 'none';
+							} else {
 								formCheckInfoElement.style.display = 'none';
-								formSubmitElement.style.display = 'block'
+								formSubmitElement.style.display = 'block';
 							}
-							
 
 							if (payload.length > 0) {
 								const htmls = payload
@@ -195,7 +219,7 @@ const startForm = () => {
 								// }
 							} else {
 								formCheckInfoElement.style.display = 'none';
-								formSubmitElement.style.display = 'none'
+								formSubmitElement.style.display = 'none';
 								infoConfirmElement.innerHTML =
 									'<div style="text-align: center">Không tìm thấy thông tin nhân viên</div>';
 							}
@@ -218,15 +242,14 @@ const startForm = () => {
 		});
 	}
 
-	if(formSubmitElement){
+	if (formSubmitElement) {
 		formSubmitElement.addEventListener('click', async () => {
-      const body = {
-        maNV: maNVInput.value,
-      };
-      await submitForm(body);
-    });
+			const body = {
+				maNV: maNVInput.value,
+			};
+			await submitForm(body);
+		});
 	}
-
 };
 
 document.addEventListener('DOMContentLoaded', () => {

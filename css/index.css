@@ -168,7 +168,7 @@ body {
 }
 
 #prizes {
-	/* background-image: url(../assets/og/YEP_HCM.gif); */
+	background-image: url(../assets/og/BG_CHECKIN.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: center;
@@ -1147,6 +1147,26 @@ button:disabled:hover {
 }
 
 /* !! */
+
+.prizes__panel__group {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+#prizes-qrcode {
+	width: 390px;
+	height: 390px;
+	background-color: #ffffff9a;
+	border-radius: 13px;
+}
+
+.qr-code-image-container {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
 #settings-panel,
 #user-prizes-panel,
