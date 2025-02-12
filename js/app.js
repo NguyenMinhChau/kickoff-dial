@@ -127,7 +127,7 @@ const start = () => {
 
 	// !SET BACKGROUND IMAGE
 	themeRedElement[0].style.backgroundImage =
-		'url(../../../assets/og/KICKOFF_V5.png)';
+		'url(../../../assets/og/KICKOFF_SG_GIF.gif)';
 	backgroundHeaderFormIndex.src = '../assets/og/KICKOFF_V5.png';
 	formIndexMainWrapper.style.backgroundImage =
 		'url(../../../assets/og/YEP_VTU.png)';
