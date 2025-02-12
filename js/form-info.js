@@ -1,14 +1,17 @@
 const ENDPOINT_BACKEND =
 	'https://icdpmobile.fpt.net/icdp-mobile-staging/v1/icdp-backend-mobile/ct-tat-nien';
 
+const ipAddressElement = document.getElementById('ip-address');
+
 const checkIpWiFi = async () => {
 	return await fetch('https://api64.ipify.org?format=json')
 		.then((response) => response.json())
 		.then((data) => {
+			ipAddressElement.innerHTML = data.ip;
 			if (data.ip.startsWith('58.188')) {
 				return data.ip;
 			} else {
-				return data.ip;
+				return '';
 			}
 		})
 		.catch((error) => {
@@ -101,14 +104,12 @@ const startForm = () => {
 					});
 			}
 		});
-		// checkIpWiFi().then(async (res) => {
-		// 	if (res) {
-		// 		alert(res);
-		// 	} else {
-		// 		alert('VUI LÒNG KẾT NỐI MẠNG TRONG SẢNH ĐỂ TIẾN HÀNH CHECKIN');
-		// 	}
-		// });
 	};
+	checkIpWiFi().then(async (res) => {
+		if (res) {
+		} else {
+		}
+	});
 
 	// ! SET NBACKGROUND IMAGE
 	if (backgroundHeaderForm) {
