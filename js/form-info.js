@@ -1,5 +1,7 @@
 const ENDPOINT_BACKEND =
 	'https://icdpmobile.fpt.net/icdp-mobile-staging/v1/icdp-backend-mobile/ct-tat-nien';
+
+var DATA_PAYLOAD = [];
 const startForm = () => {
 	const backgroundHeaderForm = document.getElementById(
 		'background-header-form',
@@ -117,6 +119,18 @@ const startForm = () => {
 								return;
 							}
 
+							DATA_PAYLOAD = payload
+							const { status } = { ...payload?.[0] }
+
+							if(status === 'CHECKED_IN' || status === 'PRIZED'){
+								formCheckInfoElement.style.display = 'none';
+								formSubmitElement.style.display = 'none'
+							} else{
+								formCheckInfoElement.style.display = 'none';
+								formSubmitElement.style.display = 'block'
+							}
+							
+
 							if (payload.length > 0) {
 								const htmls = payload
 									.map((item) => {
@@ -145,23 +159,23 @@ const startForm = () => {
 												}</span></div>
 												<div><b>Nhóm:</b> <span id="res_confirm_group">${group || '-'}</span></div> 
 											</div>
-											<button data-body='${JSON.stringify(bodySubmit)}' 
-													class="formbold-btn checkin-btn" ${isCheckinPrize ? 'disabled' : ''}
-													style="display: inline-block; width: max-content; margin-top: 0; padding: 12px; background-color: ${
+											<div data-body='${JSON.stringify(bodySubmit)}' 
+													class="checkin-btn"
+													style="display: inline-block; border-radius: 8px; color: #FFF; cursor: default; width: max-content; margin-top: 0; padding: 12px; background-color: ${
 														status === 'CHECKED_IN'
-															? ' #15803d'
+															? '#15803d'
 															: status === 'PRIZED'
 															? '#1d4ed8'
-															: ''
+															: '#b91c1c'
 													}!important">
 													${
 														isCheckinPrize
 															? status === 'CHECKED_IN'
 																? 'ĐÃ CHECK IN'
 																: 'ĐÃ TRÚNG THƯỞNG'
-															: 'CHECK IN'
+															: 'CHƯA CHECK IN'
 													}
-											</button>
+											</div>
 										</div>
 									
 									</br>
@@ -169,17 +183,19 @@ const startForm = () => {
 									})
 									.join('');
 								infoConfirmElement.innerHTML = htmls;
-								if (document.querySelectorAll('.checkin-btn').length > 0) {
-									document
-										.querySelectorAll('.checkin-btn')
-										.forEach((button) => {
-											button.addEventListener('click', function () {
-												const body = JSON.parse(this.getAttribute('data-body'));
-												submitForm(body);
-											});
-										});
-								}
+								// if (document.querySelectorAll('.checkin-btn').length > 0) {
+								// 	document
+								// 		.querySelectorAll('.checkin-btn')
+								// 		.forEach((button) => {
+								// 			button.addEventListener('click', function () {
+								// 				const body = JSON.parse(this.getAttribute('data-body'));
+								// 				submitForm(body);
+								// 			});
+								// 		});
+								// }
 							} else {
+								formCheckInfoElement.style.display = 'none';
+								formSubmitElement.style.display = 'none'
 								infoConfirmElement.innerHTML =
 									'<div style="text-align: center">Không tìm thấy thông tin nhân viên</div>';
 							}
@@ -195,10 +211,22 @@ const startForm = () => {
 		maNVInput.addEventListener('input', () => {
 			formCheckInfoElement.disabled = !maNVInput.value;
 			formSubmitElement.disabled = !maNVInput.value;
+			formSubmitElement.style.display = 'none';
+			formCheckInfoElement.style.display = 'block';
 			infoConfirmElement.innerHTML = '';
 			messageFormElement.innerHTML = '';
 		});
 	}
+
+	if(formSubmitElement){
+		formSubmitElement.addEventListener('click', async () => {
+      const body = {
+        maNV: maNVInput.value,
+      };
+      await submitForm(body);
+    });
+	}
+
 };
 
 document.addEventListener('DOMContentLoaded', () => {
