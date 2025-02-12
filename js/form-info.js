@@ -58,59 +58,56 @@ const startForm = () => {
 
 	// ! SUBMIT FORM
 	const submitForm = async (body) => {
-		checkIpWiFi().then(async (res) => {
-			if (res) {
-				alert(res);
-				await getProgram().then(async (id) => {
-					if (id) {
-						// modalLoading.style.display = 'flex';
-						await fetch(`${ENDPOINT_BACKEND}/submit-form-check-in/${id}`, {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify(body),
-						})
-							.then((response) => {
-								return response.json();
-							})
-							.then(async (data) => {
-								const { success, errors, payload } = { ...data };
-								if (!success) {
-									messageFormElement.innerHTML =
-										errors?.[0]?.message ||
-										errors?.[0]?.msg ||
-										'Thao tác không thành công';
-									return;
-								}
-								formStepOneElement.style.display = 'none';
-								formStepTwoElement.style.display = 'block';
-								if (
-									payload.fullName &&
-									document.getElementById('res_fullName')
-								) {
-									document.getElementById('res_fullName').innerText =
-										payload.fullName || '-';
-									document.getElementById('res_maNV').innerText =
-										payload.maNV || '-';
-									document.getElementById('res_phongBan').innerText =
-										payload.phongBan || '-';
-									document.getElementById('res_group').innerText =
-										payload.group || '-';
-									document.getElementById('res_chiNhanh').innerText =
-										payload.donVi || '-';
-									document.getElementById('res_timeCheckin').innerText =
-										moment(payload.timeCheckIn)
-											.add(7, 'hours')
-											.format('DD/MM/YYYY HH:mm:ss') || '-';
-								}
-							});
-					}
-				});
-			} else {
-				alert('VUI LÒNG KẾT NỐI MẠNG TRONG SẢNH ĐỂ TIẾN HÀNH CHECKIN');
+		await getProgram().then(async (id) => {
+			if (id) {
+				// modalLoading.style.display = 'flex';
+				await fetch(`${ENDPOINT_BACKEND}/submit-form-check-in/${id}`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(body),
+				})
+					.then((response) => {
+						return response.json();
+					})
+					.then(async (data) => {
+						const { success, errors, payload } = { ...data };
+						if (!success) {
+							messageFormElement.innerHTML =
+								errors?.[0]?.message ||
+								errors?.[0]?.msg ||
+								'Thao tác không thành công';
+							return;
+						}
+						formStepOneElement.style.display = 'none';
+						formStepTwoElement.style.display = 'block';
+						if (payload.fullName && document.getElementById('res_fullName')) {
+							document.getElementById('res_fullName').innerText =
+								payload.fullName || '-';
+							document.getElementById('res_maNV').innerText =
+								payload.maNV || '-';
+							document.getElementById('res_phongBan').innerText =
+								payload.phongBan || '-';
+							document.getElementById('res_group').innerText =
+								payload.group || '-';
+							document.getElementById('res_chiNhanh').innerText =
+								payload.donVi || '-';
+							document.getElementById('res_timeCheckin').innerText =
+								moment(payload.timeCheckIn)
+									.add(7, 'hours')
+									.format('DD/MM/YYYY HH:mm:ss') || '-';
+						}
+					});
 			}
 		});
+		// checkIpWiFi().then(async (res) => {
+		// 	if (res) {
+		// 		alert(res);
+		// 	} else {
+		// 		alert('VUI LÒNG KẾT NỐI MẠNG TRONG SẢNH ĐỂ TIẾN HÀNH CHECKIN');
+		// 	}
+		// });
 	};
 
 	// ! SET NBACKGROUND IMAGE
