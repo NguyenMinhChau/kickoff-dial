@@ -7,7 +7,7 @@ const checkIpWiFi = async () => {
 	return await fetch('https://api64.ipify.org?format=json')
 		.then((response) => response.json())
 		.then((data) => {
-			ipAddressElement.innerHTML = data.ip;
+			// ipAddressElement.innerHTML = data.ip;
 			if (data.ip.startsWith('58.188')) {
 				return data.ip;
 			} else {
@@ -105,11 +105,11 @@ const startForm = () => {
 			}
 		});
 	};
-	checkIpWiFi().then(async (res) => {
-		if (res) {
-		} else {
-		}
-	});
+	// checkIpWiFi().then(async (res) => {
+	// 	if (res) {
+	// 	} else {
+	// 	}
+	// });
 
 	// ! SET NBACKGROUND IMAGE
 	if (backgroundHeaderForm) {
