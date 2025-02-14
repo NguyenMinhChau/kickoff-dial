@@ -6,6 +6,7 @@
 // }
 // ?
 // https://icdpmobile.fpt.net/icdp-mobile-staging/v1/icdp-backend-mobile/ct-tat-nien
+Chart.register(ChartDataLabels);
 const ENDPOINT_BACKEND =
 	'https://icdpmobile.fpt.net/v1/icdp-backend-mobile/ct-tat-nien';
 // ! VARIABLE
@@ -475,6 +476,15 @@ const start = () => {
 	};
 	getListPrize();
 
+	const titleColors = {
+		'CHIẾN BINH SỨC MẠNH': '#FFFFFF',
+		'CHIẾN BINH KẾT NỐI': '#FFFFFF',
+		'CHIẾN BINH NHIỆT HUYẾT': '#FFFFFF',
+		'CHIẾN BINH TỐC ĐỘ': '#FFFFFF',
+		'CHIẾN BINH TRÍ TUỆ': '#FFFFFF',
+		'CHIẾN BINH SÁNG TẠO': '#FFFFFF',
+	};
+
 	// !! STATISTICAL
 	const getStatisticalChart = async () => {
 		if (PROGRAM_ID) {
@@ -499,57 +509,56 @@ const start = () => {
 					}
 					// !CHART DEPARTMENT
 					clearChart();
-					// Nhóm dữ liệu theo phòng ban
-					// const departmentCount = {};
-					// data.payload.forEach((person) => {
-					// 	const department = person.phongBan;
-					// 	departmentCount[department] =
-					// 		(departmentCount[department] || 0) + 1;
-					// });
+					// Chuyển object thành mảng để dễ sắp xếp
+					const sortedData = Object.entries(payload)
+						.map(([label, values]) => ({ label, ...values })) // Chuyển đổi thành object
+						.sort((a, b) => b.total - a.total); // Sắp xếp theo total giảm dần
 
-					// Chuyển dữ liệu thành mảng
-					// const labels = Object.keys(departmentCount);
-					// const values = Object.values(departmentCount);
-					// Chuyển đổi dữ liệu từ payload
-					const labels = Object.keys(payload);
-					const totalValues = Object.values(payload).map((item) => item.total);
-					const checkedInValues = Object.values(payload).map(
+					// Tách dữ liệu đã sắp xếp thành các mảng riêng biệt
+					const sortedLabels = sortedData.map((item) =>
+						item.label.toUpperCase(),
+					);
+					const sortedTotalValues = sortedData.map((item) => item.total);
+					const sortedCheckedInValues = sortedData.map(
 						(item) => item.checkedIn,
 					);
-					const prizedValues = Object.values(payload).map(
-						(item) => item.prized,
-					);
+					// const sortedPrizedValues = sortedData.map((item) => item.prized);
 
 					MY_CHART = new Chart(ctxChartDeparment, {
 						type: 'bar',
 						data: {
-							labels: labels.map((item) => item.toUpperCase()),
+							labels: sortedLabels.map((item) => item.toUpperCase()),
 							datasets: [
 								{
 									label: 'TỔNG SỐ CHIẾN BINH',
-									data: totalValues,
+									data: sortedTotalValues,
 									backgroundColor: '#FFFFFF',
 									borderColor: '#FFFFFF',
 									borderWidth: 1,
 								},
 								{
 									label: 'SỐ CHIẾN BINH ĐÃ CHECK-IN',
-									data: checkedInValues,
-									backgroundColor: '#16a34a9a',
-									borderColor: '#16a34a9a',
+									data: sortedCheckedInValues,
+									backgroundColor: '#FFFFFF',
+									borderColor: '#FFFFFF',
 									borderWidth: 1,
+									hidden: true, // Mặc định ẩn dataset này
 								},
-								{
-									label: 'SỐ CHIẾN BINH TRÚNG THƯỞNG',
-									data: prizedValues,
-									backgroundColor: '#2563eb9a',
-									borderColor: '#2563eb9a',
-									borderWidth: 1,
-								},
+								// {
+								// 	label: 'SỐ CHIẾN BINH TRÚNG THƯỞNG',
+								// 	data: sortedPrizedValues,
+								// 	backgroundColor: '#FFFFFF',
+								// 	borderColor: '#FFFFFF',
+								// 	borderWidth: 1,
+								// 	hidden: true, // Mặc định ẩn dataset này
+								// },
 							],
 						},
 						options: {
 							responsive: true,
+							layout: {
+								padding: { top: 30 }, // Giữ khoảng cách phía trên để tránh cắt số
+							},
 							plugins: {
 								legend: {
 									display: true,
@@ -558,10 +567,22 @@ const start = () => {
 											size: 14,
 											weight: 'bold',
 										},
-										color: '#FFFFFF', // Legend text color
+										color: '#FFFFFF',
 										padding: 15,
 									},
-									position: 'top', // Position legend at the top
+									position: 'bottom', // Đưa legend xuống dưới chart
+								},
+								tooltip: {
+									enabled: true, // Hiển thị tooltip khi hover
+								},
+								datalabels: {
+									anchor: 'end',
+									align: 'top',
+									color: '#FFFFFF',
+									font: {
+										weight: 'bold',
+									},
+									formatter: (value) => Math.round(value), // Hiển thị số nguyên trên cột
 								},
 							},
 							scales: {
@@ -571,23 +592,17 @@ const start = () => {
 											size: 12,
 											weight: 'bold',
 										},
-										color: '#FFFFFF', // X-axis label color
+										color: (context) => {
+											const label = context.tick.label.toUpperCase();
+											return titleColors[label] || '#FFFFFF'; // Mặc định màu trắng nếu không có trong danh sách
+										},
 										padding: 10,
 									},
-									// title: {
-									// 		display: true,
-									// 		text: 'Tên phòng ban',
-									// 		font: {
-									// 				size: 14,
-									// 				weight: 'bold',
-									// 		},
-									// 		color: '#FFFFFF',
-									// },
 									grid: {
-										display: false, // Ẩn lưới trục X
+										display: false,
 									},
 									border: {
-										display: false, // Ẩn luôn đường trục X
+										display: false,
 									},
 								},
 								y: {
@@ -596,23 +611,15 @@ const start = () => {
 											size: 12,
 											weight: 'bold',
 										},
-										color: '#FFFFFF', // Y-axis label color
+										color: '#FFFFFF',
 										padding: 10,
+										callback: (value) => Math.round(value), // Format thành số nguyên
 									},
-									// title: {
-									// 		display: true,
-									// 		text: 'Số lượng chiến binh',
-									// 		font: {
-									// 				size: 14,
-									// 				weight: 'bold',
-									// 		},
-									// 		color: '#FFFFFF',
-									// },
 									grid: {
-										display: false, // Ẩn lưới trục X
+										display: false,
 									},
 									border: {
-										display: false, // Ẩn luôn đường trục X
+										display: false,
 									},
 									beginAtZero: true,
 								},
