@@ -569,7 +569,7 @@ const start = () => {
 						options: {
 							responsive: true,
 							layout: {
-								padding: { top: 30 }, // Giữ khoảng cách phía trên để tránh cắt số
+								padding: { top: 50 }, // Giữ khoảng cách phía trên để tránh cắt số
 							},
 							plugins: {
 								legend: {
@@ -592,6 +592,7 @@ const start = () => {
 									align: 'top',
 									color: '#FFFFFF',
 									font: {
+										size: 30,
 										weight: 'bold',
 									},
 									formatter: (value) => Math.round(value), // Hiển thị số nguyên trên cột
