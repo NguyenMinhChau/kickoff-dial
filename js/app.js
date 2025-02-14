@@ -5,8 +5,9 @@
 // 	...
 // }
 // ?
+// https://icdpmobile.fpt.net/icdp-mobile-staging/v1/icdp-backend-mobile/ct-tat-nien
 const ENDPOINT_BACKEND =
-	'https://icdpmobile.fpt.net/icdp-mobile-staging/v1/icdp-backend-mobile/ct-tat-nien';
+	'https://icdpmobile.fpt.net/v1/icdp-backend-mobile/ct-tat-nien';
 // ! VARIABLE
 var PROGRAM_ID = '';
 var USER_NAME = '';
