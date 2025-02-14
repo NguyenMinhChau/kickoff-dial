@@ -147,6 +147,10 @@ body {
 		Arial, sans-serif;
 }
 
+.reel div {
+	letter-spacing: 16px;
+}
+
 #app {
 	padding: 0 3.125rem;
 	min-height: 100%;

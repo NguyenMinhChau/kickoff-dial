@@ -477,12 +477,12 @@ const start = () => {
 	getListPrize();
 
 	const titleColors = {
-		'CHIẾN BINH SỨC MẠNH': '#FFFFFF',
-		'CHIẾN BINH KẾT NỐI': '#FFFFFF',
-		'CHIẾN BINH NHIỆT HUYẾT': '#FFFFFF',
-		'CHIẾN BINH TỐC ĐỘ': '#FFFFFF',
-		'CHIẾN BINH TRÍ TUỆ': '#FFFFFF',
-		'CHIẾN BINH SÁNG TẠO': '#FFFFFF',
+		'CHIẾN BINH SỨC MẠNH': '#6d94b8',
+		'CHIẾN BINH KẾT NỐI': '#0563cf',
+		'CHIẾN BINH NHIỆT HUYẾT': '#b44015',
+		'CHIẾN BINH TỐC ĐỘ': '#cf9a2a',
+		'CHIẾN BINH TRÍ TUỆ': '#d5a5e7',
+		'CHIẾN BINH SÁNG TẠO': '#ee2334',
 	};
 
 	// !! STATISTICAL
@@ -532,15 +532,27 @@ const start = () => {
 								{
 									label: 'TỔNG SỐ CHIẾN BINH',
 									data: sortedTotalValues,
-									backgroundColor: '#FFFFFF',
-									borderColor: '#FFFFFF',
+									// backgroundColor: '#FFFFFF',
+									// borderColor: '#FFFFFF',
+									backgroundColor: sortedLabels.map(
+										(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
+									), // Đặt màu theo titleColors
+									borderColor: sortedLabels.map(
+										(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
+									),
 									borderWidth: 1,
 								},
 								{
 									label: 'SỐ CHIẾN BINH ĐÃ CHECK-IN',
 									data: sortedCheckedInValues,
-									backgroundColor: '#FFFFFF',
-									borderColor: '#FFFFFF',
+									// backgroundColor: '#FFFFFF',
+									// borderColor: '#FFFFFF',
+									backgroundColor: sortedLabels.map(
+										(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
+									),
+									borderColor: sortedLabels.map(
+										(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
+									),
 									borderWidth: 1,
 									hidden: true, // Mặc định ẩn dataset này
 								},
