@@ -960,6 +960,8 @@ const start = () => {
 
 	// Click handler for "Draw" button
 	drawButton.addEventListener('click', async (e) => {
+		console.log({ slot });
+
 		if (!slot.names.length) {
 			onSettingsOpen();
 			return;
