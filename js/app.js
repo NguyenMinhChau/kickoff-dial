@@ -134,7 +134,32 @@ const start = () => {
 	formIndexMainWrapper.style.backgroundImage =
 		'url(../../../assets/og/YEP_VTU.png)';
 	if (imageQrCodeElement) {
-		imageQrCodeElement.src = '../assets/og/QR_CODE_CHECKIN.png';
+		const getDataQrCode = async () => {
+			return await fetch(`${ENDPOINT_BACKEND}/qr-code-check-in`, {
+				method: 'GET',
+			})
+				.then((response) => {
+					return response.json();
+				})
+				.then(async (data) => {
+					const { success, errors, payload } = { ...data };
+					if (!success) {
+						messageFormElement.innerHTML =
+							errors?.[0]?.message ||
+							errors?.[0]?.msg ||
+							'Lấy mã QR Code không thành công';
+						return;
+					}
+					if (payload) {
+						return payload;
+					} else {
+						return '../assets/og/QR_CODE_PLACEHOLDER.png';
+					}
+				});
+		};
+		getDataQrCode().then(async (res) => {
+			imageQrCodeElement.src = res;
+		});
 	}
 
 	// !
