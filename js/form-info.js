@@ -114,7 +114,7 @@ const startForm = () => {
 
 	// ! SET NBACKGROUND IMAGE
 	if (backgroundHeaderForm) {
-		backgroundHeaderForm.src = '../assets/og/BG_CHECKIN.png';
+		backgroundHeaderForm.src = '../assets/og/BG_CHECKIN_FORM.png';
 	}
 	formMainWrapper.style.backgroundImage = 'url(../../../assets/og/YEP_VTU.png)';
 
