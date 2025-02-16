@@ -178,6 +178,13 @@ body {
 	background-position: center;
 }
 
+#checkin-chart-statistical {
+	background-image: url(../assets/og/BG_CHECKIN.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: center;
+}
+
 .theme--red {
 	/* background-image: url(../assets/og/YEP_VTU.png); */
 	color: var(--color-text-light);
@@ -1021,6 +1028,7 @@ button:disabled:hover {
 #settings,
 #prizes,
 #chart-statistical,
+#checkin-chart-statistical,
 #user-prizes,
 #prizes-select,
 #user-join {
@@ -1031,6 +1039,7 @@ button:disabled:hover {
 .settings,
 .prizes,
 .chart-statistical,
+.checkin-chart-statistical,
 .user-prizes,
 .prizes-select,
 .user-join {
@@ -1049,6 +1058,7 @@ button:disabled:hover {
 .prizes__panel,
 .prizes-select__panel,
 .chart-statistical__panel,
+.checkin-chart-statistical__panel,
 .user-prizes__panel,
 .user-join__panel {
 	position: fixed;
@@ -1075,7 +1085,8 @@ button:disabled:hover {
 }
 
 .prizes__panel,
-.chart-statistical__panel {
+.chart-statistical__panel,
+.checkin-chart-statistical__panel {
 	max-width: 100%;
 	/* background-color: #ffffff; */
 }
@@ -1083,6 +1094,7 @@ button:disabled:hover {
 .settings__title,
 .prizes__title,
 .chart-statistical__title,
+.checkin-chart-statistical__title,
 .user-prizes__title,
 .user-join__title {
 	margin: 0 0 1.875rem 0;
@@ -1097,6 +1109,7 @@ button:disabled:hover {
 #settings-close,
 #prizes-close,
 #chart-statistical-close,
+#checkin-chart-statistical-close,
 #user-prizes-close,
 #prizes-select-close,
 #user-join-close {
@@ -1158,14 +1171,16 @@ button:disabled:hover {
 	flex-direction: column;
 }
 
-#prizes-qrcode {
+#prizes-qrcode,
+#checkin-chart-statistical-qrcode {
 	width: 390px;
 	height: 390px;
 	background-color: #ffffff9a;
 	border-radius: 13px;
 }
 
-.qr-code-image-container {
+.qr-code-image-container,
+.checkin-chart-statistical-qrcode-image-container {
 	flex: 1;
 	display: flex;
 	justify-content: center;
@@ -1187,6 +1202,8 @@ body::-webkit-scrollbar,
 .prizes__panel__group::-webkit-scrollbar,
 #chart-statistical-panel::-webkit-scrollbar,
 .chart-statistical__panel__group::-webkit-scrollbar,
+#checkin-chart-statistical-panel::-webkit-scrollbar,
+.checkin-chart-statistical__panel__group::-webkit-scrollbar,
 #user-prizes-panel::-webkit-scrollbar,
 .user-prizes__panel__group::-webkit-scrollbar,
 #prizes-select-panel::-webkit-scrollbar,
@@ -1200,6 +1217,7 @@ body::-webkit-scrollbar-track,
 #settings-panel::-webkit-scrollbar-track,
 #prizes-panel::-webkit-scrollbar-track,
 #chart-statistical-panel::-webkit-scrollbar-track,
+#checkin-chart-statistical-panel::-webkit-scrollbar-track,
 #user-prizes-panel::-webkit-scrollbar-track,
 #prizes-select-panel::-webkit-scrollbar-track,
 #user-join-panel::-webkit-scrollbar-track {
@@ -1209,6 +1227,7 @@ body::-webkit-scrollbar-thumb,
 #settings-panel::-webkit-scrollbar-thumb,
 #prizes-panel::-webkit-scrollbar-thumb,
 #chart-statistical-panel::-webkit-scrollbar-thumb,
+#checkin-chart-statistical-panel::-webkit-scrollbar-thumb,
 #user-prizes-panel::-webkit-scrollbar-thumb,
 #prizes-select-panel::-webkit-scrollbar-thumb,
 #user-join-panel::-webkit-scrollbar-thumb {
