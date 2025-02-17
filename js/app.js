@@ -560,7 +560,7 @@ const start = () => {
 					// sortedCheckedInValues.push(totalCheckedInAllTeams);
 
 					sunmaryChart.innerHTML = `
-						<div>Tổng số chiến binh: <b>${totalAllTeams?.toLocaleString()}</b> chiến binh</div>
+						<div>Tổng số: <b>${totalAllTeams?.toLocaleString()}</b> chiến binh</div>
 						<div>Phần trăm đã checkin: <b>${percentageCheckedInAllTeams}</b>%</div>
 					`;
 
