@@ -179,7 +179,7 @@ const start = () => {
 		};
 		getDataQrCode().then(async (res) => {
 			imageQrCodeElement.src = res;
-			imageQrCodeCheckinStatisticalElement.src = res;
+			// imageQrCodeCheckinStatisticalElement.src = res;
 		});
 	}
 
@@ -723,13 +723,13 @@ const start = () => {
 		if (intervalId) return; // Tránh tạo nhiều interval
 
 		intervalId = setInterval(() => {
-			if (checkinChartStatisticalWrapper) {
+			if (chartStatisticalWrapper) {
 				getStatisticalChart(noClearChart);
 			} else {
 				clearInterval(intervalId);
 				intervalId = null; // Reset intervalId khi dừng
 			}
-		}, 3000);
+		}, 5000);
 	}
 
 	programSelectList.addEventListener('change', async (e) => {
@@ -961,12 +961,13 @@ const start = () => {
 
 	const onChartStatisticalOpen = () => {
 		getStatisticalChart();
+		startUpdatingChart(true);
 		chartStatisticalWrapper.style.display = 'block';
 	};
 
 	const onCheckinChartStatisticalOpen = () => {
 		getStatisticalChart();
-		startUpdatingChart(true);
+		// startUpdatingChart(true);
 		checkinChartStatisticalWrapper.style.display = 'block';
 	};
 
@@ -1059,6 +1060,8 @@ const start = () => {
 		clearChart();
 		chartStatisticalContent.scrollTop = 0;
 		chartStatisticalWrapper.style.display = 'none';
+		clearInterval(intervalId);
+		intervalId = null;
 	};
 
 	const onCheckinChartStatisticalClose = (e) => {
@@ -1066,8 +1069,8 @@ const start = () => {
 		clearChart();
 		checkinChartStatisticalContent.scrollTop = 0;
 		checkinChartStatisticalWrapper.style.display = 'none';
-		clearInterval(intervalId);
-		intervalId = null;
+		// clearInterval(intervalId);
+		// intervalId = null;
 	};
 
 	const onUserPrizesClose = (e) => {
