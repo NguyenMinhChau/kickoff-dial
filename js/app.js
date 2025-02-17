@@ -130,6 +130,7 @@ const start = () => {
 	const elementLoading = document.getElementById('middle');
 	const elementResult = document.getElementById('name-persion-lucky');
 	const tabelUserPrizeBody = document.getElementById('table_user_prize_body');
+	const sunmaryChart = document.getElementById('summary_chart');
 	const tabelUserJoinPrizeCount = document.getElementById(
 		'table_user_join_prize_count',
 	);
@@ -553,10 +554,15 @@ const start = () => {
 						? ((totalCheckedInAllTeams / totalAllTeams) * 100).toFixed(2)
 						: 0;
 
-					// Thêm hàng "TỔNG CỘNG" vào dữ liệu
-					sortedLabels.push('TỔNG');
-					sortedTotalValues.push(totalAllTeams);
-					sortedCheckedInValues.push(totalCheckedInAllTeams);
+					// // Thêm hàng "TỔNG CỘNG" vào dữ liệu
+					// sortedLabels.push('TỔNG');
+					// sortedTotalValues.push(totalAllTeams);
+					// sortedCheckedInValues.push(totalCheckedInAllTeams);
+
+					sunmaryChart.innerHTML = `
+						<div>Tổng số chiến binh: <b>${totalAllTeams?.toLocaleString()}</b> chiến binh</div>
+						<div>Phần trăm đã checkin: <b>${percentageCheckedInAllTeams}</b>%</div>
+					`;
 
 					let _mychart =
 						chartStatisticalWrapper.style.display === 'block'
@@ -568,24 +574,24 @@ const start = () => {
 						data: {
 							labels: sortedLabels.map((item) => item.toUpperCase()),
 							datasets: [
-								{
-									label: '',
-									data: sortedLabels.map((label) =>
-										label === 'TỔNG' ? percentageCheckedInAllTeams : null,
-									),
-									borderWidth: 1,
-									hidden: true,
-									datalabels: {
-										anchor: 'end',
-										align: 'top',
-										color: '#FFFFFF',
-										font: {
-											size: 30,
-											weight: 'bold',
-										},
-										formatter: (value) => (value ? value + '%' : ''),
-									},
-								},
+								// {
+								// 	label: '',
+								// 	data: sortedLabels.map((label) =>
+								// 		label === 'TỔNG' ? percentageCheckedInAllTeams : null,
+								// 	),
+								// 	borderWidth: 1,
+								// 	hidden: true,
+								// 	datalabels: {
+								// 		anchor: 'end',
+								// 		align: 'top',
+								// 		color: '#FFFFFF',
+								// 		font: {
+								// 			size: 30,
+								// 			weight: 'bold',
+								// 		},
+								// 		formatter: (value) => (value ? value + '%' : ''),
+								// 	},
+								// },
 								{
 									label: 'TỔNG SỐ CHIẾN BINH',
 									data: sortedTotalValues,
