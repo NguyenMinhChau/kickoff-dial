@@ -179,7 +179,7 @@ const start = () => {
 		};
 		getDataQrCode().then(async (res) => {
 			imageQrCodeElement.src = res;
-			imageQrCodeCheckinStatisticalElement.src = res;
+			// imageQrCodeCheckinStatisticalElement.src = res;
 		});
 	}
 
