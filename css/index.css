@@ -147,10 +147,6 @@ body {
 		Arial, sans-serif;
 }
 
-.reel div {
-	letter-spacing: 16px;
-}
-
 #app {
 	padding: 0 3.125rem;
 	min-height: 100%;
@@ -1265,6 +1261,10 @@ input[type='radio'] {
 	width: 22px;
 	height: 22px;
 	cursor: pointer;
+}
+
+.reel div {
+	letter-spacing: 16px !important;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
