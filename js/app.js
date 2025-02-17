@@ -14,7 +14,6 @@ var PROGRAM_ID = '';
 var USER_NAME = '';
 var PASSWORD = '';
 var PRIZE = null;
-var PRIZE_DATA_FLAG = null;
 var PRIZE_DATA = null;
 var MY_CHART = null;
 
@@ -480,7 +479,7 @@ const start = () => {
 					inputRadioElements.forEach((inputRadioElement) => {
 						inputRadioElement.addEventListener('change', function (e) {
 							PRIZE = e.target.value;
-							PRIZE_DATA_FLAG = {
+							PRIZE_DATA = {
 								prizeName: e.target.dataset.prizeName,
 								prizeCode: e.target.dataset.prizeCode,
 								prizeId: e.target.dataset.prizeId,
@@ -646,6 +645,7 @@ const start = () => {
 						},
 						options: {
 							responsive: true,
+							animation: false,
 							layout: {
 								padding: { top: 50 }, // Giữ khoảng cách phía trên để tránh cắt số
 							},
@@ -730,7 +730,7 @@ const start = () => {
 
 		intervalId = setInterval(() => {
 			if (chartStatisticalWrapper) {
-				getStatisticalChart(noClearChart);
+				getStatisticalChart(false);
 			} else {
 				clearInterval(intervalId);
 				intervalId = null; // Reset intervalId khi dừng
@@ -1112,8 +1112,7 @@ const start = () => {
 
 		await slot.spin();
 
-		PRIZE_DATA = null;
-		PRIZE_DATA_FLAG = null;
+		// PRIZE_DATA = null;
 	});
 
 	if (
@@ -1239,11 +1238,10 @@ const start = () => {
 
 	// ! HANDLE PRIZE SELECT
 	function submitPrize(e) {
-		if (PRIZE_DATA_FLAG) {
+		if (PRIZE_DATA) {
 			onPrizesSelectClose(e);
 			// console.log({ PRIZE, PRIZE_DATA });
-			PRIZE_DATA = PRIZE_DATA_FLAG;
-			prizeDataElement.innerHTML = `${PRIZE_DATA_FLAG.prizeId}`;
+			prizeDataElement.innerHTML = `${PRIZE_DATA.prizeId}`;
 		} else {
 			alert('Vui lòng chọn phần thưởng trước khi xác nhận. Xin cảm ơn!');
 		}
