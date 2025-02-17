@@ -153,7 +153,7 @@ const start = () => {
 	backgroundHeaderFormIndex.src = '../assets/og//BG_CHECKIN.png';
 	formIndexMainWrapper.style.backgroundImage =
 		'url(../../../assets/og/YEP_VTU.png)';
-	if (imageQrCodeElement) {
+	if (imageQrCodeElement || imageQrCodeCheckinStatisticalElement) {
 		const getDataQrCode = async () => {
 			return await fetch(`${ENDPOINT_BACKEND}/qr-code-check-in`, {
 				method: 'GET',
@@ -179,33 +179,6 @@ const start = () => {
 		};
 		getDataQrCode().then(async (res) => {
 			imageQrCodeElement.src = res;
-		});
-	}
-	if (imageQrCodeCheckinStatisticalElement) {
-		const getDataQrCode = async () => {
-			return await fetch(`${ENDPOINT_BACKEND}/qr-code-check-in`, {
-				method: 'GET',
-			})
-				.then((response) => {
-					return response.json();
-				})
-				.then(async (data) => {
-					const { success, errors, payload } = { ...data };
-					if (!success) {
-						messageFormElement.innerHTML =
-							errors?.[0]?.message ||
-							errors?.[0]?.msg ||
-							'Lấy mã QR Code không thành công';
-						return;
-					}
-					if (payload) {
-						return payload;
-					} else {
-						return '../assets/og/QR_CODE_PLACEHOLDER.png';
-					}
-				});
-		};
-		getDataQrCode().then(async (res) => {
 			imageQrCodeCheckinStatisticalElement.src = res;
 		});
 	}
@@ -312,33 +285,13 @@ const start = () => {
 
 	function clearChart() {
 		if (MY_CHART) {
+			let _myChart = ctxChartDeparment || ctxCheckinChartDeparment;
 			MY_CHART.destroy();
 
-			ctxChartDeparment.clearRect(
-				0,
-				0,
-				ctxChartDeparment.canvas.width,
-				ctxChartDeparment.canvas.height,
-			);
+			_myChart.clearRect(0, 0, _myChart.canvas.width, _myChart.canvas.height);
 
-			ctxChartDeparment.beginPath();
-			ctxChartDeparment.save();
-		}
-	}
-
-	function clearCheckinChart() {
-		if (MY_CHART) {
-			MY_CHART.destroy();
-
-			ctxCheckinChartDeparment.clearRect(
-				0,
-				0,
-				ctxCheckinChartDeparment.canvas.width,
-				ctxCheckinChartDeparment.canvas.height,
-			);
-
-			ctxCheckinChartDeparment.beginPath();
-			ctxCheckinChartDeparment.save();
+			_myChart.beginPath();
+			_myChart.save();
 		}
 	}
 
@@ -605,7 +558,12 @@ const start = () => {
 					sortedTotalValues.push(totalAllTeams);
 					sortedCheckedInValues.push(totalCheckedInAllTeams);
 
-					MY_CHART = new Chart(ctxChartDeparment, {
+					let _mychart =
+						chartStatisticalWrapper.style.display === 'block'
+							? ctxChartDeparment
+							: ctxCheckinChartDeparment;
+
+					MY_CHART = new Chart(_mychart, {
 						type: 'bar',
 						data: {
 							labels: sortedLabels.map((item) => item.toUpperCase()),
@@ -757,223 +715,7 @@ const start = () => {
 				});
 		}
 	};
-	if (chartStatisticalWrapper) {
-		getStatisticalChart();
-	}
-
-	// !! STATISTICAL
-	const getStatisticalCheckinChart = async (noClearChart = false) => {
-		if (PROGRAM_ID) {
-			await fetch(
-				`${ENDPOINT_BACKEND}/thong-ke-so-luong-quay-so/${PROGRAM_ID}`,
-				{
-					method: 'GET',
-				},
-			)
-				.then((response) => {
-					return response.json();
-				})
-				.then((data) => {
-					const { success, errors, payload } = { ...data };
-					if (!success) {
-						alert(
-							errors?.[0]?.message ||
-								errors?.[0]?.msg ||
-								'Lấy danh sách giải thưởng không thành công',
-						);
-						return;
-					}
-					// !CHART DEPARTMENT
-					if (!noClearChart) {
-						clearCheckinChart();
-					}
-					// Chuyển object thành mảng để dễ sắp xếp
-					const sortedData = Object.entries(payload)
-						.map(([label, values]) => ({ label, ...values })) // Chuyển đổi thành object
-						.sort((a, b) => b.total - a.total); // Sắp xếp theo total giảm dần
-
-					// Tách dữ liệu đã sắp xếp thành các mảng riêng biệt
-					const sortedLabels = sortedData.map((item) =>
-						item.label.toUpperCase(),
-					);
-					const sortedTotalValues = sortedData.map((item) => item.total);
-					const sortedCheckedInValues = sortedData.map(
-						(item) => item.checkedIn,
-					);
-					// const sortedPrizedValues = sortedData.map((item) => item.prized);
-					// Tính tổng số chiến binh và tổng số đã check-in
-					const totalAllTeams = sortedTotalValues.reduce(
-						(sum, val) => sum + val,
-						0,
-					);
-					const totalCheckedInAllTeams = sortedCheckedInValues.reduce(
-						(sum, val) => sum + val,
-						0,
-					);
-					const percentageCheckedInAllTeams = totalAllTeams
-						? ((totalCheckedInAllTeams / totalAllTeams) * 100).toFixed(2)
-						: 0;
-
-					// Thêm hàng "TỔNG CỘNG" vào dữ liệu
-					sortedLabels.push('TỔNG');
-					sortedTotalValues.push(totalAllTeams);
-					sortedCheckedInValues.push(totalCheckedInAllTeams);
-
-					MY_CHART = new Chart(ctxCheckinChartDeparment, {
-						type: 'bar',
-						data: {
-							labels: sortedLabels.map((item) => item.toUpperCase()),
-							datasets: [
-								{
-									label: '',
-									data: sortedLabels.map((label) =>
-										label === 'TỔNG' ? percentageCheckedInAllTeams : null,
-									),
-									borderWidth: 1,
-									hidden: true,
-									datalabels: {
-										anchor: 'end',
-										align: 'top',
-										color: '#FFFFFF',
-										font: {
-											size: 30,
-											weight: 'bold',
-										},
-										formatter: (value) => (value ? value + '%' : ''),
-									},
-								},
-								{
-									label: 'TỔNG SỐ CHIẾN BINH',
-									data: sortedTotalValues,
-									// backgroundColor: '#FFFFFF',
-									// borderColor: '#FFFFFF',
-									backgroundColor: sortedLabels.map(
-										(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
-									), // Đặt màu theo titleColors
-									borderColor: sortedLabels.map(
-										(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
-									),
-									borderWidth: 1,
-								},
-								{
-									label: 'PHẦN TRĂM CHIẾN BINH ĐÃ CHECK-IN',
-									data: sortedCheckedInValues,
-									// backgroundColor: '#FFFFFF',
-									// borderColor: '#FFFFFF',
-									backgroundColor: sortedLabels.map(
-										(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
-									),
-									borderColor: sortedLabels.map(
-										(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
-									),
-									borderWidth: 1,
-									//hidden: true, // Mặc định ẩn dataset này
-									datalabels: {
-										anchor: 'end',
-										align: 'top',
-										color: '#FFFFFF',
-										font: {
-											size: 30,
-											weight: 'bold',
-										},
-										formatter: (value, context) => {
-											const total = sortedTotalValues[context.dataIndex]; // Lấy tổng số chiến binh của cột hiện tại
-											if (!total) return '0%'; // Tránh lỗi chia cho 0
-											const percentage = (value / total) * 100;
-											return percentage.toFixed(2) + '%'; // Hiển thị 2 số thập phân
-										},
-									},
-								},
-								// {
-								// 	label: 'SỐ CHIẾN BINH TRÚNG THƯỞNG',
-								// 	data: sortedPrizedValues,
-								// 	backgroundColor: '#FFFFFF',
-								// 	borderColor: '#FFFFFF',
-								// 	borderWidth: 1,
-								// 	hidden: true, // Mặc định ẩn dataset này
-								// },
-							],
-						},
-						options: {
-							responsive: true,
-							layout: {
-								padding: { top: 50 }, // Giữ khoảng cách phía trên để tránh cắt số
-							},
-							plugins: {
-								legend: {
-									display: true,
-									labels: {
-										font: {
-											size: 14,
-											weight: 'bold',
-										},
-										color: '#FFFFFF',
-										padding: 15,
-									},
-									position: 'bottom', // Đưa legend xuống dưới chart
-								},
-								tooltip: {
-									enabled: true, // Hiển thị tooltip khi hover
-								},
-								datalabels: {
-									anchor: 'end',
-									align: 'top',
-									color: '#FFFFFF',
-									font: {
-										size: 30,
-										weight: 'bold',
-									},
-									formatter: (value) => Math.round(value)?.toLocaleString(), // Hiển thị số nguyên trên cột
-								},
-							},
-							scales: {
-								x: {
-									ticks: {
-										font: {
-											size: 12,
-											weight: 'bold',
-										},
-										color: (context) => {
-											const label = context.tick.label.toUpperCase();
-											return titleColors[label] || '#FFFFFF'; // Mặc định màu trắng nếu không có trong danh sách
-										},
-										padding: 10,
-									},
-									grid: {
-										display: false,
-									},
-									border: {
-										display: false,
-									},
-								},
-								y: {
-									ticks: {
-										font: {
-											size: 12,
-											weight: 'bold',
-										},
-										color: '#FFFFFF',
-										padding: 10,
-										callback: (value) => Math.round(value), // Format thành số nguyên
-									},
-									grid: {
-										display: false,
-									},
-									border: {
-										display: false,
-									},
-									beginAtZero: true,
-								},
-							},
-						},
-					});
-					// !!
-				});
-		}
-	};
-	if (checkinChartStatisticalWrapper) {
-		getStatisticalCheckinChart();
-	}
+	getStatisticalChart();
 
 	let intervalId = null;
 
@@ -982,7 +724,7 @@ const start = () => {
 
 		intervalId = setInterval(() => {
 			if (checkinChartStatisticalWrapper) {
-				getStatisticalCheckinChart(noClearChart);
+				getStatisticalChart(noClearChart);
 			} else {
 				clearInterval(intervalId);
 				intervalId = null; // Reset intervalId khi dừng
@@ -1223,7 +965,7 @@ const start = () => {
 	};
 
 	const onCheckinChartStatisticalOpen = () => {
-		getStatisticalCheckinChart();
+		getStatisticalChart();
 		startUpdatingChart(true);
 		checkinChartStatisticalWrapper.style.display = 'block';
 	};
@@ -1321,7 +1063,7 @@ const start = () => {
 
 	const onCheckinChartStatisticalClose = (e) => {
 		e.stopPropagation();
-		clearCheckinChart();
+		clearChart();
 		checkinChartStatisticalContent.scrollTop = 0;
 		checkinChartStatisticalWrapper.style.display = 'none';
 		clearInterval(intervalId);
