@@ -895,7 +895,7 @@ button:disabled:hover {
 	text-align: center;
 	position: relative;
 	z-index: var(--z-index-lucky-draw);
-	padding-top: 8%;
+	padding-top: 18%;
 }
 
 .title {
