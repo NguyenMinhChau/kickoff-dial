@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Chương Trình Quay Số Trúng Thưởng</title>
+		<link rel="icon" href="./assets/favicon-16x16.png" type="image/png" />
+		<meta property="og:image" content="./assets/image_og.png" />
+		<meta
+			name="description"
+			content="FPT Telecom - Chương Trình Quay Số Trúng Thưởng"
+		/>
+
+		<!-- import cs/js -->
+		<link rel="stylesheet" href="./css/index.css" />
+		<link rel="stylesheet" href="./css/form-info.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+			integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+			crossorigin="anonymous"
+		/>
+		<!-- Google Tag Manager -->
+		<!-- <script>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({
+					'gtm.start': new Date().getTime(),
+					event: 'gtm.js',
+				});
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s),
+					dl = l != 'dataLayer' ? '&l=' + l : '';
+				j.async = true;
+				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, 'script', 'dataLayer', 'GTM-54B6D4G');
+		</script> -->
+	</head>
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<!-- <noscript>
+			<iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-54B6D4G"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden"
+			></iframe>
+		</noscript> -->
+		<div id="app" class="theme--red">
+			<div class="control-group">
+				<button
+					title="Full màn hình"
+					id="fullscreen-button"
+					class="icon-button icon-button--small"
+				>
+					<i class="fas fa-expand"></i>
+				</button>
+				<button
+					title="QR Code checkin"
+					id="prizes-button"
+					class="icon-button icon-button--small"
+					style="display: none"
+				>
+					<!-- <i class="fas fa-photo-video"></i> -->
+					<i class="fas fa-qrcode"></i>
+				</button>
+				<button
+					title="Thống kê số lượng"
+					id="chart-statistical-button"
+					class="icon-button icon-button--small"
+					style="display: none"
+				>
+					<i class="fas fa-chart-bar"></i>
+				</button>
+				<button
+					title="Checkin + Thống kê số lượng"
+					id="checkin-chart-statistical-button"
+					class="icon-button icon-button--small"
+					style="display: none"
+				>
+					<i class="fas fa-qrcode"></i> <i class="fas fa-chart-bar"></i>
+				</button>
+				<button
+					title="Chọn giải thưởng để quay"
+					id="prizes-select-button"
+					class="icon-button icon-button--small"
+				>
+					<i class="fas fa-gift"></i>
+				</button>
+				<button
+					title="Danh sách nhân sự trúng thưởng"
+					id="user-prizes-button"
+					class="icon-button icon-button--small"
+				>
+					<i class="fas fa-award"></i>
+				</button>
+				<button
+					title="Danh sách nhân sự tham gia"
+					id="user-join-button"
+					class="icon-button icon-button--small"
+				>
+					<i class="fas fa-users"></i>
+				</button>
+				<button
+					title="Cài đặt"
+					id="settings-button"
+					class="icon-button icon-button--small"
+				>
+					<i class="fas fa-cog"></i>
+				</button>
+			</div>
+
+			<canvas id="confetti-canvas" class="confetti"></canvas>
+
+			<div id="lucky-draw">
+				<div class="persion-lucky">
+					<div id="middle" class="hiddenElement">
+						<div class="bar bar1"></div>
+						<div class="bar bar2"></div>
+						<div class="bar bar3"></div>
+						<div class="bar bar4"></div>
+						<div class="bar bar5"></div>
+						<div class="bar bar6"></div>
+						<div class="bar bar7"></div>
+						<div class="bar bar8"></div>
+						<div class="bar bar9"></div>
+						<div class="bar bar10"></div>
+						<div class="bar bar11"></div>
+						<div class="bar bar12"></div>
+						<div class="bar bar13"></div>
+						<div class="bar bar14"></div>
+						<div class="bar bar15"></div>
+						<div class="bar bar16"></div>
+						<div class="bar bar17"></div>
+						<div class="bar bar18"></div>
+						<div class="bar bar19"></div>
+						<div class="bar bar20"></div>
+						<div class="bar bar21"></div>
+						<div class="bar bar22"></div>
+						<div class="bar bar23"></div>
+						<div class="bar bar24"></div>
+						<div class="bar bar25"></div>
+						<div class="bar bar26"></div>
+						<div class="bar bar27"></div>
+						<div class="bar bar28"></div>
+						<div class="bar bar29"></div>
+						<div class="bar bar30"></div>
+						<div class="bar bar31"></div>
+						<div class="bar bar32"></div>
+						<div class="bar bar33"></div>
+						<div class="bar bar34"></div>
+						<div class="bar bar35"></div>
+						<div class="bar bar36"></div>
+						<div class="bar bar37"></div>
+						<div class="bar bar38"></div>
+						<div class="bar bar39"></div>
+						<div class="bar bar40"></div>
+					</div>
+
+					<div id="name-persion-lucky" class="hiddenElement">---</div>
+				</div>
+
+				<div class="slot">
+					<div class="slot__outer">
+						<div class="slot__inner">
+							<div class="slot__shadow"></div>
+							<div id="reel" class="reel"></div>
+						</div>
+					</div>
+
+					<div id="sunburst" class="sunburst">
+						<img src="./assets/sunburst.svg" alt="sunburst" />
+					</div>
+				</div>
+
+				<button id="draw-button" class="solid-button">BẮT ĐẦU</button>
+			</div>
+
+			<div id="prizes" class="prizes">
+				<div id="prizes-panel" class="prizes__panel">
+					<div class="prizes__panel__group" style="overflow: auto">
+						<div
+							style="
+								display: flex;
+								flex-direction: row;
+								gap: 5px;
+								align-items: flex-end;
+								justify-content: flex-end;
+								position: absolute;
+								top: 24px;
+								right: 24px;
+								z-index: 999999;
+							"
+						>
+							<div
+								id="prizes-close"
+								style="flex: 0; color: #ffffff; margin: 0; cursor: pointer"
+							>
+								<i class="far fa-window-close" style="font-size: 3rem"></i>
+							</div>
+						</div>
+						<div class="qr-code-image-container" style="align-items: end">
+							<img
+								id="prizes-qrcode"
+								style="margin-top: 40px; width: 800px; height: 800px"
+								alt="QR code"
+								src="./assets/og/QR_CODE_PLACEHOLDER.png"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="prizes-select" class="prizes-select">
+				<div
+					id="prizes-select-panel"
+					class="prizes-select__panel"
+					style="background-color: #ffffff"
+				>
+					<div
+						style="
+							display: flex;
+							flex-direction: row;
+							gap: 5px;
+							align-items: flex-start;
+						"
+					>
+						<div style="flex: 1">
+							<h1 class="settings__title">
+								Danh sách giải thưởng <span id="prizes-select-count"></span>
+							</h1>
+						</div>
+						<div
+							id="prizes-select-close"
+							style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+						>
+							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
+						</div>
+					</div>
+					<div
+						class="prizes-select__panel__group"
+						style="overflow: auto; flex: 1"
+					>
+						<div id="modal_prize_select_container">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Tên giải thưởng</th>
+										<th scope="col">Chọn</th>
+									</tr>
+								</thead>
+								<tbody id="table_prize_select_body"></tbody>
+							</table>
+						</div>
+					</div>
+					<div class="settings__panel__group">
+						<button
+							id="settings-save-prize-select"
+							style="
+								background-color: #dc2626;
+								padding: 10px;
+								font-size: 22px;
+								width: 100%;
+							"
+							class="solid-button"
+						>
+							XÁC NHẬN PHẦN THƯỞNG
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="chart-statistical" class="chart-statistical">
+				<div id="chart-statistical-panel" class="chart-statistical__panel">
+					<div class="chart-statistical__panel__group" style="overflow: auto">
+						<div
+							style="
+								display: flex;
+								flex-direction: row;
+								gap: 5px;
+								align-items: center;
+								justify-content: flex-end;
+								position: absolute;
+								top: 24px;
+								right: 24px;
+								z-index: 999999;
+							"
+						>
+							<div
+								id="chart-statistical-close"
+								style="flex: 0; color: #ffffff; margin: 0; cursor: pointer"
+							>
+								<i class="far fa-window-close" style="font-size: 3rem"></i>
+							</div>
+						</div>
+					</div>
+					<!-- <div
+						style="
+							position: absolute;
+							top: 38%;
+							right: 0;
+							left: 60%;
+							bottom: 0;
+							transform: translate(-60%, -38%);
+						"
+					>
+						<img
+							id="checkin-chart-statistical-qrcode"
+							alt="QR code"
+							src="./assets/og/QR_CODE_PLACEHOLDER.png"
+							style="width: 500px; height: 500px"
+						/>
+					</div> -->
+					<div
+						style="
+							width: 100%;
+							height: 100%;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							padding-top: 80px;
+						"
+					>
+						<canvas
+							id="departmentChart"
+							style="max-width: 100%; max-height: 700px"
+							width="400"
+							height="200"
+						></canvas>
+					</div>
+					<div id="summary_chart" style="font-size: 20px"></div>
+				</div>
+			</div>
+
+			<div id="checkin-chart-statistical" class="checkin-chart-statistical">
+				<div
+					id="checkin-chart-statistical-panel"
+					class="checkin-chart-statistical__panel"
+				>
+					<div
+						class="checkin-chart-statistical__panel__group"
+						style="overflow: auto"
+					>
+						<div
+							style="
+								display: flex;
+								flex-direction: row;
+								gap: 5px;
+								align-items: flex-end;
+								justify-content: flex-end;
+								position: absolute;
+								top: 24px;
+								right: 24px;
+								z-index: 999999;
+							"
+						>
+							<div
+								id="checkin-chart-statistical-close"
+								style="flex: 0; color: #ffffff; margin: 0; cursor: pointer"
+							>
+								<i class="far fa-window-close" style="font-size: 3rem"></i>
+							</div>
+						</div>
+					</div>
+					<div
+						style="
+							width: 100%;
+							height: 100%;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							justify-content: space-around;
+							gap: 6px;
+						"
+					>
+						<div
+							class="checkin-chart-statistical-qrcode-image-container"
+							style="width: 100%; align-items: center"
+						>
+							<img
+								id="checkin-chart-statistical-qrcode"
+								alt="QR code"
+								src="./assets/og/QR_CODE_PLACEHOLDER.png"
+								style="width: 500px; height: 500px"
+							/>
+						</div>
+						<canvas
+							id="departmentChartAndCheckin"
+							style="
+								max-width: 100%;
+								max-height: 360px;
+								/* background-color: rgba(0, 0, 0, 0.6); */
+							"
+							width="400"
+							height="200"
+						></canvas>
+					</div>
+				</div>
+			</div>
+
+			<div id="user-prizes" class="user-prizes">
+				<div
+					id="user-prizes-panel"
+					class="user-prizes__panel"
+					style="background-color: #ffffff"
+				>
+					<div
+						style="
+							display: flex;
+							flex-direction: row;
+							gap: 5px;
+							align-items: flex-start;
+						"
+					>
+						<div style="flex: 1">
+							<h1 class="settings__title">
+								Nhân sự trúng thưởng <span id="user-prizes-count"></span>
+							</h1>
+						</div>
+						<div
+							id="user-settings-close"
+							style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+						>
+							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
+						</div>
+					</div>
+					<div class="user-prizes__panel__group" style="overflow: auto">
+						<div id="modal_user_prize_container">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Email/Mã NV</th>
+										<th scope="col">Họ tên</th>
+										<th scope="col">Chi nhánh</th>
+										<th scope="col">Phòng ban</th>
+										<th scope="col">Nhóm</th>
+										<th scope="col">Giải thưởng</th>
+									</tr>
+								</thead>
+								<tbody id="table_user_prize_body"></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="user-join" class="user-join">
+				<div
+					id="user-join-panel"
+					class="user-join__panel"
+					style="background-color: #ffffff"
+				>
+					<div
+						style="
+							display: flex;
+							flex-direction: row;
+							gap: 5px;
+							align-items: flex-start;
+						"
+					>
+						<div style="flex: 1">
+							<h1 class="settings__title">
+								Nhân sự tham gia <span id="user-join-count"></span>
+							</h1>
+						</div>
+						<div
+							id="user-join-close"
+							style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+						>
+							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
+						</div>
+					</div>
+					<div class="user-join__panel__group" style="overflow: auto">
+						<div id="modal_user_join_container">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Email/Mã NV</th>
+										<th scope="col">Họ tên</th>
+										<th scope="col">Chi nhánh</th>
+										<th scope="col">Phòng ban</th>
+										<th scope="col">Nhóm</th>
+										<th scope="col">Trạng thái</th>
+									</tr>
+								</thead>
+								<tbody id="table_user_join_body"></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="settings" class="settings">
+				<div id="settings-panel" class="settings__panel">
+					<div
+						style="
+							display: flex;
+							flex-direction: row;
+							gap: 5px;
+							align-items: flex-start;
+						"
+					>
+						<div style="flex: 1">
+							<h1 class="settings__title">Cài đặt</h1>
+						</div>
+						<div
+							id="settings-close"
+							style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+						>
+							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
+						</div>
+					</div>
+					<div class="settings__panel__group" style="overflow: auto; flex: 1">
+						<div class="input-group mb-3 flex-nowrap">
+							<span class="input-group-text" id="addon-wrapping"
+								>Chương trình</span
+							>
+							<select
+								class="form-select"
+								aria-label="PROGRAM SELECTED"
+								id="program_select_list"
+							></select>
+						</div>
+
+						<div class="input-group mb-3 flex-nowrap">
+							<span class="input-group-text" id="addon-wrapping"
+								>Tài khoản</span
+							>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Nhập tên tài khoản"
+								aria-label="Nhập tên tài khoản"
+								aria-describedby="addon-wrapping"
+								id="username"
+								autocomplete="off"
+							/>
+						</div>
+						<div class="input-group mb-3 flex-nowrap">
+							<span class="input-group-text" id="addon-wrapping">Mật khẩu</span>
+							<!-- TYPOE: PASSWORD -->
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Nhập mật khẩu"
+								aria-label="Nhập mật khẩu"
+								aria-describedby="addon-wrapping"
+								id="password"
+								autocomplete="off"
+							/>
+							<!-- !ADD INPUT HIDDEN -->
+							<input
+								id="realPassword"
+								type="hidden"
+								class="form-control"
+								placeholder="Nhập mật khẩu"
+								aria-label="Nhập mật khẩu"
+								aria-describedby="addon-wrapping"
+								autocomplete="off"
+							/>
+						</div>
+
+						<div class="input-group mb-3 flex-nowrap">
+							<span class="input-group-text" id="addon-wrapping"
+								>Thời gian vòng quay (giây)</span
+							>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Nhập thời gian vòng quay (giây)"
+								aria-label="Nhập thời gian vòng quay (giây)"
+								aria-describedby="addon-wrapping"
+								id="duration"
+								autocomplete="off"
+							/>
+							<span class="input-group-text" id="addon-wrapping">giây</span>
+						</div>
+
+						<div class="input-group">
+							<label class="input-label" for="name-list"
+								>Danh sách nhân sự quay thưởng còn lại
+								<span id="table_user_join_prize_count"></span
+							></label>
+							<textarea
+								readonly
+								class="input-field input-field--textarea"
+								rows="8"
+								placeholder="Nhập tên nhân sự tham gia, mỗi tên là 1 dòng"
+								id="name-list"
+								style="display: none"
+							></textarea>
+							<div class="table_scroll">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Email/Mã NV</th>
+											<th scope="col">Họ tên</th>
+											<th scope="col">Chi nhánh</th>
+											<th scope="col">Phòng ban</th>
+											<th scope="col">Nhóm</th>
+										</tr>
+									</thead>
+									<tbody id="table_user_join_prize_body"></tbody>
+								</table>
+							</div>
+						</div>
+
+						<label
+							class="input-group input-group--2-column"
+							for="remove-from-list"
+						>
+							<label class="input-label" for="remove-from-list"
+								>Xóa nhân sự trúng thưởng khỏi danh sách</label
+							>
+							<div class="input--switch switch-remove-from-list">
+								<input
+									disabled
+									type="checkbox"
+									id="remove-from-list"
+									checked="true"
+								/>
+								<span class="slider slider-remove-from-list"></span>
+							</div>
+						</label>
+
+						<label class="input-group input-group--2-column" for="enable-sound">
+							<label class="input-label" for="enable-sound"
+								>Bật hiệu ứng âm thanh</label
+							>
+							<div class="input--switch switch-enable-sound">
+								<input
+									disabled
+									type="checkbox"
+									id="enable-sound"
+									checked="true"
+								/>
+								<span class="slider slider-enable-sound"></span>
+							</div>
+						</label>
+
+						<label class="input-group input-group--2-column" for="select-prize">
+							<label class="input-label" for="select-prize"
+								>Quay số chọn quà</label
+							>
+							<div class="input--switch switch-select-prize">
+								<input type="checkbox" id="select-prize" checked="true" />
+								<span class="slider slider-select-prize"></span>
+							</div>
+						</label>
+					</div>
+
+					<div class="settings__panel__group">
+						<button
+							id="settings-save"
+							style="background-color: #dc2626; padding: 10px; font-size: 22px"
+							class="solid-button"
+						>
+							LƯU LẠI CÀI ĐẶT
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div id="prize-data" style="display: none"></div>
+		</div>
+
+		<!-- NO SUPPORT -->
+		<div class="formbold-main-wrapper-index">
+			<div class="formbold-form-wrapper-index">
+				<img
+					src="./assets/bg-header-form.svg"
+					id="background-header-form-index"
+				/>
+
+				<div class="title-form">TRANG CHỈ THAO TÁC TRÊN WEBSITE</div>
+			</div>
+		</div>
+
+		<!-- Bootstrap JS: nên tải sớm vì có thể ảnh hưởng đến UI -->
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+			crossorigin="anonymous"
+		></script>
+
+		<!-- Thư viện bên ngoài, độc lập -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+		<script
+			async
+			src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"
+		></script>
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"
+		></script>
+
+		<!-- Các script nội bộ -->
+		<script defer src="./js/general.js" crossorigin="anonymous"></script>
+		<script defer src="./js/Slot.js" crossorigin="anonymous"></script>
+		<script defer src="./js/SoundEffects.js" crossorigin="anonymous"></script>
+		<script
+			defer
+			src="./js/constants/pianoKeys.constant.js"
+			crossorigin="anonymous"
+		></script>
+
+		<!-- Script chính của ứng dụng (nên là `defer`) -->
+		<script
+			defer
+			type="module"
+			src="./js/app.js"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
