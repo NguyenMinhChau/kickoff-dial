@@ -315,11 +315,12 @@ const start = () => {
 						return;
 					}
 					const DATA_NO_PRIZE = data?.payload
-						// ?.map((item) => {
-						// 	if (item?.status !== 'PRIZED' && item.status === 'CHECKED_IN') {
-						// 		return item;
-						// 	}
-						// })
+						?.map((item) => {
+							if (item?.status !== 'PRIZED') {
+								//  && item.status === 'CHECKED_IN'
+								return item;
+							}
+						})
 						?.filter((x) => x);
 
 					// !TABLE USER PRIZE BODY
