@@ -315,11 +315,11 @@ const start = () => {
 						return;
 					}
 					const DATA_NO_PRIZE = data?.payload
-						?.map((item) => {
-							if (item?.status !== 'PRIZED' && item.status === 'CHECKED_IN') {
-								return item;
-							}
-						})
+						// ?.map((item) => {
+						// 	if (item?.status !== 'PRIZED' && item.status === 'CHECKED_IN') {
+						// 		return item;
+						// 	}
+						// })
 						?.filter((x) => x);
 
 					// !TABLE USER PRIZE BODY
@@ -335,6 +335,25 @@ const start = () => {
 								prize,
 								donVi,
 							} = { ...item };
+							// <td>${
+							// 	isCheckIn
+							// 		? `<div>
+							// 	<p style="color: #15803d; margin: 0; padding: 0">ĐÃ CHECK IN</p>
+							// 	<p style="color: #15803d; margin: 0; padding: 0; font-size: 10px">${moment(
+							// 		timeCheckIn,
+							// 	)
+							// 		.add(7, 'hours')
+							// 		.format('DD/MM/YYYY HH:mm:ss')}</p>
+							// </div>`
+							// 		: isPrized
+							// 		? `<div>
+							// 	<p style="color: #1d4ed8; margin: 0; padding: 0">TRÚNG THƯỞNG</p>
+							// 	<p style="color: #1d4ed8; margin: 0; padding: 0; font-size: 10px">${
+							// 		prize?.prizeName || '-'
+							// 	}</p>
+							// </div>`
+							// 		: `<span style="color: #b91c1c">CHƯA CHECK IN</span>`
+							// }</td>
 							const isCheckIn = status === 'CHECKED_IN';
 							const isPrized = status === 'PRIZED';
 							return `
@@ -346,23 +365,14 @@ const start = () => {
 										<td>${phongBan || '-'}</td>
 										<td>${group || '-'}</td>
 										<td>${
-											isCheckIn
-												? `<div>
-											<p style="color: #15803d; margin: 0; padding: 0">ĐÃ CHECK IN</p>
-											<p style="color: #15803d; margin: 0; padding: 0; font-size: 10px">${moment(
-												timeCheckIn,
-											)
-												.add(7, 'hours')
-												.format('DD/MM/YYYY HH:mm:ss')}</p>
-										</div>`
-												: isPrized
+											isPrized
 												? `<div>
 											<p style="color: #1d4ed8; margin: 0; padding: 0">TRÚNG THƯỞNG</p>
 											<p style="color: #1d4ed8; margin: 0; padding: 0; font-size: 10px">${
 												prize?.prizeName || '-'
 											}</p>
 										</div>`
-												: `<span style="color: #b91c1c">CHƯA CHECK IN</span>`
+												: '-'
 										}</td>
 									</tr>
 							`;
