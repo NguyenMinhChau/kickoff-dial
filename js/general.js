@@ -15,7 +15,7 @@ function setOgImage(imageUrl) {
 
 const startGeneral = () => {
 	// ! SET IMAGE OG
-	setOgImage('../assets/og/SINH_NHAT_BGG.png');
+	setOgImage('../assets/og/KICKOFF_V5.png');
 };
 
 startGeneral();

@@ -116,7 +116,7 @@ const startForm = () => {
 	if (backgroundHeaderForm) {
 		backgroundHeaderForm.src = '../assets/og/BG_CHECKIN_FORM.png';
 	}
-	formMainWrapper.style.backgroundImage = 'url(../../../assets/og/YEP_VTU.png)';
+	formMainWrapper.style.backgroundImage = 'url(../../../assets/og/KICKOFF_V5.png)';
 
 	if (formCheckInfoElement) {
 		formCheckInfoElement.addEventListener('click', async () => {

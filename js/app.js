@@ -149,10 +149,10 @@ const start = () => {
 
 	// !SET BACKGROUND IMAGE
 	themeRedElement[0].style.backgroundImage =
-		'url(../../../assets/og/SINH_NHAT_BGG_01.gif)';
-	backgroundHeaderFormIndex.src = '../assets/og//BG_CHECKIN.png';
+		'url(../../../assets/og/KICKOFF_V5.png)';
+	backgroundHeaderFormIndex.src = '../assets/og/BG_CHECKIN.png';
 	formIndexMainWrapper.style.backgroundImage =
-		'url(../../../assets/og/YEP_VTU.png)';
+		'url(../../../assets/og/KICKOFF_V5.png)';
 	if (imageQrCodeElement || imageQrCodeCheckinStatisticalElement) {
 		const getDataQrCode = async () => {
 			return await fetch(`${ENDPOINT_BACKEND}/qr-code-check-in`, {
