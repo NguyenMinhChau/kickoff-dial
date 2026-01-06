@@ -877,6 +877,7 @@ const start = () => {
 		// 		elementResult.innerHTML = data[luckyNumber.toString()];
 		// 	});
 		// !!!!
+		elementResult.innerHTML = '';
 
 		await fetch(`${ENDPOINT_BACKEND}/get-users-by-program/${PROGRAM_ID}`, {
 			method: 'GET',
@@ -887,6 +888,7 @@ const start = () => {
 			.then((data) => {
 				const { success, errors } = { ...data };
 				if (!success) {
+					elementResult.innerHTML = '';
 					alert(
 						errors?.[0]?.message ||
 							errors?.[0]?.msg ||
@@ -899,7 +901,13 @@ const start = () => {
 					(x) => (x?.maNV || x?.email) === luckyNumber,
 				)?.[0];
 				elementResult.innerHTML = `${
-					_userPrize?.fullName + ' - ' + dataJSON[luckyNumber.toString()]
+					_userPrize?.fullName ? _userPrize?.fullName : ''
+				}${
+					_userPrize?.fullName && dataJSON[luckyNumber.toString()] ? ' - ' : ''
+				}${
+					dataJSON[luckyNumber.toString()]
+						? dataJSON[luckyNumber.toString()]
+						: ''
 				}`;
 			});
 	};
@@ -1104,8 +1112,6 @@ const start = () => {
 
 	// Click handler for "Draw" button
 	drawButton.addEventListener('click', async (e) => {
-		console.log({ slot });
-
 		if (!slot.names.length) {
 			onSettingsOpen();
 			return;
