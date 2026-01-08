@@ -13,9 +13,6 @@ function setOgImage(imageUrl) {
 	metaTag.setAttribute('content', imageUrl);
 }
 
-const startGeneral = () => {
-	// ! SET IMAGE OG
-	setOgImage('../assets/og/KICKOFF_V5.png');
-};
+const startGeneral = () => {};
 
 startGeneral();

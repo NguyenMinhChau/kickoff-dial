@@ -17,6 +17,10 @@ var PRIZE = null;
 var PRIZE_DATA = null;
 var MY_CHART = null;
 
+const URL_BACKGROUND_HEADER_FORM =
+	'https://sf-static.upanhlaylink.com/img/image_20250826bb2383fa4c5c3fb975fc6130ddee0961.jpg';
+const URL_BACKGROUND = 'url(../../../assets/og/YEP_2026.png)';
+
 let MAX_REEL_ITEMS = 111; // ! THỜI GIAN CỦA VÒNG QUAY
 const CONFETTI_COLORS = [
 	'#26ccff',
@@ -148,11 +152,10 @@ const start = () => {
 		.getContext('2d');
 
 	// !SET BACKGROUND IMAGE
-	themeRedElement[0].style.backgroundImage =
-		'url(../../../assets/og/YEP_2026.png)';
-	backgroundHeaderFormIndex.src = '../assets/og/BG_CHECKIN.png';
-	formIndexMainWrapper.style.backgroundImage =
-		'url(../../../assets/og/YEP_2026.png)';
+	themeRedElement[0].style.backgroundImage = URL_BACKGROUND;
+	formIndexMainWrapper.style.backgroundImage = URL_BACKGROUND;
+	backgroundHeaderFormIndex.src = URL_BACKGROUND_HEADER_FORM;
+
 	if (imageQrCodeElement || imageQrCodeCheckinStatisticalElement) {
 		const getDataQrCode = async () => {
 			return await fetch(`${ENDPOINT_BACKEND}/qr-code-check-in`, {
@@ -164,23 +167,21 @@ const start = () => {
 				.then(async (data) => {
 					const { success, errors, payload } = { ...data };
 					if (!success) {
-						// messageFormElement.innerHTML = // Variable not defined in provided code
-						// 	errors?.[0]?.message ||
-						// 	errors?.[0]?.msg ||
-						// 	'Lấy mã QR Code không thành công';
 						console.error(errors);
 						return;
 					}
-					if (payload) {
-						return payload;
-					} else {
-						return '../assets/og/QR_CODE_PLACEHOLDER.png';
-					}
+					// if (payload) {
+					// 	return payload;
+					// } else {
+					// 	return '../assets/og/QR_CODE_PLACEHOLDER.png';
+					// }
+					return '../assets/og/QR_CODE_PLACEHOLDER.png';
 				});
 		};
 		getDataQrCode().then(async (res) => {
 			if (res && imageQrCodeElement) imageQrCodeElement.src = res;
-			// imageQrCodeCheckinStatisticalElement.src = res;
+			if (res && imageQrCodeCheckinStatisticalElement)
+				imageQrCodeCheckinStatisticalElement.src = res;
 		});
 	}
 

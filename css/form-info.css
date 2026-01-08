@@ -15,9 +15,35 @@ body {
 	background-size: '100% 100%';
 	background-repeat: 'no-repeat';
 	background-position: 'center';
-	/* background-image: url('../assets/og/KICKOFF_V5.png'); */
+	/* background-image: url(''); */
 	/* filter: blur(3px) brightness(0.3); */
 	min-height: 100%;
+
+	/* Thêm 2 dòng này để định vị lớp background giả */
+	position: relative;
+	z-index: 1;
+	overflow: hidden; /* Cắt bỏ phần thừa nếu ảnh bị loe ra */
+}
+
+/* Thêm mới đoạn này */
+.formbold-main-wrapper::before,
+.formbold-main-wrapper-index::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1; /* Đẩy xuống dưới cùng */
+
+	/* Cấu hình hình nền */
+	background-image: url('../assets/og/YEP_2026.png');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+
+	/* Áp dụng hiệu ứng mờ và tối CHỈ cho lớp nền này */
+	filter: blur(2px) brightness(0.3);
 }
 
 .formbold-form-wrapper,

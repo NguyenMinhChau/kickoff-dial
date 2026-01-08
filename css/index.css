@@ -168,27 +168,30 @@ body {
 }
 
 #prizes {
-	background-image: url(../assets/og/BG_CHECKIN.png);
+	/* background-image: url(../assets/og/BACKGROUND_BLUR.png);
 	background-repeat: no-repeat;
-	background-size: 140% 100%;
-	background-position: center;
+	background-size: 100% 100%;
+	background-position: center; */
+	background-color: rgba(0, 0, 0, 0.8);
 }
 
 #chart-statistical {
-	background-image: url(../assets/og/BG_STATISTICAL.png);
+	/* background-image: url(../assets/og/BACKGROUND_BLUR.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	background-position: center;
+	background-position: center; */
+	background-color: rgba(0, 0, 0, 0.8);
 }
 #checkin-chart-statistical {
-	background-image: url(../assets/og/BG_CHECKIN.png);
+	/* background-image: url(../assets/og/BACKGROUND_BLUR.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	background-position: center;
+	background-position: center; */
+	background-color: rgba(0, 0, 0, 0.8);
 }
 
 .theme--red {
-	/* background-image: url(../assets/og/KICKOFF_V5.png); */
+	/* background-image: url(); */
 	color: var(--color-text-light);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
