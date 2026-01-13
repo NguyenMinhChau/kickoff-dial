@@ -241,7 +241,7 @@ const start = () => {
 		}
 		return {};
 	};
-	// !!!
+	//! ============================
 
 	// ! GET PROGRAM
 	const getProgram = async () => {
@@ -286,19 +286,7 @@ const start = () => {
 			});
 	};
 	getProgram();
-	// !!!
-
-	function clearChart() {
-		if (MY_CHART) {
-			MY_CHART.destroy();
-			MY_CHART = null; // Important reset
-		}
-		// Clear both canvases to be safe
-		[ctxChartDeparment, ctxCheckinChartDeparment].forEach((ctx) => {
-			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-			ctx.beginPath();
-		});
-	}
+	//! ============================
 
 	// ! SET SLOTS NAME
 	const setSlotNames = async (noSetSlotName = false) => {
@@ -405,7 +393,7 @@ const start = () => {
 		}
 	};
 	setSlotNames();
-	// !!!
+	//! ============================
 
 	// !! GET PRIZE
 	const getListPrize = async () => {
@@ -478,26 +466,39 @@ const start = () => {
 		}
 	};
 	getListPrize();
-
-	const titleColors = {
-		'CHIẾN BINH SỨC MẠNH': '#6d94b8',
-		'CHIẾN BINH KẾT NỐI': '#0563cf',
-		'CHIẾN BINH NHIỆT HUYẾT': '#b44015',
-		'CHIẾN BINH TỐC ĐỘ': '#cf9a2a',
-		'CHIẾN BINH TRÍ TUỆ': '#d5a5e7',
-		'CHIẾN BINH SÁNG TẠO': '#ee2334',
-	};
-
-	// Function helpers for Chart styling
-	function getGradientColor(ctx, color) {
-		const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-		gradient.addColorStop(0, color); // Solid color at top
-		gradient.addColorStop(0.8, color + '80'); // Semitransparent
-		gradient.addColorStop(1, color + '10'); // Very transparent at bottom
-		return gradient;
-	}
+	//! ============================
 
 	// !! STATISTICAL
+	// function clearChart() {
+	// 	if (MY_CHART) {
+	// 		MY_CHART.destroy();
+	// 		MY_CHART = null; // Important reset
+	// 	}
+	// 	// Clear both canvases to be safe
+	// 	[ctxChartDeparment, ctxCheckinChartDeparment].forEach((ctx) => {
+	// 		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	// 		ctx.beginPath();
+	// 	});
+	// }
+
+	// const titleColors = {
+	// 	'CHIẾN BINH SỨC MẠNH': '#6d94b8',
+	// 	'CHIẾN BINH KẾT NỐI': '#0563cf',
+	// 	'CHIẾN BINH NHIỆT HUYẾT': '#b44015',
+	// 	'CHIẾN BINH TỐC ĐỘ': '#cf9a2a',
+	// 	'CHIẾN BINH TRÍ TUỆ': '#d5a5e7',
+	// 	'CHIẾN BINH SÁNG TẠO': '#ee2334',
+	// };
+
+	// // Function helpers for Chart styling
+	// function getGradientColor(ctx, color) {
+	// 	const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+	// 	gradient.addColorStop(0, color); // Solid color at top
+	// 	gradient.addColorStop(0.8, color + '80'); // Semitransparent
+	// 	gradient.addColorStop(1, color + '10'); // Very transparent at bottom
+	// 	return gradient;
+	// }
+
 	// const getStatisticalChart = async (isUpdate = false) => {
 	// 	if (PROGRAM_ID) {
 	// 		await fetch(
@@ -752,7 +753,7 @@ const start = () => {
 	// 		}
 	// 	}, 5000);
 	// }
-	// !! STATISTICAL
+	//! ============================
 
 	programSelectList.addEventListener('change', async (e) => {
 		PROGRAM_ID = e.target.value;
@@ -944,7 +945,7 @@ const start = () => {
 		// PASSWORD = e.target.value;
 		// !
 	});
-	//!!!!!!
+	//! ============================
 
 	durationDrawElement.addEventListener('input', (e) => {
 		MAX_REEL_ITEMS = calculateMaxReelItems(e.target.value);
@@ -1004,7 +1005,7 @@ const start = () => {
 	// 	startUpdatingChart(true);
 	// 	checkinChartStatisticalWrapper.style.display = 'block';
 	// };
-	// !! STATISTICAL
+	//! ============================
 
 	const onUserPrizesOpen = async () => {
 		if (PROGRAM_ID) {
@@ -1108,7 +1109,7 @@ const start = () => {
 	// 	clearInterval(intervalId);
 	// 	intervalId = null;
 	// };
-	// !! STATISTICAL
+	//! ============================
 
 	const onUserPrizesClose = (e) => {
 		e.stopPropagation();
@@ -1172,7 +1173,7 @@ const start = () => {
 	// 	'click',
 	// 	onCheckinChartStatisticalOpen,
 	// );
-	// !! STATISTICAL
+	//! ============================
 	userPrizesButton.addEventListener('click', onUserPrizesOpen);
 	userJoinButton.addEventListener('click', onUserJoinOpen);
 
@@ -1214,7 +1215,7 @@ const start = () => {
 	// 	'click',
 	// 	onCheckinChartStatisticalClose,
 	// );
-	// !! STATISTICAL
+	//! ============================
 	userSettingsCloseButton.addEventListener('click', onUserPrizesClose);
 	userJoinCloseButton.addEventListener('click', onUserJoinClose);
 
@@ -1273,7 +1274,6 @@ const start = () => {
 	function submitPrize(e) {
 		if (PRIZE_DATA) {
 			onPrizesSelectClose(e);
-			// console.log({ PRIZE, PRIZE_DATA });
 			prizeDataElement.innerHTML = `${PRIZE_DATA.prizeId}`;
 		} else {
 			alert('Vui lòng chọn phần thưởng trước khi xác nhận. Xin cảm ơn!');
