@@ -110,10 +110,10 @@ const start = () => {
 	const confettiCanvas = document.getElementById('confetti-canvas');
 	const nameListTextArea = document.getElementById('name-list');
 	const removeNameFromListCheckbox =
-	document.getElementById('remove-from-list');
+		document.getElementById('remove-from-list');
 	const enableSoundCheckbox = document.getElementById('enable-sound');
 	const selectPrizeCheckbox = document.getElementById('select-prize');
-	
+
 	const elementLoading = document.getElementById('middle');
 	const elementResult = document.getElementById('name-persion-lucky');
 	const tabelUserPrizeBody = document.getElementById('table_user_prize_body');
@@ -187,7 +187,8 @@ const start = () => {
 		// });
 
 		imageQrCodeElement.src = '../assets/og/QR_CODE_PLACEHOLDER.png';
-		imageQrCodeCheckinStatisticalElement.src = '../assets/og/QR_CODE_PLACEHOLDER.png';
+		imageQrCodeCheckinStatisticalElement.src =
+			'../assets/og/QR_CODE_PLACEHOLDER.png';
 	}
 
 	// !
