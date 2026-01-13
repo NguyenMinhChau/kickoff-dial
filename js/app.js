@@ -83,10 +83,6 @@ const start = () => {
 	const settingsWrapper = document.getElementById('settings');
 	const prizesWrapper = document.getElementById('prizes');
 	const prizesSelectWrapper = document.getElementById('prizes-select');
-	const chartStatisticalWrapper = document.getElementById('chart-statistical');
-	const checkinChartStatisticalWrapper = document.getElementById(
-		'checkin-chart-statistical',
-	);
 	const userPrizesWrapper = document.getElementById('user-prizes');
 	const userPrizesCount = document.getElementById('user-prizes-count');
 	const prizesSelectCount = document.getElementById('prizes-select-count');
@@ -95,12 +91,6 @@ const start = () => {
 	const settingsContent = document.getElementById('settings-panel');
 	const prizesContent = document.getElementById('prizes-panel');
 	const prizesSelectContent = document.getElementById('prizes-select-panel');
-	const chartStatisticalContent = document.getElementById(
-		'chart-statistical-panel',
-	);
-	const checkinChartStatisticalContent = document.getElementById(
-		'checkin-chart-statistical-panel',
-	);
 	const userPrizesContent = document.getElementById('user-prizes-panel');
 	const userJoinContent = document.getElementById('user-join-panel');
 	const settingsSaveButton = document.getElementById('settings-save');
@@ -116,24 +106,17 @@ const start = () => {
 	const prizesSelectCloseButton = document.getElementById(
 		'prizes-select-close',
 	);
-	const chartStatisticalCloseButton = document.getElementById(
-		'chart-statistical-close',
-	);
-	const checkinChartStatisticalCloseButton = document.getElementById(
-		'checkin-chart-statistical-close',
-	);
 	const sunburstSvg = document.getElementById('sunburst');
 	const confettiCanvas = document.getElementById('confetti-canvas');
 	const nameListTextArea = document.getElementById('name-list');
 	const removeNameFromListCheckbox =
-		document.getElementById('remove-from-list');
+	document.getElementById('remove-from-list');
 	const enableSoundCheckbox = document.getElementById('enable-sound');
 	const selectPrizeCheckbox = document.getElementById('select-prize');
-
+	
 	const elementLoading = document.getElementById('middle');
 	const elementResult = document.getElementById('name-persion-lucky');
 	const tabelUserPrizeBody = document.getElementById('table_user_prize_body');
-	const sunmaryChart = document.getElementById('summary_chart');
 	const tabelUserJoinPrizeCount = document.getElementById(
 		'table_user_join_prize_count',
 	);
@@ -144,12 +127,31 @@ const start = () => {
 	const tabelPrizeSelectBody = document.getElementById(
 		'table_prize_select_body',
 	);
-	const ctxChartDeparment = document
-		.getElementById('departmentChart')
-		.getContext('2d');
-	const ctxCheckinChartDeparment = document
-		.getElementById('departmentChartAndCheckin')
-		.getContext('2d');
+	// !! STATISTICAL
+	// const chartStatisticalWrapper = document.getElementById('chart-statistical');
+	// const checkinChartStatisticalWrapper = document.getElementById(
+	// 	'checkin-chart-statistical',
+	// );
+	// const chartStatisticalContent = document.getElementById(
+	// 	'chart-statistical-panel',
+	// );
+	// const checkinChartStatisticalContent = document.getElementById(
+	// 	'checkin-chart-statistical-panel',
+	// );
+	// const chartStatisticalCloseButton = document.getElementById(
+	// 	'chart-statistical-close',
+	// );
+	// const checkinChartStatisticalCloseButton = document.getElementById(
+	// 	'checkin-chart-statistical-close',
+	// );
+	// const sunmaryChart = document.getElementById('summary_chart');
+	// const ctxChartDeparment = document
+	// 	.getElementById('departmentChart')
+	// 	.getContext('2d');
+	// const ctxCheckinChartDeparment = document
+	// 	.getElementById('departmentChartAndCheckin')
+	// 	.getContext('2d');
+	//! ============================
 
 	// !SET BACKGROUND IMAGE
 	themeRedElement[0].style.backgroundImage = URL_BACKGROUND;
@@ -241,7 +243,6 @@ const start = () => {
 		}
 		return {};
 	};
-	//! ============================
 
 	// ! GET PROGRAM
 	const getProgram = async () => {
@@ -286,7 +287,6 @@ const start = () => {
 			});
 	};
 	getProgram();
-	//! ============================
 
 	// ! SET SLOTS NAME
 	const setSlotNames = async (noSetSlotName = false) => {
@@ -393,7 +393,6 @@ const start = () => {
 		}
 	};
 	setSlotNames();
-	//! ============================
 
 	// !! GET PRIZE
 	const getListPrize = async () => {
@@ -466,7 +465,6 @@ const start = () => {
 		}
 	};
 	getListPrize();
-	//! ============================
 
 	// !! STATISTICAL
 	// function clearChart() {
@@ -753,7 +751,6 @@ const start = () => {
 	// 		}
 	// 	}, 5000);
 	// }
-	//! ============================
 
 	programSelectList.addEventListener('change', async (e) => {
 		PROGRAM_ID = e.target.value;
@@ -1005,6 +1002,24 @@ const start = () => {
 	// 	startUpdatingChart(true);
 	// 	checkinChartStatisticalWrapper.style.display = 'block';
 	// };
+
+	// const onChartStatisticalClose = (e) => {
+	// 	e.stopPropagation();
+	// 	clearChart();
+	// 	chartStatisticalContent.scrollTop = 0;
+	// 	chartStatisticalWrapper.style.display = 'none';
+	// 	clearInterval(intervalId);
+	// 	intervalId = null;
+	// };
+
+	// const onCheckinChartStatisticalClose = (e) => {
+	// 	e.stopPropagation();
+	// 	clearChart();
+	// 	checkinChartStatisticalContent.scrollTop = 0;
+	// 	checkinChartStatisticalWrapper.style.display = 'none';
+	// 	clearInterval(intervalId);
+	// 	intervalId = null;
+	// };
 	//! ============================
 
 	const onUserPrizesOpen = async () => {
@@ -1091,26 +1106,6 @@ const start = () => {
 		prizesSelectWrapper.style.display = 'none';
 	};
 
-	// !! STATISTICAL
-	// const onChartStatisticalClose = (e) => {
-	// 	e.stopPropagation();
-	// 	clearChart();
-	// 	chartStatisticalContent.scrollTop = 0;
-	// 	chartStatisticalWrapper.style.display = 'none';
-	// 	clearInterval(intervalId);
-	// 	intervalId = null;
-	// };
-
-	// const onCheckinChartStatisticalClose = (e) => {
-	// 	e.stopPropagation();
-	// 	clearChart();
-	// 	checkinChartStatisticalContent.scrollTop = 0;
-	// 	checkinChartStatisticalWrapper.style.display = 'none';
-	// 	clearInterval(intervalId);
-	// 	intervalId = null;
-	// };
-	//! ============================
-
 	const onUserPrizesClose = (e) => {
 		e.stopPropagation();
 		userPrizesContent.scrollTop = 0;
@@ -1167,13 +1162,6 @@ const start = () => {
 	settingsButton.addEventListener('click', onSettingsOpen);
 	prizesButton.addEventListener('click', onPrizesOpen);
 	prizesSelectButton.addEventListener('click', onPrizesSelectOpen);
-	// !! STATISTICAL
-	// chartStatisticalButton.addEventListener('click', onChartStatisticalOpen);
-	// checkinChartStatisticalButton.addEventListener(
-	// 	'click',
-	// 	onCheckinChartStatisticalOpen,
-	// );
-	//! ============================
 	userPrizesButton.addEventListener('click', onUserPrizesOpen);
 	userJoinButton.addEventListener('click', onUserJoinOpen);
 
@@ -1207,6 +1195,11 @@ const start = () => {
 	prizesCloseButton.addEventListener('click', onPrizesClose);
 	prizesSelectCloseButton.addEventListener('click', onPrizesSelectClose);
 	// !! STATISTICAL
+	// chartStatisticalButton.addEventListener('click', onChartStatisticalOpen);
+	// checkinChartStatisticalButton.addEventListener(
+	// 	'click',
+	// 	onCheckinChartStatisticalOpen,
+	// );
 	// chartStatisticalCloseButton.addEventListener(
 	// 	'click',
 	// 	onChartStatisticalClose,
