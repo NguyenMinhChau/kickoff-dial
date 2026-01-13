@@ -19,7 +19,7 @@ var MY_CHART = null;
 
 const URL_BACKGROUND_HEADER_FORM =
 	'https://sf-static.upanhlaylink.com/img/image_20250826bb2383fa4c5c3fb975fc6130ddee0961.jpg';
-const URL_BACKGROUND = 'url(../../../assets/og/YEP_2026.png)';
+const URL_BACKGROUND = 'url(../../../assets/og/YEP_HCM_2026.png)';
 
 let MAX_REEL_ITEMS = 111; // ! THỜI GIAN CỦA VÒNG QUAY
 const CONFETTI_COLORS = [
@@ -155,7 +155,7 @@ const start = () => {
 
 	// !SET BACKGROUND IMAGE
 	themeRedElement[0].style.backgroundImage = URL_BACKGROUND;
-	formIndexMainWrapper.style.backgroundImage = URL_BACKGROUND;
+	formIndexMainWrapper.style.setProperty('--bg-image', URL_BACKGROUND);
 	backgroundHeaderFormIndex.src = URL_BACKGROUND_HEADER_FORM;
 
 	if (imageQrCodeElement || imageQrCodeCheckinStatisticalElement) {
