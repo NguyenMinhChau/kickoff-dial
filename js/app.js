@@ -65,6 +65,8 @@ const start = () => {
 	const drawButton = document.getElementById('draw-button');
 	const prizeDataElement = document.getElementById('prize-data');
 	const fullscreenButton = document.getElementById('fullscreen-button');
+
+	const selectUserWinButton = document.getElementById('select-user-button');
 	const settingsButton = document.getElementById('settings-button');
 	const prizesButton = document.getElementById('prizes-button');
 	const prizesSelectButton = document.getElementById('prizes-select-button');
@@ -1157,6 +1159,11 @@ const start = () => {
 		if (document.exitFullscreen) {
 			document.exitFullscreen();
 		}
+	});
+
+	selectUserWinButton.addEventListener('click', () => {
+		console.log(11111);
+		window.location.href = "select_user_win.html";
 	});
 
 	// Click handler for "Settings" button
