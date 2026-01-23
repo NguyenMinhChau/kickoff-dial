@@ -361,7 +361,7 @@ const start = () => {
 				} else {
 					showError(res.errors?.[0]?.msg || 'Không tìm thấy thông tin!');
 				}
-			}, 800);
+			}, 5000);
 		} catch (e) {
 			elementLoading.classList.add('hiddenElement');
 			// sfxSpin.pause(); // Tắt tiếng quay khi lỗi
@@ -382,19 +382,19 @@ const start = () => {
 
 		elementResult.innerHTML = `
             <div class="lucky-result-card">
-                <div class="res-label">🎉 XIN CHÚC MỪNG 🎉</div>
+                <div class="res-label">XIN CHÚC MỪNG</div>
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
                 <div class="res-info">
                     <span class="res-badge">${user.maNV || user.email}</span>
-                    <div class="res-dept">${user.bienChe || ''}</div>
-                    <div class="res-sub">${user.phongBan || ''}</div>
+                    <div class="res-dept">${user.bienChe.toUpperCase() || ''}</div>
+                    <div class="res-sub">${user.phongBan.toUpperCase() || ''}</div>
                 </div>
             </div>
         `;
 
 		confettiAnimation();
 		resetButton.style.display = 'inline-block';
-		resetButton.innerText = 'NHẬP LẠI';
+		resetButton.innerText = 'TIẾP TỤC';
 		resetButton.style.backgroundColor = '#f59e0b';
 		resetButton.className = 'solid-button animate__animated animate__fadeInUp';
 	};
