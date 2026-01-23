@@ -9,7 +9,7 @@ var DIGIT_COUNT = 3; // Mặc định 3 số, có thể chỉnh trong settings
 var PRIZE = null;
 var PRIZE_DATA = null;
 
-const URL_BACKGROUND = 'url(./assets/og/YEP_HCM_2026.png)';
+const URL_BACKGROUND = 'url(./assets/og/YEP_HCM_2026_v2.png)';
 const CONFETTI_COLORS = [
 	'#26ccff',
 	'#a25afd',
