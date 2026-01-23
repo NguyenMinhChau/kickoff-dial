@@ -386,7 +386,7 @@ const start = () => {
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
                 <div class="res-info">
                     <span class="res-badge">${user.maNV || user.email}</span>
-                    <div class="res-dept">${user.donVi || ''}</div>
+                    <div class="res-dept">${user.bienChe || ''}</div>
                     <div class="res-sub">${user.phongBan || ''}</div>
                 </div>
             </div>
