@@ -5,7 +5,7 @@ const ENDPOINT_BACKEND =
 var PROGRAM_ID = '';
 var USER_NAME = '';
 var PASSWORD = '';
-var DIGIT_COUNT = 3; // Mặc định 3 số
+var DIGIT_COUNT = 3; // Mặc định 3 số, có thể chỉnh trong settings
 var PRIZE = null;
 var PRIZE_DATA = null;
 
@@ -72,16 +72,34 @@ const userJoinWrapper = document.getElementById('user-join');
 const userJoinCloseButton = document.getElementById('user-join-close');
 const fullscreenButton = document.getElementById('fullscreen-button');
 
-// AUDIO & EFFECTS
-const soundEffects = new SoundEffects();
-let soundWinner = new Audio('../assets/Win.mp3');
+// AUDIO & EFFECTS SETUP
+// Sử dụng object SoundEffects nếu có, hoặc tạo object giả lập
+const soundEffects =
+	typeof SoundEffects !== 'undefined' ? new SoundEffects() : { mute: false };
+
+// 1. NHẠC NỀN (BACKGROUND MUSIC)
+// Khởi tạo riêng biệt, chạy xuyên suốt
+let bgMusic = new Audio('../assets/Ring_Spin_2024.mp3');
+bgMusic.loop = true; // <--- QUAN TRỌNG: Tự động lặp lại khi hết bài
+bgMusic.volume = 0.8; // Âm lượng nhỏ để làm nền
+
+// 2. HIỆU ỨNG QUAY (SPIN SFX)
+// Khởi tạo riêng biệt, chỉ chạy khi bấm nút
+let sfxSpin = new Audio('../assets/Ring_Spin_2024.mp3');
+sfxSpin.loop = true; // Lặp lại trong lúc chờ kết quả quay
+sfxSpin.volume = 1.0; // Âm lượng lớn hơn nhạc nền
+
+// 3. HIỆU ỨNG CHIẾN THẮNG
+let sfxWin = new Audio('../assets/Win.mp3');
+
 let confettiAnimationId;
 let customConfetti = null;
-if (confettiCanvas)
+if (confettiCanvas && typeof confetti !== 'undefined') {
 	customConfetti = confetti.create(confettiCanvas, {
 		resize: true,
 		useWorker: true,
 	});
+}
 
 let currentDigitInputs = [];
 
@@ -90,6 +108,38 @@ const start = () => {
 	const themeRedElement = document.getElementsByClassName('theme--red');
 	if (themeRedElement.length > 0)
 		themeRedElement[0].style.backgroundImage = URL_BACKGROUND;
+
+	// ============================================================
+	// LOGIC KÍCH HOẠT NHẠC NỀN (AUTO PLAY)
+	// ============================================================
+	const tryPlayBackgroundMusic = () => {
+		// Chỉ phát nếu chưa bị mute và nhạc đang dừng (paused)
+		if (!soundEffects.mute && bgMusic.paused) {
+			bgMusic
+				.play()
+				.then(() => {
+					console.log('Nhạc nền đang phát...');
+				})
+				.catch((error) => {
+					console.log('Trình duyệt chặn Autoplay. Đợi người dùng click...');
+				});
+		}
+	};
+
+	tryPlayBackgroundMusic();
+
+	// Bắt sự kiện click/touch đầu tiên để mở khóa âm thanh
+	const unlockAudioContext = () => {
+		tryPlayBackgroundMusic();
+		// Sau khi đã kích hoạt, gỡ bỏ sự kiện để tránh gọi lại không cần thiết
+		document.removeEventListener('click', unlockAudioContext);
+		document.removeEventListener('keydown', unlockAudioContext);
+		document.removeEventListener('touchstart', unlockAudioContext);
+	};
+
+	document.addEventListener('click', unlockAudioContext);
+	document.addEventListener('keydown', unlockAudioContext);
+	document.addEventListener('touchstart', unlockAudioContext);
 
 	// --- 1. RENDER INPUTS ---
 	const renderDigitInputs = () => {
@@ -169,43 +219,46 @@ const start = () => {
 	// --- 2. DATA HANDLING ---
 	const setSlotNames = async () => {
 		if (!PROGRAM_ID) return;
-		await fetch(`${ENDPOINT_BACKEND}/get-users-by-program/${PROGRAM_ID}`, {
-			method: 'GET',
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (!data.success) return;
-				const all = data.payload || [];
+		try {
+			await fetch(`${ENDPOINT_BACKEND}/get-users-by-program/${PROGRAM_ID}`, {
+				method: 'GET',
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					if (!data.success) return;
+					const all = data.payload || [];
 
-				// Update Settings List
-				const noPrize = all.filter((i) => i.status !== 'PRIZED');
-				tabelUserJoinPrizeCount.innerHTML = `(${noPrize.length})`;
-				tabelUserJoinPrizeBody.innerHTML = noPrize
-					.map(
-						(i, x) =>
-							`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td></tr>`,
-					)
-					.join('');
+					const noPrize = all.filter((i) => i.status !== 'PRIZED');
+					if (tabelUserJoinPrizeCount)
+						tabelUserJoinPrizeCount.innerHTML = `(${noPrize.length})`;
+					if (tabelUserJoinPrizeBody)
+						tabelUserJoinPrizeBody.innerHTML = noPrize
+							.map(
+								(i, x) =>
+									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td></tr>`,
+							)
+							.join('');
 
-				// Update Join List
-				userJoinCount.innerHTML = `(${all.length})`;
-				tabelUserJoinBody.innerHTML = all
-					.map(
-						(i, x) =>
-							`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td><td>${i.status === 'PRIZED' ? '<b style="color:blue">TRÚNG THƯỞNG</b>' : i.status}</td></tr>`,
-					)
-					.join('');
+					if (userJoinCount) userJoinCount.innerHTML = `(${all.length})`;
+					if (tabelUserJoinBody)
+						tabelUserJoinBody.innerHTML = all
+							.map(
+								(i, x) =>
+									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td><td>${i.status === 'PRIZED' ? '<b style="color:blue">TRÚNG THƯỞNG</b>' : i.status}</td></tr>`,
+							)
+							.join('');
 
-				// Update Prize List
-				const prize = all.filter((u) => u.status === 'PRIZED');
-				userPrizesCount.innerHTML = `(${prize.length})`;
-				tabelUserPrizeBody.innerHTML = prize
-					.map(
-						(i, x) =>
-							`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td><td>${i.phongBan}</td><td>${i.prize?.prizeName || '-'}</td></tr>`,
-					)
-					.join('');
-			});
+					const prize = all.filter((u) => u.status === 'PRIZED');
+					if (userPrizesCount) userPrizesCount.innerHTML = `(${prize.length})`;
+					if (tabelUserPrizeBody)
+						tabelUserPrizeBody.innerHTML = prize
+							.map(
+								(i, x) =>
+									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td><td>${i.phongBan}</td><td>${i.prize?.prizeName || '-'}</td></tr>`,
+							)
+							.join('');
+				});
+		} catch (e) {}
 	};
 
 	const getProgram = async () => {
@@ -224,37 +277,41 @@ const start = () => {
 		} catch (e) {}
 	};
 	getProgram();
-	programSelectList.addEventListener('change', (e) => {
-		PROGRAM_ID = e.target.value;
-		setSlotNames();
-	});
+	if (programSelectList) {
+		programSelectList.addEventListener('change', (e) => {
+			PROGRAM_ID = e.target.value;
+			setSlotNames();
+		});
+	}
 
 	const getListPrize = async () => {
 		if (PROGRAM_ID) {
-			const res = await fetch(
-				`${ENDPOINT_BACKEND}/get-prizes/${PROGRAM_ID}`,
-			).then((r) => r.json());
-			if (res.success) {
-				tabelPrizeSelectBody.innerHTML = res.payload
-					.map(
-						(i, x) =>
-							`<tr><td>${x + 1}</td><td>${i.prizeName}</td><td><input type="radio" name="pz" value="${i._id}" data-n="${i.prizeName}" data-c="${i.prizeCode}" data-i="${i._id}" class="pz-radio"></td></tr>`,
-					)
-					.join('');
-				prizesSelectCount.innerHTML = `(${res.payload.length})`;
-				document.querySelectorAll('.pz-radio').forEach((el) =>
-					el.addEventListener('change', (e) => {
-						PRIZE_DATA = {
-							prizeId: e.target.dataset.i,
-							prizeName: e.target.dataset.n,
-						};
-					}),
-				);
-			}
+			try {
+				const res = await fetch(
+					`${ENDPOINT_BACKEND}/get-prizes/${PROGRAM_ID}`,
+				).then((r) => r.json());
+				if (res.success) {
+					tabelPrizeSelectBody.innerHTML = res.payload
+						.map(
+							(i, x) =>
+								`<tr><td>${x + 1}</td><td>${i.prizeName}</td><td><input type="radio" name="pz" value="${i._id}" data-n="${i.prizeName}" data-c="${i.prizeCode}" data-i="${i._id}" class="pz-radio"></td></tr>`,
+						)
+						.join('');
+					prizesSelectCount.innerHTML = `(${res.payload.length})`;
+					document.querySelectorAll('.pz-radio').forEach((el) =>
+						el.addEventListener('change', (e) => {
+							PRIZE_DATA = {
+								prizeId: e.target.dataset.i,
+								prizeName: e.target.dataset.n,
+							};
+						}),
+					);
+				}
+			} catch (e) {}
 		}
 	};
 
-	// --- 3. DRAW LOGIC (SHOW WINNER STYLE) ---
+	// --- 3. DRAW LOGIC (LOGIC QUAY SỐ) ---
 	const handleDraw = async () => {
 		let code = '';
 		currentDigitInputs.forEach((i) => (code += i.value));
@@ -267,38 +324,62 @@ const start = () => {
 			return;
 		}
 
+		// Ẩn UI nhập liệu
 		drawButton.style.display = 'none';
 		manualInputArea.classList.add('fade-out-up');
 		setTimeout(() => (manualInputArea.style.display = 'none'), 400);
 
+		// Hiển thị Loading
 		elementLoading.classList.remove('hiddenElement');
 		elementResult.classList.add('hiddenElement');
 		elementResult.innerHTML = '';
 		stopWinningAnimation();
+
+		// --- XỬ LÝ ÂM THANH KHI QUAY ---
+		// Chỉ thao tác với sfxSpin. Nhạc nền (bgMusic) không bị đụng vào.
+		// if (!soundEffects.mute) {
+		// 	sfxSpin.currentTime = 0;
+		// 	sfxSpin.loop = true; // Đảm bảo tiếng quay lặp lại
+		// 	sfxSpin.play().catch((err) => console.log(err));
+		// }
+
 		try {
 			const res = await fetch(
 				`${ENDPOINT_BACKEND}/get-info-user-by-code/{programId}/{code}?programId=${PROGRAM_ID}&code=${code}`,
 			).then((r) => r.json());
+
+			// Giả lập độ trễ hồi hộp
 			setTimeout(() => {
 				elementLoading.classList.add('hiddenElement');
-				if (res.success && res.payload) showWinner(res.payload);
-				else showError(res.errors?.[0]?.msg || 'Không tìm thấy thông tin!');
+
+				// Tắt tiếng quay (Nhạc nền vẫn chạy bình thường)
+				// sfxSpin.pause();
+				// sfxSpin.currentTime = 0;
+
+				if (res.success && res.payload) {
+					showWinner(res.payload);
+				} else {
+					showError(res.errors?.[0]?.msg || 'Không tìm thấy thông tin!');
+				}
 			}, 800);
-		} catch {
+		} catch (e) {
 			elementLoading.classList.add('hiddenElement');
+			// sfxSpin.pause(); // Tắt tiếng quay khi lỗi
+			// sfxSpin.currentTime = 0;
 			showError('Lỗi kết nối server!');
 		}
 	};
 
 	const showWinner = (user) => {
+		// Phát tiếng chiến thắng (đè lên nhạc nền)
 		if (!soundEffects.mute) {
-			soundWinner.currentTime = 0;
-			soundWinner.play().catch(() => {});
+			sfxWin.currentTime = 0;
+			sfxWin.play().catch(() => {});
 		}
+
 		elementResult.classList.remove('hiddenElement');
 		sunburstSvg.style.display = 'flex';
 
-		// --- TẠO HTML CARD ĐẸP ---
 		elementResult.innerHTML = `
             <div class="lucky-result-card">
                 <div class="res-label">🎉 XIN CHÚC MỪNG 🎉</div>
@@ -315,7 +396,7 @@ const start = () => {
 		resetButton.style.display = 'inline-block';
 		resetButton.innerText = 'NHẬP LẠI';
 		resetButton.style.backgroundColor = '#f59e0b';
-		resetButton.className = 'solid-button animate__animated animate__fadeInUp'; // Thêm class animation nếu muốn
+		resetButton.className = 'solid-button animate__animated animate__fadeInUp';
 	};
 
 	const showError = (msg) => {
@@ -334,7 +415,9 @@ const start = () => {
 
 	const handleReset = () => {
 		stopWinningAnimation();
-		soundWinner.pause();
+		sfxWin.pause(); // Tắt nhạc chiến thắng
+		sfxWin.currentTime = 0;
+
 		elementResult.classList.add('hiddenElement');
 		resetButton.style.display = 'none';
 
@@ -351,7 +434,24 @@ const start = () => {
 	settingsSaveButton.addEventListener('click', () => {
 		if (userNameElement) USER_NAME = userNameElement.value;
 		if (passwordElement) PASSWORD = realPasswordElement.value;
-		if (enableSoundCheckbox) soundEffects.mute = !enableSoundCheckbox.checked;
+
+		// Xử lý MUTE / UNMUTE toàn bộ
+		if (enableSoundCheckbox) {
+			soundEffects.mute = !enableSoundCheckbox.checked;
+
+			if (soundEffects.mute) {
+				// Nếu chọn tắt tiếng -> Dừng mọi âm thanh
+				bgMusic.pause();
+				// sfxSpin.pause();
+				sfxWin.pause();
+			} else {
+				// Nếu chọn bật tiếng -> Phát lại nhạc nền (nếu nó đang dừng)
+				if (bgMusic.paused) {
+					bgMusic.play().catch(() => {});
+				}
+			}
+		}
+
 		if (digitCountSelect) {
 			const newCount = parseInt(digitCountSelect.value);
 			if (newCount !== DIGIT_COUNT) {
@@ -362,7 +462,6 @@ const start = () => {
 		settingsWrapper.style.display = 'none';
 	});
 
-	// Modal Events
 	settingsButton.addEventListener('click', () => {
 		if (userNameElement) userNameElement.value = USER_NAME;
 		if (digitCountSelect) digitCountSelect.value = DIGIT_COUNT;
@@ -440,7 +539,6 @@ const start = () => {
 		}),
 	);
 
-	// Helpers
 	const confettiAnimation = () => {
 		if (!customConfetti) return;
 		const s = Math.max(
