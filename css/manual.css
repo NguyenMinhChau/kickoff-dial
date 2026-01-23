@@ -1,0 +1,398 @@
+/* --- CONTAINER CHÍNH --- */
+.manual-input-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 2rem;
+	position: relative;
+	z-index: 10;
+	transition: all 0.3s ease;
+}
+
+.digit-inputs {
+	display: flex;
+	gap: 15px;
+}
+
+/* --- Ô NHẬP SỐ (INPUT) --- */
+.digit-input {
+	width: 100px;
+	height: 120px;
+	font-size: 4rem;
+	font-weight: 800;
+	text-align: center;
+	background: rgba(255, 255, 255, 0.95);
+	border: 2px solid #fff;
+	border-radius: 16px;
+	color: #dc2626;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	outline: none;
+	font-family: 'Segoe UI', sans-serif;
+}
+
+.digit-input:focus {
+	border-color: #fbbf24;
+	transform: translateY(-5px) scale(1.05);
+	box-shadow: 0 15px 30px rgba(251, 191, 36, 0.4);
+}
+
+/* --- HIỆU ỨNG ẨN/HIỆN INPUT --- */
+.fade-out-up {
+	animation: fadeOutUp 0.5s forwards;
+}
+.fade-in-down {
+	animation: fadeInDown 0.5s forwards;
+}
+
+@keyframes fadeOutUp {
+	to {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+}
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* --- CARD KẾT QUẢ (GLASSMORPHISM) --- */
+.lucky-result-card {
+	background: rgba(0, 0, 0, 0.7); /* Nền đen mờ để chữ nổi */
+	backdrop-filter: blur(12px); /* Làm mờ hậu cảnh */
+	-webkit-backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 24px;
+	padding: 40px 60px;
+	text-align: center;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+	max-width: 800px;
+	margin: 0 auto 30px auto;
+	animation: zoomInCard 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	position: relative;
+	overflow: hidden;
+}
+
+/* Hiệu ứng viền sáng chạy quanh card (Optional) */
+.lucky-result-card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4px;
+	background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+	animation: borderRun 2s linear infinite;
+}
+
+@keyframes borderRun {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes zoomInCard {
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/* --- NỘI DUNG TRONG CARD KẾT QUẢ --- */
+.res-label {
+	font-size: 1.2rem;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #e2e8f0;
+	margin-bottom: 10px;
+	font-weight: 500;
+}
+
+.res-name {
+	font-size: 3.5rem; /* Tên to rõ */
+	font-weight: 900;
+	line-height: 1.2;
+	margin: 15px 0;
+	color: #fbbf24; /* Màu vàng kim */
+	text-transform: uppercase;
+	text-shadow: 0 0 20px rgba(251, 191, 36, 0.5); /* Đổ bóng sáng */
+}
+
+.res-info {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-items: center;
+	color: #fff;
+}
+
+.res-badge {
+	background: rgba(255, 255, 255, 0.15);
+	padding: 6px 16px;
+	border-radius: 50px;
+	font-size: 1.1rem;
+	font-weight: bold;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	display: inline-block;
+	margin-bottom: 10px;
+}
+
+.res-dept {
+	font-size: 1.3rem;
+	font-weight: 500;
+}
+
+.res-sub {
+	font-size: 1rem;
+	color: #94a3b8;
+	font-style: italic;
+}
+
+/* --- CARD LỖI (ERROR) --- */
+.error-card {
+	border-color: rgba(239, 68, 68, 0.3);
+}
+
+.error-icon {
+	font-size: 4rem;
+	color: #ef4444;
+	margin-bottom: 15px;
+	animation: shake 0.5s;
+}
+
+.error-msg {
+	font-size: 1.5rem;
+	color: #fff;
+	margin-bottom: 10px;
+}
+
+.error-hint {
+	color: #cbd5e1;
+	font-size: 1rem;
+}
+
+@keyframes shake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(-10px);
+	}
+	75% {
+		transform: translateX(10px);
+	}
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+	.digit-input {
+		width: 50px;
+		height: 70px;
+		font-size: 2rem;
+	}
+	.res-name {
+		font-size: 2.2rem;
+	}
+	.lucky-result-card {
+		padding: 20px;
+	}
+}
+
+.modern-loader-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%; /* Chiếm chiều rộng tối đa có thể */
+	max-width: 500px; /* NHƯNG không vượt quá 500px (Kích thước chuẩn đẹp) */
+	min-height: 280px; /* Chiều cao tối thiểu vừa phải */
+	margin: 0 auto 30px auto; /* Canh giữa khung loading */
+	padding: 30px; /* Khoảng cách đệm bên trong */
+
+	position: relative;
+	z-index: 50;
+
+	/* Hiệu ứng kính mờ (Giữ nguyên) */
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(15px);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 24px;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+
+	animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.loader-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 25px;
+	z-index: 2; /* Đảm bảo nội dung nổi lên trên nền mờ */
+}
+
+/* Vòng tròn chứa hiệu ứng */
+.loader-circle-box {
+	position: relative;
+	width: 120px; /* Tăng kích thước lên chút */
+	height: 120px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Vòng xoay ngoài cùng (Vàng kim - Tăng độ sáng) */
+.loader-ring {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border: 4px solid transparent; /* Dày hơn */
+	border-top: 4px solid #fbbf24;
+	border-right: 4px solid #fbbf24;
+	border-radius: 50%;
+	animation: spinRight 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+	/* Glow mạnh hơn */
+	box-shadow: 0 0 25px rgba(251, 191, 36, 0.6);
+	filter: drop-shadow(0 0 5px #fbbf24);
+}
+
+/* Vòng xoay bên trong (Màu trắng) */
+.loader-ring-2 {
+	position: absolute;
+	width: 75%;
+	height: 75%;
+	border: 4px solid transparent;
+	border-bottom: 4px solid rgba(255, 255, 255, 0.9);
+	border-left: 4px solid rgba(255, 255, 255, 0.9);
+	border-radius: 50%;
+	animation: spinLeft 1.2s linear infinite;
+	box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Icon ở giữa */
+.loader-icon {
+	font-size: 2.2rem;
+	color: #fbbf24;
+	animation: pulseIcon 1.2s ease-in-out infinite;
+	text-shadow: 0 0 15px rgba(251, 191, 36, 1);
+}
+
+/* Chữ hiển thị */
+.loader-text {
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: #ffffff;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); /* Bóng chữ đậm hơn */
+	display: flex;
+	align-items: center;
+	background: linear-gradient(
+		90deg,
+		#fff,
+		#fbbf24,
+		#fff
+	); /* Chữ Gradient ánh kim */
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-size: 200% auto;
+	animation: shineText 3s linear infinite;
+}
+
+/* Animation chữ ánh kim chạy ngang */
+@keyframes shineText {
+	to {
+		background-position: 200% center;
+	}
+}
+
+.dots {
+	display: inline-block;
+	width: 25px;
+	animation: dotTyping 1.5s steps(4, end) infinite;
+	overflow: hidden;
+	vertical-align: bottom;
+	white-space: nowrap;
+	/* Reset màu cho dấu chấm vì text-fill-color làm nó trong suốt */
+	-webkit-text-fill-color: #fbbf24;
+	color: #fbbf24;
+}
+
+/* --- ANIMATIONS (Giữ nguyên logic xoay) --- */
+@keyframes spinRight {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+@keyframes spinLeft {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+@keyframes pulseIcon {
+	0% {
+		transform: scale(0.9);
+		opacity: 0.8;
+	}
+	50% {
+		transform: scale(1.1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(0.9);
+		opacity: 0.8;
+	}
+}
+@keyframes dotTyping {
+	0% {
+		content: '';
+	}
+	25% {
+		content: '.';
+	}
+	50% {
+		content: '..';
+	}
+	75% {
+		content: '...';
+	}
+	100% {
+		content: '';
+	}
+}
+
+.hiddenElement {
+	display: none !important;
+}
