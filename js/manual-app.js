@@ -405,7 +405,7 @@ const start = () => {
 		elementResult.innerHTML = `
             <div class="lucky-result-card">
                 <div class="res-label">XIN CHÚC MỪNG${
-									code ? ` - Mã ${code}` : ''
+									code ? ` ${code}` : ''
 								}</div>
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
                 <div class="res-info">
