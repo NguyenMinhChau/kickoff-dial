@@ -9,7 +9,7 @@ var DIGIT_COUNT = 3; // Mặc định 3 số, có thể chỉnh trong settings
 var PRIZE = null;
 var PRIZE_DATA = null;
 
-const URL_BACKGROUND = 'url(./assets/og/YEP_HCM_2026_v2.png)';
+const URL_BACKGROUND = 'url(./assets/og/YEP_HNI_2026.png)';
 const CONFETTI_COLORS = [
 	'#26ccff',
 	'#a25afd',
@@ -235,7 +235,9 @@ const start = () => {
 						tabelUserJoinPrizeBody.innerHTML = noPrize
 							.map(
 								(i, x) =>
-									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td></tr>`,
+									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${
+										i.fullName
+									}</td><td>${i.donVi}</td></tr>`,
 							)
 							.join('');
 
@@ -244,7 +246,13 @@ const start = () => {
 						tabelUserJoinBody.innerHTML = all
 							.map(
 								(i, x) =>
-									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td><td>${i.status === 'PRIZED' ? '<b style="color:blue">TRÚNG THƯỞNG</b>' : i.status}</td></tr>`,
+									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${
+										i.fullName
+									}</td><td>${i.donVi}</td><td>${
+										i.status === 'PRIZED'
+											? '<b style="color:blue">TRÚNG THƯỞNG</b>'
+											: i.status
+									}</td></tr>`,
 							)
 							.join('');
 
@@ -254,7 +262,11 @@ const start = () => {
 						tabelUserPrizeBody.innerHTML = prize
 							.map(
 								(i, x) =>
-									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${i.fullName}</td><td>${i.donVi}</td><td>${i.phongBan}</td><td>${i.prize?.prizeName || '-'}</td></tr>`,
+									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${
+										i.fullName
+									}</td><td>${i.donVi}</td><td>${i.phongBan}</td><td>${
+										i.prize?.prizeName || '-'
+									}</td></tr>`,
 							)
 							.join('');
 				});
@@ -294,7 +306,13 @@ const start = () => {
 					tabelPrizeSelectBody.innerHTML = res.payload
 						.map(
 							(i, x) =>
-								`<tr><td>${x + 1}</td><td>${i.prizeName}</td><td><input type="radio" name="pz" value="${i._id}" data-n="${i.prizeName}" data-c="${i.prizeCode}" data-i="${i._id}" class="pz-radio"></td></tr>`,
+								`<tr><td>${x + 1}</td><td>${
+									i.prizeName
+								}</td><td><input type="radio" name="pz" value="${
+									i._id
+								}" data-n="${i.prizeName}" data-c="${i.prizeCode}" data-i="${
+									i._id
+								}" class="pz-radio"></td></tr>`,
 						)
 						.join('');
 					prizesSelectCount.innerHTML = `(${res.payload.length})`;
@@ -386,8 +404,12 @@ const start = () => {
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
                 <div class="res-info">
                     <span class="res-badge">${user.maNV || user.email}</span>
-                    <div class="res-dept">${user.bienChe.toUpperCase() || ''}</div>
-                    <div class="res-sub">${user.phongBan.toUpperCase() || ''}</div>
+                    <div class="res-dept">${
+											user.bienChe.toUpperCase() || ''
+										}</div>
+                    <div class="res-sub">${
+											user.phongBan.toUpperCase() || ''
+										}</div>
                 </div>
             </div>
         `;
