@@ -344,8 +344,8 @@ const start = () => {
 
 		// Ẩn UI nhập liệu
 		drawButton.style.display = 'none';
-		manualInputArea.classList.add('fade-out-up');
-		setTimeout(() => (manualInputArea.style.display = 'none'), 400);
+		// manualInputArea.classList.add('fade-out-up');
+		// setTimeout(() => (manualInputArea.style.display = 'none'), 400);
 
 		// Hiển thị Loading
 		elementLoading.classList.remove('hiddenElement');
@@ -375,8 +375,10 @@ const start = () => {
 				// sfxSpin.currentTime = 0;
 
 				if (res.success && res.payload) {
+					manualInputArea.style.display = 'none';
 					showWinner(res.payload);
 				} else {
+					manualInputArea.style.display = 'none';
 					showError(res.errors?.[0]?.msg || 'Không tìm thấy thông tin!');
 				}
 			}, 5000);
@@ -394,13 +396,17 @@ const start = () => {
 			sfxWin.currentTime = 0;
 			sfxWin.play().catch(() => {});
 		}
+		let code = '';
+		currentDigitInputs?.forEach((i) => (code += i.value));
 
 		elementResult.classList.remove('hiddenElement');
 		sunburstSvg.style.display = 'flex';
 
 		elementResult.innerHTML = `
             <div class="lucky-result-card">
-                <div class="res-label">XIN CHÚC MỪNG</div>
+                <div class="res-label">XIN CHÚC MỪNG${
+									code ? ` - Mã ${code}` : ''
+								}</div>
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
                 <div class="res-info">
                     <span class="res-badge">${user.maNV || user.email}</span>
