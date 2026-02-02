@@ -904,15 +904,18 @@ const start = () => {
 				const _userPrize = data?.payload?.filter(
 					(x) => (x?.maNV || x?.email) === luckyNumber,
 				)?.[0];
+				// elementResult.innerHTML = `${
+				// 	_userPrize?.fullName ? _userPrize?.fullName : ''
+				// }${
+				// 	_userPrize?.fullName && dataJSON[luckyNumber.toString()] ? ' - ' : ''
+				// }${
+				// 	dataJSON[luckyNumber.toString()]
+				// 		? dataJSON[luckyNumber.toString()]
+				// 		: ''
+				// }`;
 				elementResult.innerHTML = `${
 					_userPrize?.fullName ? _userPrize?.fullName : ''
-				}${
-					_userPrize?.fullName && dataJSON[luckyNumber.toString()] ? ' - ' : ''
-				}${
-					dataJSON[luckyNumber.toString()]
-						? dataJSON[luckyNumber.toString()]
-						: ''
-				}`;
+				}${`</br>${_userPrize?.email} - ${dataJSON[luckyNumber.toString()]}`}`;
 			});
 	};
 
