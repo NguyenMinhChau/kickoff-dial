@@ -6,7 +6,7 @@ const ipAddressElement = document.getElementById('ip-address');
 
 const URL_BACKGROUND_HEADER_FORM =
 	'https://sf-static.upanhlaylink.com/img/image_20250826bb2383fa4c5c3fb975fc6130ddee0961.jpg';
-const URL_BACKGROUND = 'url(../../../assets/og/YEP_HNI_2026.png)';
+const URL_BACKGROUND = 'url(../../../assets/og/YEP_VTU_2026.png)';
 
 const checkIpWiFi = async () => {
 	return await fetch('https://api64.ipify.org?format=json')
@@ -192,8 +192,8 @@ const startForm = () => {
 														status === 'CHECKED_IN'
 															? '#15803d'
 															: status === 'PRIZED'
-															? '#1d4ed8'
-															: '#b91c1c'
+																? '#1d4ed8'
+																: '#b91c1c'
 													}!important">
 													${
 														isCheckinPrize
