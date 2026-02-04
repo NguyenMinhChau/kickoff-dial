@@ -9,7 +9,7 @@ var DIGIT_COUNT = 3; // Mặc định 3 số, có thể chỉnh trong settings
 var PRIZE = null;
 var PRIZE_DATA = null;
 
-const URL_BACKGROUND = 'url(./assets/og/YEP_VTU_2026.png)';
+const URL_BACKGROUND = 'url(./assets/og/YEP_SOC_2026.png)';
 const CONFETTI_COLORS = [
 	'#26ccff',
 	'#a25afd',
@@ -410,11 +410,11 @@ const start = () => {
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
                 <div class="res-info">
                     <span class="res-badge">${user.maNV || user.email}</span>
-                    <div class="res-dept">${
-											user.bienChe.toUpperCase() || ''
+										<div class="res-sub">Email: ${
+											user.email || ''
 										}</div>
-                    <div class="res-sub">${
-											user.phongBan.toUpperCase() || ''
+                    <div class="res-dept">Phòng: ${
+											user.bienChe.toUpperCase() || ''
 										}</div>
                 </div>
             </div>

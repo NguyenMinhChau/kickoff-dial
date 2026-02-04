@@ -64,7 +64,7 @@
 
 /* --- CARD KẾT QUẢ (GLASSMORPHISM) --- */
 .lucky-result-card {
-	/* background: rgba(0, 0, 0, 0.7); */
+	background: rgb(245 64 64 / 70%);
 	/* backdrop-filter: blur(12px); */
 	/* -webkit-backdrop-filter: blur(12px); */
 	border: 1px solid rgba(255, 255, 255, 0.2);

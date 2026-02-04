@@ -37,7 +37,7 @@ body {
 	z-index: -1; /* Đẩy xuống dưới cùng */
 
 	/* Cấu hình hình nền */
-	background-image: var(--bg-image, url('../assets/og/YEP_VTU_2026.png'));
+	background-image: var(--bg-image, url('../assets/og/YEP_SOC_2026.png'));
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-position: center;

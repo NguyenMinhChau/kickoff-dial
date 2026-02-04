@@ -6,7 +6,7 @@ const ipAddressElement = document.getElementById('ip-address');
 
 const URL_BACKGROUND_HEADER_FORM =
 	'https://sf-static.upanhlaylink.com/img/image_20250826bb2383fa4c5c3fb975fc6130ddee0961.jpg';
-const URL_BACKGROUND = 'url(../../../assets/og/YEP_VTU_2026.png)';
+const URL_BACKGROUND = 'url(../../../assets/og/YEP_SOC_2026.png)';
 
 const checkIpWiFi = async () => {
 	return await fetch('https://api64.ipify.org?format=json')
