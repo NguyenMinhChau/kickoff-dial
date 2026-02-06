@@ -99,7 +99,8 @@
 		(
 				var(--slot-height) - (var(--slot-border-width) * 2) -
 					var(--reel-item-height)
-			) / 2
+			) /
+			2
 	);
 
 	/* Draw button */
@@ -141,10 +142,10 @@ body {
 	min-width: 320px;
 	height: 100%;
 	line-height: 1.5;
-	font-family: 'Nunito Sans', 微軟正黑體, 'Microsoft JhengHei',
-		'Microsoft JhengHei UI', 'Microsoft YaHei', 'Microsoft YaHei UI',
-		'PingFang TC', 'Lantinghei TC', 'Heiti TC', 'Apple LiGothic', 'PMingLiU',
-		Arial, sans-serif;
+	font-family:
+		'Nunito Sans', 微軟正黑體, 'Microsoft JhengHei', 'Microsoft JhengHei UI',
+		'Microsoft YaHei', 'Microsoft YaHei UI', 'PingFang TC', 'Lantinghei TC',
+		'Heiti TC', 'Apple LiGothic', 'PMingLiU', Arial, sans-serif;
 }
 
 #app {
@@ -422,8 +423,14 @@ a:active {
 	54%,
 	56%,
 	100% {
-		text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
-			0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+		text-shadow:
+			0 0 5px #ffa500,
+			0 0 15px #ffa500,
+			0 0 20px #ffa500,
+			0 0 40px #ffa500,
+			0 0 60px #ff0000,
+			0 0 10px #ff8d00,
+			0 0 98px #ff0000;
 		color: #fff6a9;
 	}
 }
@@ -443,8 +450,14 @@ a:active {
 	54%,
 	56%,
 	100% {
-		text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
-			0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+		text-shadow:
+			0 0 5px #ffa500,
+			0 0 15px #ffa500,
+			0 0 20px #ffa500,
+			0 0 40px #ffa500,
+			0 0 60px #ff0000,
+			0 0 10px #ff8d00,
+			0 0 98px #ff0000;
 		color: #fff6a9;
 	}
 }
@@ -898,7 +911,8 @@ button:disabled:hover {
 	text-align: center;
 	position: relative;
 	z-index: var(--z-index-lucky-draw);
-	padding-top: 25%;
+	/* 25% */
+	padding-top: 5%;
 }
 
 .title {
