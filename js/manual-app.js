@@ -9,7 +9,7 @@ var DIGIT_COUNT = 3; // Mặc định 3 số, có thể chỉnh trong settings
 var PRIZE = null;
 var PRIZE_DATA = null;
 
-const URL_BACKGROUND = 'url(./assets/og/YEP_HCM_V5_2026.png)';
+const URL_BACKGROUND = 'url(./assets/og/HOLIDAY_INF_2026.png)';
 const CONFETTI_COLORS = [
 	'#26ccff',
 	'#a25afd',
@@ -399,21 +399,22 @@ const start = () => {
 		let code = '';
 		currentDigitInputs?.forEach((i) => (code += i.value));
 
+		// Khoá scroll khi hiển thị kết quả
+		document.documentElement.style.overflow = 'hidden';
+		document.body.style.overflow = 'hidden';
+
 		elementResult.classList.remove('hiddenElement');
 		sunburstSvg.style.display = 'flex';
 
 		elementResult.innerHTML = `
             <div class="lucky-result-card">
-                <div class="res-label">XIN CHÚC MỪNG${
-									code ? ` ${code}` : ''
-								}</div>
+                <span class="res-icon-top">🏆</span>
+                <div class="res-label">XIN CHÚC MỪNG${code ? ` · MÃ SỐ ${code}` : ''}</div>
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
                 <div class="res-info">
-                    <span class="res-badge">${user.maNV || user.email}</span>
-										<div class="res-sub">Email: ${user.email || ''}</div>
-                    <div class="res-dept">Phòng: ${
-											user.bienChe.toUpperCase() || ''
-										}</div>
+                    <span class="res-badge"><i class="fas fa-id-badge" style="margin-right:6px"></i>${user.maNV || user.email}</span>
+                    <div class="res-dept"><i class="fas fa-building" style="margin-right:6px"></i>${user.bienChe ? user.bienChe.toUpperCase() : ''}</div>
+                    <div class="res-sub"><i class="fas fa-envelope" style="margin-right:6px"></i>${user.email || ''}</div>
                 </div>
             </div>
         `;
@@ -426,6 +427,9 @@ const start = () => {
 	};
 
 	const showError = (msg) => {
+		// Khoá scroll khi hiển thị lỗi
+		document.documentElement.style.overflow = 'hidden';
+		document.body.style.overflow = 'hidden';
 		elementResult.classList.remove('hiddenElement');
 		elementResult.innerHTML = `
             <div class="lucky-result-card error-card">
@@ -443,6 +447,10 @@ const start = () => {
 		stopWinningAnimation();
 		sfxWin.pause(); // Tắt nhạc chiến thắng
 		sfxWin.currentTime = 0;
+
+		// Mở lại scroll khi reset
+		document.documentElement.style.overflow = '';
+		document.body.style.overflow = '';
 
 		elementResult.classList.add('hiddenElement');
 		resetButton.style.display = 'none';

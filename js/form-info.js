@@ -1,4 +1,3 @@
-// https://icdpmobile.fpt.net/icdp-mobile-staging/v1/icdp-backend-mobile/ct-tat-nien
 const ENDPOINT_BACKEND =
 	'https://icdpmobile.fpt.net/v1/icdp-backend-mobile/ct-tat-nien';
 
@@ -6,13 +5,12 @@ const ipAddressElement = document.getElementById('ip-address');
 
 const URL_BACKGROUND_HEADER_FORM =
 	'https://sf-static.upanhlaylink.com/img/image_20250826bb2383fa4c5c3fb975fc6130ddee0961.jpg';
-const URL_BACKGROUND = 'url(../../../assets/og/YEP_HCM_V5_2026.png)';
+const URL_BACKGROUND = 'url(./assets/og/YEP_HCM_V5_2026.png)';
 
 const checkIpWiFi = async () => {
 	return await fetch('https://api64.ipify.org?format=json')
 		.then((response) => response.json())
 		.then((data) => {
-			// ipAddressElement.innerHTML = data.ip;
 			if (data.ip.startsWith('58.188')) {
 				return data.ip;
 			} else {
@@ -37,6 +35,7 @@ const startForm = () => {
 	const formStepTwoElement = document.getElementById('form-step-two');
 	const formSubmitElement = document.getElementById('form-submit');
 	const formCheckInfoElement = document.getElementById('form-check-info');
+	const modalLoading = document.querySelector('.modal-loading');
 
 	// ! GET PROGRAM
 	const getProgram = async () => {
@@ -53,22 +52,24 @@ const startForm = () => {
 						errors?.[0]?.message ||
 						errors?.[0]?.msg ||
 						'Lấy danh sách chương trình không thành công';
-					return;
+					return '';
 				}
 				if (payload && payload.length > 0) {
 					return payload[0]._id;
 				} else {
 					return '';
 				}
+			})
+			.catch(() => {
+				return '';
 			});
 	};
-	// !!!
 
 	// ! SUBMIT FORM
 	const submitForm = async (body) => {
+		if (modalLoading) modalLoading.style.display = 'flex';
 		await getProgram().then(async (id) => {
 			if (id) {
-				// modalLoading.style.display = 'flex';
 				await fetch(`${ENDPOINT_BACKEND}/submit-form-check-in/${id}`, {
 					method: 'POST',
 					headers: {
@@ -80,6 +81,7 @@ const startForm = () => {
 						return response.json();
 					})
 					.then(async (data) => {
+						if (modalLoading) modalLoading.style.display = 'none';
 						const { success, errors, payload } = { ...data };
 						if (!success) {
 							messageFormElement.innerHTML =
@@ -106,24 +108,29 @@ const startForm = () => {
 									.add(7, 'hours')
 									.format('DD/MM/YYYY HH:mm:ss') || '-';
 						}
+					})
+					.catch((err) => {
+						if (modalLoading) modalLoading.style.display = 'none';
+						alert('Đã xảy ra lỗi khi gửi yêu cầu check-in. Vui lòng thử lại.');
 					});
+			} else {
+				if (modalLoading) modalLoading.style.display = 'none';
+				alert('Không thể kết nối chương trình.');
 			}
 		});
 	};
-	// checkIpWiFi().then(async (res) => {
-	// 	if (res) {
-	// 	} else {
-	// 	}
-	// });
 
-	// ! SET NBACKGROUND IMAGE
+	// ! SET BACKGROUND IMAGE
 	if (backgroundHeaderForm) {
 		backgroundHeaderForm.src = URL_BACKGROUND_HEADER_FORM;
 	}
-	formMainWrapper.style.setProperty('--bg-image', URL_BACKGROUND);
+	if (formMainWrapper) {
+		formMainWrapper.style.setProperty('--bg-image', URL_BACKGROUND);
+	}
 
 	if (formCheckInfoElement) {
 		formCheckInfoElement.addEventListener('click', async () => {
+			if (modalLoading) modalLoading.style.display = 'flex';
 			await getProgram().then(async (id) => {
 				if (id) {
 					await fetch(
@@ -137,6 +144,7 @@ const startForm = () => {
 							return response.json();
 						})
 						.then(async (data) => {
+							if (modalLoading) modalLoading.style.display = 'none';
 							const { success, errors, payload } = { ...data };
 							if (!success) {
 								alert(
@@ -170,31 +178,31 @@ const startForm = () => {
 											maNV: maNV,
 										};
 										return `
-										<div style="display: flex; flex-direction: row; gap: 12px; align-items: flex-start">
+										<div style="display: flex; flex-direction: row; gap: 12px; align-items: flex-start; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px;">
 											<div style="flex: 1">
 												<div><b>Họ và tên:</b> <span id="res_confirm_fullName">${
 													fullName || '-'
 												}</span></div>
-												<div><b>Mã nhân viên:</b> <span id="res_confirm_maNV">${
+												<div style="margin-top: 4px;"><b>Mã nhân viên:</b> <span id="res_confirm_maNV">${
 													maNV || '-'
 												}</span></div>
-												<div><b>Chi nhánh:</b> <span id="res_confirm_chiNhanh">${
+												<div style="margin-top: 4px;"><b>Chi nhánh:</b> <span id="res_confirm_chiNhanh">${
 													donVi || '-'
 												}</span></div>
-												<div><b>Phòng ban:</b> <span id="res_confirm_phongBan">${
+												<div style="margin-top: 4px;"><b>Phòng ban:</b> <span id="res_confirm_phongBan">${
 													phongBan || '-'
 												}</span></div>
-												<div><b>Nhóm:</b> <span id="res_confirm_group">${group || '-'}</span></div> 
+												<div style="margin-top: 4px;"><b>Nhóm:</b> <span id="res_confirm_group">${group || '-'}</span></div> 
 											</div>
 											<div data-body='${JSON.stringify(bodySubmit)}' 
 													class="checkin-btn"
-													style="display: inline-block; border-radius: 8px; color: #FFF; cursor: default; width: max-content; margin-top: 0; padding: 12px; background-color: ${
+													style="display: inline-block; border-radius: 8px; color: #FFF; font-weight: 700; cursor: default; width: max-content; margin-top: 0; padding: 10px 14px; background-color: ${
 														status === 'CHECKED_IN'
 															? '#15803d'
 															: status === 'PRIZED'
 																? '#1d4ed8'
 																: '#b91c1c'
-													}!important">
+													}">
 													${
 														isCheckinPrize
 															? status === 'CHECKED_IN'
@@ -204,29 +212,24 @@ const startForm = () => {
 													}
 											</div>
 										</div>
-									
-									</br>
 								`;
 									})
 									.join('');
 								infoConfirmElement.innerHTML = htmls;
-								// if (document.querySelectorAll('.checkin-btn').length > 0) {
-								// 	document
-								// 		.querySelectorAll('.checkin-btn')
-								// 		.forEach((button) => {
-								// 			button.addEventListener('click', function () {
-								// 				const body = JSON.parse(this.getAttribute('data-body'));
-								// 				submitForm(body);
-								// 			});
-								// 		});
-								// }
 							} else {
 								formCheckInfoElement.style.display = 'none';
 								formSubmitElement.style.display = 'none';
 								infoConfirmElement.innerHTML =
-									'<div style="text-align: center">Không tìm thấy thông tin nhân viên</div>';
+									'<div style="text-align: center; color: #f43f5e; font-weight: 600;">Không tìm thấy thông tin nhân viên</div>';
 							}
+						})
+						.catch((err) => {
+							if (modalLoading) modalLoading.style.display = 'none';
+							alert('Đã xảy ra lỗi khi tìm kiếm thông tin nhân viên.');
 						});
+				} else {
+					if (modalLoading) modalLoading.style.display = 'none';
+					alert('Không thể kết nối chương trình.');
 				}
 			});
 		});

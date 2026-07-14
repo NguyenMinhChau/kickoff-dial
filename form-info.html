@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -17,6 +17,12 @@
 		/>
 
 		<!-- import cs/js -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="./css/index.css" />
 		<link rel="stylesheet" href="./css/form-info.css" />
 	</head>
@@ -33,7 +39,7 @@
 				/>
 
 				<div id="form-step-one">
-					<div class="title-form">THÔNG TIN NHÂN SỰ</div>
+					<h1 class="title-form">THÔNG TIN NHÂN SỰ</h1>
 
 					<div
 						id="message-form"
@@ -334,26 +340,28 @@
 				</div>
 
 				<div id="form-step-two" style="display: none">
-					<div class="title-form">ĐÃ CHECK IN THÀNH CÔNG.</div>
-					<div style="color: #000">
+					<h2 class="title-form" style="font-size: 20px">
+						ĐÃ CHECK IN THÀNH CÔNG.
+					</h2>
+					<div style="color: #f1f5f9; margin-bottom: 8px">
 						<b>Họ và tên:</b> <span id="res_fullName"></span>
 					</div>
-					<div style="color: #000">
+					<div style="color: #f1f5f9; margin-bottom: 8px">
 						<b>Mã nhân viên:</b> <span id="res_maNV"></span>
 					</div>
-					<div style="color: #000">
+					<div style="color: #f1f5f9; margin-bottom: 8px">
 						<b>Chi nhánh:</b> <span id="res_chiNhanh"></span>
 					</div>
-					<div style="color: #000">
+					<div style="color: #f1f5f9; margin-bottom: 8px">
 						<b>Phòng ban:</b> <span id="res_phongBan"></span>
 					</div>
-					<div style="color: #000">
+					<div style="color: #f1f5f9; margin-bottom: 8px">
 						<b>Nhóm:</b> <span id="res_group"></span>
 					</div>
-					<div style="color: #000">
+					<div style="color: #f1f5f9; margin-bottom: 8px">
 						<b>Thời gian check in:</b> <span id="res_timeCheckin"></span>
 					</div>
-					<div class="title-form">XIN CẢM ƠN.</div>
+					<h2 class="title-form" style="font-size: 20px">XIN CẢM ƠN.</h2>
 				</div>
 			</div>
 		</div>

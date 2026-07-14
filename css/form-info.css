@@ -1,31 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
+
 body {
-	font-family: 'Inter', sans-serif;
+	font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+	background-color: #0c0203;
+	color: #1e293b;
 }
+
 .formbold-main-wrapper,
 .formbold-main-wrapper-index {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-size: '100% 100%';
-	background-repeat: 'no-repeat';
-	background-position: 'center';
-	/* background-image: url(''); */
-	/* filter: blur(3px) brightness(0.3); */
 	min-height: 100%;
-
-	/* Thêm 2 dòng này để định vị lớp background giả */
 	position: relative;
 	z-index: 1;
-	overflow: hidden; /* Cắt bỏ phần thừa nếu ảnh bị loe ra */
+	overflow: hidden;
 }
 
-/* Thêm mới đoạn này */
 .formbold-main-wrapper::before,
 .formbold-main-wrapper-index::before {
 	content: '';
@@ -34,87 +31,104 @@ body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: -1; /* Đẩy xuống dưới cùng */
-
-	/* Cấu hình hình nền */
-	background-image: var(--bg-image, url('../assets/og/YEP_HCM_V5_2026.png'));
-	background-size: 100% 100%;
+	z-index: -1;
+	background-image: var(--bg-image, url('../assets/og/HOLIDAY_INF_2026.png'));
+	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
-
-	/* Áp dụng hiệu ứng mờ và tối CHỈ cho lớp nền này */
-	filter: blur(2px) brightness(0.3);
 }
 
 .formbold-form-wrapper,
 .formbold-form-wrapper-index {
-	margin: 30px auto;
+	margin: 40px auto;
 	max-width: 570px;
-	width: 100%;
-	background: white;
+	width: 90%;
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(25px);
+	-webkit-backdrop-filter: blur(25px);
+	border: 1px solid rgba(37, 99, 235, 0.25);
+	box-shadow:
+		0 30px 60px rgba(0, 0, 0, 0.25),
+		inset 0 0 20px rgba(255, 255, 255, 0.5);
 	padding: 40px;
+	border-radius: 24px;
+	transition: all 0.3s ease;
 }
 
 .formbold-form-img {
-	margin-bottom: 45px;
+	margin-bottom: 30px;
 }
 
 .formbold-input-group {
-	margin-bottom: 18px;
+	margin-bottom: 24px;
 }
 
 .formbold-form-select {
 	width: 100%;
-	padding: 12px 22px;
-	border-radius: 5px;
-	border: 1px solid #dde3ec;
+	padding: 14px 20px;
+	border-radius: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
 	background: #ffffff;
 	font-size: 16px;
-	color: #536387;
+	color: #0f172a;
 	outline: none;
 	resize: none;
+	font-family: inherit;
+	transition: all 0.3s ease;
+}
+
+.formbold-form-select:focus {
+	border-color: #2563eb;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .formbold-input-radio-wrapper {
 	margin-bottom: 25px;
 }
+
 .formbold-radio-flex {
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
 }
+
 .formbold-radio-label {
-	font-size: 14px;
+	font-size: 15px;
 	line-height: 24px;
-	color: #07074d;
+	color: #334155;
 	position: relative;
-	padding-left: 25px;
+	padding-left: 28px;
 	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 }
+
 .formbold-input-radio {
 	position: absolute;
 	opacity: 0;
 	cursor: pointer;
 }
+
 .formbold-radio-checkmark {
 	position: absolute;
-	top: -1px;
+	top: 2px;
 	left: 0;
 	height: 18px;
 	width: 18px;
 	background-color: #ffffff;
-	border: 1px solid #dde3ec;
+	border: 1px solid rgba(0, 0, 0, 0.15);
 	border-radius: 50%;
 }
+
 .formbold-radio-label
 	.formbold-input-radio:checked
 	~ .formbold-radio-checkmark {
-	background-color: #6a64f1;
+	background-color: #2563eb;
+	border-color: #2563eb;
 }
+
 .formbold-radio-checkmark:after {
 	content: '';
 	position: absolute;
@@ -130,8 +144,8 @@ body {
 .formbold-radio-label .formbold-radio-checkmark:after {
 	top: 50%;
 	left: 50%;
-	width: 10px;
-	height: 10px;
+	width: 8px;
+	height: 8px;
 	border-radius: 50%;
 	background: #ffffff;
 	transform: translate(-50%, -50%);
@@ -139,72 +153,109 @@ body {
 
 .formbold-form-input {
 	width: 100%;
-	padding: 13px 22px;
-	border-radius: 5px;
-	border: 1px solid #dde3ec;
+	padding: 14px 20px;
+	border-radius: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
 	background: #ffffff;
 	font-weight: 500;
 	font-size: 16px;
-	color: #07074d;
+	color: #0f172a;
 	outline: none;
 	resize: none;
+	font-family: inherit;
+	transition: all 0.3s ease;
 }
+
 .formbold-form-input::placeholder {
-	color: #536387;
+	color: #94a3b8;
 }
+
 .formbold-form-input:focus {
-	border-color: #6a64f1;
-	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+	border-color: #2563eb;
+	background: #ffffff;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
+
 .formbold-form-label {
-	color: #07074d;
-	font-size: 14px;
+	color: #2563eb;
+	font-size: 15px;
+	font-weight: 700;
 	line-height: 24px;
 	display: block;
 	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
 }
 
 .formbold-btn {
 	text-align: center;
 	width: 100%;
-	font-size: 16px;
-	border-radius: 5px;
+	font-size: 18px;
+	border-radius: 12px;
 	padding: 14px 25px;
-	border: none;
-	font-weight: 500;
-	background-color: #6a64f1;
+	border: 1px solid rgba(37, 99, 235, 0.2);
+	font-weight: 700;
+	background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
 	color: white;
 	cursor: pointer;
 	margin-top: 15px;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	letter-spacing: 1px;
 }
+
 .btn-warning {
-	background-color: #ff9800 !important;
+	background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+	color: #0c0203 !important;
+	border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
+
 .formbold-btn:hover {
-	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-	background-color: #6a64f19a !important;
+	transform: translateY(-2px);
+	box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
 }
+
 .btn-warning:hover {
-	background-color: #ff98009a !important;
+	box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3) !important;
 }
+
+.formbold-btn:active {
+	transform: translateY(0);
+}
+
 .formbold-btn:disabled {
-	background-color: #6a64f1 !important;
+	background: #cbd5e1 !important;
+	border-color: rgba(0, 0, 0, 0.1) !important;
+	color: #94a3b8 !important;
+	cursor: not-allowed;
+	transform: none !important;
+	box-shadow: none !important;
+	opacity: 0.6;
 }
+
 .btn-warning:disabled {
-	background-color: #ff9800 !important;
+	background: #cbd5e1 !important;
+	border-color: rgba(0, 0, 0, 0.1) !important;
+	color: #94a3b8 !important;
 }
+
 #background-header-form,
 #background-header-form-index {
 	width: 100%;
+	border-radius: 16px;
 	overflow: hidden;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
+
 .title-form {
-	font-weight: bold;
-	font-size: 22px;
+	font-weight: 800;
+	font-size: 24px;
 	text-align: center;
-	margin: 12px 0;
-	color: #000000;
+	margin: 20px 0;
+	color: #2563eb;
+	text-transform: uppercase;
+	letter-spacing: 1px;
 }
+
 /* ! MODAL LOADING */
 .modal-loading {
 	position: fixed;
@@ -225,22 +276,28 @@ body {
 
 .text_modal {
 	font-size: 1.3rem;
-	color: #000;
+	color: #1e293b;
 	text-align: center;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
+	font-weight: 600;
 }
 
 .modal-content {
-	background-color: #ffffff !important;
-	border-radius: 13px !important;
+	background: rgba(255, 255, 255, 0.98) !important;
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid rgba(37, 99, 235, 0.25) !important;
+	border-radius: 20px !important;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 7px;
+	padding: 24px !important;
 	box-sizing: border-box;
-	width: 300px !important;
+	width: 320px !important;
+	box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
 }
+
 @keyframes fadeIn {
 	from {
 		opacity: 0;
@@ -249,84 +306,74 @@ body {
 		opacity: 1;
 	}
 }
-@keyframes dots-fade {
-	0% {
-		background: #2d7cd4;
-		opacity: 0;
-		-webkit-transform: translateX(-175%);
-		transform: translateX(-175%);
-	}
-	10% {
-		opacity: 1;
-		-webkit-transform: translateX(-175%);
-		transform: translateX(-175%);
-	}
-	20% {
-		background: #2d7cd4;
-		opacity: 0;
-		-webkit-transform: translateX(-175%);
-		transform: translateX(-175%);
-	}
-	30% {
-		opacity: 0;
-		-webkit-transform: translateX(0);
-		transform: translateX(0);
-	}
-	40% {
-		opacity: 1;
-		-webkit-transform: translateX(0);
-		transform: translateX(0);
-	}
-	50% {
-		background: #f27228;
-		opacity: 0;
-		-webkit-transform: translateX(0);
-		transform: translateX(0);
-	}
-	60% {
-		background-color: #24b24b;
-		opacity: 0;
-		-webkit-transform: translateX(175%);
-		transform: translateX(175%);
-	}
-	70% {
-		opacity: 1;
-		-webkit-transform: translateX(175%);
-		transform: translateX(175%);
-	}
-	80%,
-	100% {
-		opacity: 0;
-		-webkit-transform: translateX(175%);
-		transform: translateX(175%);
-	}
+
+.dots-fade {
+	width: 40px;
+	height: 10px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
 }
 
 .dots-fade:before {
-	-webkit-animation: dots-fade 2s infinite;
-	animation: dots-fade 2s infinite;
-	background-color: #2d7cd4;
-	border-radius: 100%;
+	display: none;
+}
+
+.dots-fade::after {
 	content: '';
-	display: block;
-	height: 8px;
-	width: 8px;
+	width: 100%;
+	height: 4px;
+	background: #2563eb;
+	border-radius: 2px;
+	box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+	animation: pulseWidth 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseWidth {
+	0%,
+	100% {
+		transform: scaleX(0.2);
+		opacity: 0.3;
+	}
+	50% {
+		transform: scaleX(1);
+		opacity: 1;
+	}
+}
+
+#info_confirm {
+	background: rgba(0, 0, 0, 0.02);
+	border-radius: 14px;
+	padding: 15px;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	margin-bottom: 15px;
 }
 
 #info_confirm::-webkit-scrollbar {
 	display: none;
 }
-/* ! */
+
+#info_confirm div {
+	color: #334155;
+	font-size: 15px;
+	margin-bottom: 4px;
+}
+
+#info_confirm div b {
+	color: #2563eb;
+}
+
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
 	.formbold-form-wrapper,
 	.formbold-form-wrapper-index {
 		max-width: 700px;
-		padding: 12px;
+		padding: 30px;
 	}
 	.modal-content {
-		width: 500px !important;
+		width: 400px !important;
 	}
 }
+
 @media only screen and (max-width: 600px) {
 	.formbold-main-wrapper,
 	.formbold-main-wrapper-index {
@@ -335,14 +382,14 @@ body {
 
 	.formbold-form-wrapper,
 	.formbold-form-wrapper-index {
-		padding: 6px;
+		padding: 20px;
 	}
 	.modal-content {
 		width: 100% !important;
 	}
 
 	.checkin-btn {
-		font-size: 10px;
-		padding: 6px !important;
+		font-size: 11px;
+		padding: 8px 12px !important;
 	}
 }

@@ -11,30 +11,31 @@
 
 .digit-inputs {
 	display: flex;
-	gap: 15px;
+	gap: 18px;
 }
 
 /* --- Ô NHẬP SỐ (INPUT) --- */
 .digit-input {
 	width: 120px;
 	height: 120px;
-	font-size: 5rem;
-	font-weight: 800;
+	font-size: 5.5rem;
+	font-weight: 900;
 	text-align: center;
-	background: rgba(255, 255, 255, 0.95);
-	border: 2px solid #fff;
-	border-radius: 16px;
-	color: #dc2626;
-	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	background: #ffffff;
+	border: 2px solid rgba(0, 0, 0, 0.15);
+	border-radius: 20px;
+	color: #1d4ed8;
+	box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	outline: none;
-	font-family: 'Segoe UI', sans-serif;
+	font-family: 'Outfit', sans-serif;
 }
 
 .digit-input:focus {
 	border-color: #fbbf24;
-	transform: translateY(-5px) scale(1.05);
-	box-shadow: 0 15px 30px rgba(251, 191, 36, 0.4);
+	background: #ffffff;
+	transform: translateY(-6px) scale(1.04);
+	box-shadow: 0 18px 35px rgba(251, 191, 36, 0.35);
 }
 
 /* --- HIỆU ỨNG ẨN/HIỆN INPUT --- */
@@ -62,74 +63,91 @@
 	}
 }
 
-/* --- CARD KẾT QUẢ (GLASSMORPHISM) --- */
+/* --- CARD KẾT QUẢ (BRIGHT & COMPACT) --- */
 .lucky-result-card {
-	background: rgb(245 64 64 / 70%);
-	/* backdrop-filter: blur(12px); */
-	/* -webkit-backdrop-filter: blur(12px); */
-	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: linear-gradient(160deg, #ffffff 0%, #eff6ff 60%, #dbeafe 100%);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 2px solid rgba(59, 130, 246, 0.25);
 	border-radius: 24px;
-	padding: 40px 60px;
+	padding: 28px 36px;
 	text-align: center;
-	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-	max-width: 900px;
+	box-shadow:
+		0 8px 32px rgba(30, 64, 175, 0.18),
+		0 2px 8px rgba(0, 0, 0, 0.08),
+		inset 0 1px 0 rgba(255, 255, 255, 0.9);
+	max-width: 480px;
 	width: 100%;
-	margin: 0 auto 30px auto;
-	animation: zoomInCard 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	margin: 0 auto 20px auto;
+	animation: zoomInCard 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 	position: relative;
 	overflow: hidden;
 }
 
-/* Hiệu ứng viền sáng chạy quanh card (Optional) */
+/* Dải màu chạy ở đỉnh card */
 .lucky-result-card::before {
 	content: '';
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
-	height: 4px;
-	background: linear-gradient(90deg, transparent, #fbbf24, transparent);
-	animation: borderRun 2s linear infinite;
+	height: 5px;
+	background: linear-gradient(90deg, #1d4ed8, #06b6d4, #1d4ed8);
+	background-size: 200% auto;
+	animation: borderRun 2.5s linear infinite;
+	border-radius: 24px 24px 0 0;
 }
 
 @keyframes borderRun {
 	0% {
-		transform: translateX(-100%);
+		background-position: 0% center;
 	}
 	100% {
-		transform: translateX(100%);
+		background-position: 200% center;
 	}
 }
 
 @keyframes zoomInCard {
 	from {
 		opacity: 0;
-		transform: scale(0.8);
+		transform: scale(0.85) translateY(20px);
 	}
 	to {
 		opacity: 1;
-		transform: scale(1);
+		transform: scale(1) translateY(0);
 	}
 }
 
 /* --- NỘI DUNG TRONG CARD KẾT QUẢ --- */
+
+/* Icon trang trí trên cùng */
+.lucky-result-card .res-icon-top {
+	font-size: 2.2rem;
+	margin-bottom: 8px;
+	display: block;
+}
+
 .res-label {
-	font-size: 1.7rem;
-	letter-spacing: 2px;
+	font-size: 0.78rem;
+	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: #e2e8f0;
-	margin-bottom: 10px;
-	font-weight: 500;
+	color: #2563eb;
+	margin-bottom: 6px;
+	font-weight: 700;
+	font-family: 'Outfit', sans-serif;
+	opacity: 0.85;
 }
 
 .res-name {
-	font-size: 3.5rem; /* Tên to rõ */
+	font-size: 2rem;
 	font-weight: 900;
 	line-height: 1.2;
-	margin: 15px 0;
-	color: #fbbf24; /* Màu vàng kim */
+	margin: 10px 0 14px;
+	color: #1e3a8a;
 	text-transform: uppercase;
-	text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+	font-family: 'Outfit', sans-serif;
+	letter-spacing: 0.5px;
+	word-break: break-word;
 }
 
 .res-info {
@@ -137,31 +155,43 @@
 	flex-direction: column;
 	gap: 8px;
 	align-items: center;
-	color: #fff;
+	font-family: 'Outfit', sans-serif;
 }
 
+/* Badge Mã NV */
 .res-badge {
-	background: rgba(255, 255, 255, 0.15);
-	padding: 6px 16px;
+	background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+	color: #ffffff;
+	padding: 7px 22px;
 	border-radius: 100px;
-	font-size: 1.7rem;
-	font-weight: bold;
-	border: 1px solid rgba(255, 255, 255, 0.3);
-	display: inline-block;
-	margin-bottom: 10px;
-	width: 500px;
-}
-
-.res-dept {
-	font-size: 2rem;
+	font-size: 1rem;
 	font-weight: 700;
-	letter-spacing: 0px;
+	display: inline-block;
+	margin-bottom: 4px;
+	width: auto;
+	min-width: auto;
+	max-width: 100%;
+	letter-spacing: 1.5px;
+	box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);
 }
 
+/* Phòng ban */
+.res-dept {
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: #1e40af;
+	background: rgba(59, 130, 246, 0.1);
+	padding: 5px 16px;
+	border-radius: 8px;
+	display: inline-block;
+	border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Email / thông tin phụ */
 .res-sub {
-	font-size: 1.7rem;
-	color: #fff;
-	/* font-style: italic; */
+	font-size: 0.88rem;
+	color: #64748b;
+	font-weight: 500;
 }
 
 #reset-button {

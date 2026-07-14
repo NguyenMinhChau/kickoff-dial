@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -17,6 +17,12 @@
 		/>
 
 		<!-- import cs/js -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="./css/index.css" />
 		<link rel="stylesheet" href="./css/form-info.css" />
 		<link
@@ -127,47 +133,22 @@
 
 			<div id="lucky-draw">
 				<div class="persion-lucky">
-					<div id="middle" class="hiddenElement">
-						<div class="bar bar1"></div>
-						<div class="bar bar2"></div>
-						<div class="bar bar3"></div>
-						<div class="bar bar4"></div>
-						<div class="bar bar5"></div>
-						<div class="bar bar6"></div>
-						<div class="bar bar7"></div>
-						<div class="bar bar8"></div>
-						<div class="bar bar9"></div>
-						<div class="bar bar10"></div>
-						<div class="bar bar11"></div>
-						<div class="bar bar12"></div>
-						<div class="bar bar13"></div>
-						<div class="bar bar14"></div>
-						<div class="bar bar15"></div>
-						<div class="bar bar16"></div>
-						<div class="bar bar17"></div>
-						<div class="bar bar18"></div>
-						<div class="bar bar19"></div>
-						<div class="bar bar20"></div>
-						<div class="bar bar21"></div>
-						<div class="bar bar22"></div>
-						<div class="bar bar23"></div>
-						<div class="bar bar24"></div>
-						<div class="bar bar25"></div>
-						<div class="bar bar26"></div>
-						<div class="bar bar27"></div>
-						<div class="bar bar28"></div>
-						<div class="bar bar29"></div>
-						<div class="bar bar30"></div>
-						<div class="bar bar31"></div>
-						<div class="bar bar32"></div>
-						<div class="bar bar33"></div>
-						<div class="bar bar34"></div>
-						<div class="bar bar35"></div>
-						<div class="bar bar36"></div>
-						<div class="bar bar37"></div>
-						<div class="bar bar38"></div>
-						<div class="bar bar39"></div>
-						<div class="bar bar40"></div>
+					<div id="middle" class="hiddenElement modern-loader-container">
+						<div class="loader-content">
+							<div class="loader-circle-box">
+								<div class="loader-ring"></div>
+								<div class="loader-ring-2"></div>
+								<div class="loader-icon">
+									<i
+										class="fas fa-sync-alt fa-spin"
+										style="animation-duration: 2s; color: #fbbf24"
+									></i>
+								</div>
+							</div>
+							<div class="loader-text">
+								<span>ĐANG TÌM NHÂN SỰ MAY MẮN...</span>
+							</div>
+						</div>
 					</div>
 
 					<div id="name-persion-lucky" class="hiddenElement">---</div>
@@ -225,11 +206,7 @@
 			</div>
 
 			<div id="prizes-select" class="prizes-select">
-				<div
-					id="prizes-select-panel"
-					class="prizes-select__panel"
-					style="background-color: #ffffff"
-				>
+				<div id="prizes-select-panel" class="prizes-select__panel">
 					<div
 						style="
 							display: flex;
@@ -245,7 +222,7 @@
 						</div>
 						<div
 							id="prizes-select-close"
-							style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+							style="flex: 0; color: #3b82f6; margin: 0; cursor: pointer"
 						>
 							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
 						</div>
@@ -270,13 +247,8 @@
 					<div class="settings__panel__group">
 						<button
 							id="settings-save-prize-select"
-							style="
-								background-color: #dc2626;
-								padding: 10px;
-								font-size: 22px;
-								width: 100%;
-							"
-							class="solid-button"
+							style="padding: 10px; font-size: 22px; width: 100%"
+							class="solid-button solid-button--danger"
 						>
 							XÁC NHẬN PHẦN THƯỞNG
 						</button>
@@ -396,11 +368,7 @@
 			</div>
 
 			<div id="user-prizes" class="user-prizes">
-				<div
-					id="user-prizes-panel"
-					class="user-prizes__panel"
-					style="background-color: #ffffff"
-				>
+				<div id="user-prizes-panel" class="user-prizes__panel">
 					<div
 						style="
 							display: flex;
@@ -416,7 +384,7 @@
 						</div>
 						<div
 							id="user-settings-close"
-							style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+							style="flex: 0; color: #3b82f6; margin: 0; cursor: pointer"
 						>
 							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
 						</div>
@@ -443,11 +411,7 @@
 			</div>
 
 			<div id="user-join" class="user-join">
-				<div
-					id="user-join-panel"
-					class="user-join__panel"
-					style="background-color: #ffffff"
-				>
+				<div id="user-join-panel" class="user-join__panel">
 					<div
 						style="
 							display: flex;
@@ -463,7 +427,7 @@
 						</div>
 						<div
 							id="user-join-close"
-							style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+							style="flex: 0; color: #3b82f6; margin: 0; cursor: pointer"
 						>
 							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
 						</div>
@@ -504,7 +468,7 @@
 						</div>
 						<div
 							id="settings-close"
-							style="flex: 0; color: #dc2626; margin: 0; cursor: pointer"
+							style="flex: 0; color: #3b82f6; margin: 0; cursor: pointer"
 						>
 							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
 						</div>
@@ -652,8 +616,8 @@
 					<div class="settings__panel__group">
 						<button
 							id="settings-save"
-							style="background-color: #dc2626; padding: 10px; font-size: 22px"
-							class="solid-button"
+							style="padding: 10px; font-size: 22px"
+							class="solid-button solid-button--danger"
 						>
 							LƯU LẠI CÀI ĐẶT
 						</button>
