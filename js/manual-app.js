@@ -6,6 +6,7 @@ var PROGRAM_ID = '';
 var USER_NAME = '';
 var PASSWORD = '';
 var DIGIT_COUNT = 3; // Mặc định 3 số, có thể chỉnh trong settings
+var SPIN_DURATION = 5; // Mặc định 5 giây
 var PRIZE = null;
 var PRIZE_DATA = null;
 
@@ -39,6 +40,7 @@ const passwordElement = document.getElementById('password');
 const realPasswordElement = document.getElementById('realPassword');
 const settingsWrapper = document.getElementById('settings');
 const enableSoundCheckbox = document.getElementById('enable-sound');
+const durationDrawElement = document.getElementById('duration');
 
 // TABLES
 const tabelUserJoinPrizeBody = document.getElementById(
@@ -381,7 +383,7 @@ const start = () => {
 					manualInputArea.style.display = 'none';
 					showError(res.errors?.[0]?.msg || 'Không tìm thấy thông tin!');
 				}
-			}, 5000);
+			}, SPIN_DURATION * 1000);
 		} catch (e) {
 			elementLoading.classList.add('hiddenElement');
 			// sfxSpin.pause(); // Tắt tiếng quay khi lỗi
@@ -422,8 +424,9 @@ const start = () => {
 		confettiAnimation();
 		resetButton.style.display = 'inline-block';
 		resetButton.innerText = 'TIẾP TỤC';
-		resetButton.style.backgroundColor = '#f59e0b';
-		resetButton.className = 'solid-button animate__animated animate__fadeInUp';
+		resetButton.style.backgroundColor = '';
+		resetButton.className =
+			'solid-button btn-continue animate__animated animate__fadeInUp';
 	};
 
 	const showError = (msg) => {
@@ -440,7 +443,9 @@ const start = () => {
         `;
 		resetButton.style.display = 'inline-block';
 		resetButton.innerText = 'THỬ LẠI';
-		resetButton.style.backgroundColor = '#64748b';
+		resetButton.style.backgroundColor = '';
+		resetButton.className =
+			'solid-button btn-retry animate__animated animate__fadeInUp';
 	};
 
 	const handleReset = () => {
@@ -468,6 +473,8 @@ const start = () => {
 	settingsSaveButton.addEventListener('click', () => {
 		if (userNameElement) USER_NAME = userNameElement.value;
 		if (passwordElement) PASSWORD = realPasswordElement.value;
+		if (durationDrawElement)
+			SPIN_DURATION = parseInt(durationDrawElement.value) || 5;
 
 		// Xử lý MUTE / UNMUTE toàn bộ
 		if (enableSoundCheckbox) {
@@ -499,6 +506,7 @@ const start = () => {
 	settingsButton.addEventListener('click', () => {
 		if (userNameElement) userNameElement.value = USER_NAME;
 		if (digitCountSelect) digitCountSelect.value = DIGIT_COUNT;
+		if (durationDrawElement) durationDrawElement.value = SPIN_DURATION;
 		setSlotNames();
 		settingsWrapper.style.display = 'block';
 	});

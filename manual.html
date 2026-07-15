@@ -71,13 +71,7 @@
 
 			<!-- MAIN AREA -->
 			<div id="lucky-draw">
-				<!-- INPUT CONTAINER -->
-				<div class="manual-input-container" id="manual-input-area">
-					<div class="digit-inputs" id="digit-inputs-container">
-						<!-- JS sẽ tự tạo input dựa vào cấu hình -->
-					</div>
-				</div>
-
+				<!-- Loading & Result -->
 				<div class="persion-lucky">
 					<!-- Loading -->
 					<div id="middle" class="hiddenElement modern-loader-container">
@@ -91,20 +85,26 @@
 							</div>
 							<div class="loader-text">
 								<span>ĐANG TÌM KIẾM NHÂN SỰ MAY MẮN NGÀY HÔM NAY...</span>
-								<!-- <span class="dots">...</span> -->
 							</div>
 						</div>
 					</div>
 
-					<!-- RESULT CONTAINER (Nơi JS sẽ vẽ Card kết quả vào đây) -->
+					<!-- RESULT CONTAINER -->
 					<div id="name-persion-lucky" class="hiddenElement"></div>
+				</div>
+
+				<!-- INPUT CONTAINER -->
+				<div class="manual-input-container" id="manual-input-area">
+					<div class="digit-inputs" id="digit-inputs-container">
+						<!-- JS sẽ tự tạo input dựa vào cấu hình -->
+					</div>
 				</div>
 
 				<div id="sunburst" class="sunburst" style="display: none">
 					<img src="./assets/sunburst.svg" alt="sunburst" />
 				</div>
 
-				<div style="margin-top: 10px">
+				<div id="manual-button-container">
 					<button id="draw-button" class="solid-button">BẮT ĐẦU</button>
 					<button
 						id="reset-button"
@@ -119,95 +119,127 @@
 			<!-- SETTINGS MODAL -->
 			<div id="settings" class="settings">
 				<div id="settings-panel" class="settings__panel">
-					<div
-						style="
-							display: flex;
-							flex-direction: row;
-							gap: 5px;
-							align-items: flex-start;
-						"
-					>
-						<div style="flex: 1"><h1 class="settings__title">Cài đặt</h1></div>
-						<div
-							id="settings-close"
-							style="flex: 0; color: #3b82f6; margin: 0; cursor: pointer"
-						>
-							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
+					<div class="panel-inner">
+						<div class="panel-title-row">
+							<h1 class="settings__title">
+								<span class="panel-icon"><i class="fas fa-sliders-h"></i></span>
+								Cài đặt
+							</h1>
+							<button id="settings-close" class="panel-close-btn">
+								<i class="fas fa-times"></i>
+							</button>
 						</div>
-					</div>
-					<div class="settings__panel__group" style="overflow: auto; flex: 1">
-						<div class="input-group mb-3 flex-nowrap">
-							<span class="input-group-text">Chương trình</span>
-							<select class="form-select" id="program_select_list"></select>
-						</div>
-						<!-- CẤU HÌNH SỐ LƯỢNG KÝ TỰ -->
-						<div class="input-group mb-3 flex-nowrap">
-							<span class="input-group-text">Số lượng chữ số</span>
-							<select class="form-select" id="digit_count_select">
-								<option value="3" selected>3 Số</option>
-								<option value="4">4 Số</option>
-								<option value="5">5 Số</option>
-								<option value="6">6 Số</option>
-							</select>
-						</div>
-						<div class="input-group mb-3 flex-nowrap">
-							<span class="input-group-text">Tài khoản</span>
-							<input
-								type="text"
-								class="form-control"
-								id="username"
-								placeholder="Nhập tên tài khoản"
-							/>
-						</div>
-						<div class="input-group mb-3 flex-nowrap">
-							<span class="input-group-text">Mật khẩu</span>
-							<input
-								type="text"
-								class="form-control"
-								id="password"
-								placeholder="Nhập mật khẩu"
-							/>
-							<input id="realPassword" type="hidden" class="form-control" />
-						</div>
-						<!-- BẢNG DANH SÁCH -->
-						<div class="input-group">
-							<label class="input-label" for="name-list">
-								Nhân sự chưa trúng
-								<span id="table_user_join_prize_count"></span>
-							</label>
-							<div class="table_scroll">
-								<table class="table">
-									<thead>
-										<tr>
-											<th scope="col">#</th>
-											<th scope="col">Mã NV</th>
-											<th scope="col">Họ tên</th>
-											<th scope="col">Đơn vị</th>
-										</tr>
-									</thead>
-									<tbody id="table_user_join_prize_body"></tbody>
-								</table>
+
+						<div class="settings__panel__group" style="overflow: auto; flex: 1">
+							<!-- Chương trình -->
+							<div class="input-group mb-3 flex-nowrap">
+								<span class="input-group-text">Chương trình</span>
+								<select class="form-select" id="program_select_list"></select>
 							</div>
+
+							<!-- Số lượng chữ số -->
+							<div class="input-group mb-3 flex-nowrap">
+								<span class="input-group-text">Số lượng chữ số</span>
+								<select class="form-select" id="digit_count_select">
+									<option value="3" selected>3 Số</option>
+									<option value="4">4 Số</option>
+									<option value="5">5 Số</option>
+									<option value="6">6 Số</option>
+								</select>
+							</div>
+
+							<!-- Tài khoản -->
+							<div class="input-group mb-3 flex-nowrap">
+								<span class="input-group-text">Tài khoản</span>
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Nhập tên tài khoản"
+									id="username"
+									autocomplete="off"
+								/>
+							</div>
+
+							<!-- Mật khẩu -->
+							<div class="input-group mb-3 flex-nowrap">
+								<span class="input-group-text">Mật khẩu</span>
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Nhập mật khẩu"
+									id="password"
+									autocomplete="off"
+								/>
+								<input
+									id="realPassword"
+									type="hidden"
+									class="form-control"
+									autocomplete="off"
+								/>
+							</div>
+
+							<!-- Thời gian quay -->
+							<div class="input-group mb-3 flex-nowrap">
+								<span class="input-group-text">Thời gian quay (giây)</span>
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Nhập thời gian (giây)"
+									id="duration"
+									autocomplete="off"
+								/>
+								<span class="input-group-text">giây</span>
+							</div>
+
+							<!-- BẢNG DANH SÁCH -->
+							<div class="input-group">
+								<label class="input-label" for="name-list">
+									Danh sách nhân sự chưa trúng
+									<span
+										id="table_user_join_prize_count"
+										class="panel-count"
+									></span>
+								</label>
+								<div class="table_scroll">
+									<table class="table">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Mã NV</th>
+												<th scope="col">Họ tên</th>
+												<th scope="col">Đơn vị</th>
+											</tr>
+										</thead>
+										<tbody id="table_user_join_prize_body"></tbody>
+									</table>
+								</div>
+							</div>
+
+							<!-- Bật âm thanh -->
+							<label
+								class="input-group input-group--2-column"
+								for="enable-sound"
+							>
+								<label class="input-label" for="enable-sound"
+									>Bật hiệu ứng âm thanh</label
+								>
+								<div class="input--switch switch-enable-sound">
+									<input type="checkbox" id="enable-sound" checked="true" />
+									<span class="slider slider-enable-sound"></span>
+								</div>
+							</label>
 						</div>
-						<div class="input-group mb-3 flex-nowrap">
-							<label class="input-label" for="enable-sound">Bật âm thanh</label>
-							<div style="flex: 1"></div>
-							<input
-								type="checkbox"
-								id="enable-sound"
-								checked="true"
-								style="width: 20px; height: 20px"
-							/>
+
+						<div class="panel-footer">
+							<button
+								id="settings-save"
+								class="solid-button solid-button--danger"
+								style="font-size: 1.1rem; padding: 0.9rem; width: 100%"
+							>
+								<i class="fas fa-save" style="margin-right: 8px"></i>LƯU LẠI CÀI
+								ĐẶT
+							</button>
 						</div>
-					</div>
-					<div class="settings__panel__group">
-						<button
-							id="settings-save"
-							style="width: 100%"
-							class="solid-button solid-button--danger"
-						>
-							LƯU CÀI ĐẶT
-						</button>
 					</div>
 				</div>
 			</div>
@@ -215,96 +247,83 @@
 			<!-- CÁC MODAL KHÁC (PRIZE, USER, JOIN) -->
 			<div id="prizes-select" class="prizes-select">
 				<div id="prizes-select-panel" class="prizes-select__panel">
-					<!-- HEADER GIỐNG HỆT INDEX.HTML -->
-					<div
-						style="
-							display: flex;
-							flex-direction: row;
-							gap: 5px;
-							align-items: flex-start;
-						"
-					>
-						<div style="flex: 1">
+					<div class="panel-inner">
+						<div class="panel-title-row">
 							<h1 class="settings__title">
-								Danh sách giải thưởng <span id="prizes-select-count"></span>
+								<span class="panel-icon"><i class="fas fa-gift"></i></span>
+								Cơ cấu giải thưởng
+								<span id="prizes-select-count" class="panel-count"></span>
 							</h1>
+							<button id="prizes-select-close" class="panel-close-btn">
+								<i class="fas fa-times"></i>
+							</button>
 						</div>
-						<div
-							id="prizes-select-close"
-							style="flex: 0; color: #3b82f6; margin: 0; cursor: pointer"
-						>
-							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
-						</div>
-					</div>
 
-					<div
-						class="prizes-select__panel__group"
-						style="overflow: auto; flex: 1"
-					>
-						<div id="modal_prize_select_container">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Tên giải thưởng</th>
-										<th scope="col">Chọn</th>
-									</tr>
-								</thead>
-								<tbody id="table_prize_select_body"></tbody>
-							</table>
-						</div>
-					</div>
-					<div class="settings__panel__group">
-						<button
-							id="settings-save-prize-select"
-							style="padding: 10px; font-size: 22px; width: 100%"
-							class="solid-button solid-button--danger"
+						<div
+							class="prizes-select__panel__group"
+							style="overflow: auto; flex: 1"
 						>
-							XÁC NHẬN PHẦN THƯỞNG
-						</button>
+							<div class="table_scroll">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Tên giải thưởng</th>
+											<th>Chọn</th>
+										</tr>
+									</thead>
+									<tbody id="table_prize_select_body"></tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="panel-footer">
+							<button
+								id="settings-save-prize-select"
+								class="solid-button solid-button--danger"
+								style="font-size: 1.1rem; padding: 0.9rem; width: 100%"
+							>
+								<i class="fas fa-check-circle" style="margin-right: 8px"></i>XÁC
+								NHẬN PHẦN THƯỞNG
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
 
 			<div id="user-prizes" class="user-prizes">
 				<div id="user-prizes-panel" class="user-prizes__panel">
-					<!-- HEADER GIỐNG HỆT INDEX.HTML -->
-					<div
-						style="
-							display: flex;
-							flex-direction: row;
-							gap: 5px;
-							align-items: flex-start;
-						"
-					>
-						<div style="flex: 1">
+					<div class="panel-inner">
+						<div class="panel-title-row">
 							<h1 class="settings__title">
-								Nhân sự trúng thưởng <span id="user-prizes-count"></span>
+								<span class="panel-icon"><i class="fas fa-award"></i></span>
+								Danh sách trúng thưởng
+								<span id="user-prizes-count" class="panel-count"></span>
 							</h1>
+							<button id="user-settings-close" class="panel-close-btn">
+								<i class="fas fa-times"></i>
+							</button>
 						</div>
-						<div
-							id="user-settings-close"
-							style="flex: 0; color: #3b82f6; margin: 0; cursor: pointer"
-						>
-							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
-						</div>
-					</div>
 
-					<div class="user-prizes__panel__group" style="overflow: auto">
-						<div id="modal_user_prize_container">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Email/Mã NV</th>
-										<th scope="col">Họ tên</th>
-										<th scope="col">Chi nhánh</th>
-										<th scope="col">Phòng ban</th>
-										<th scope="col">Giải thưởng</th>
-									</tr>
-								</thead>
-								<tbody id="table_user_prize_body"></tbody>
-							</table>
+						<div
+							class="user-prizes__panel__group"
+							style="overflow: auto; flex: 1"
+						>
+							<div class="table_scroll">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Mã nhân viên / Email</th>
+											<th>Họ tên</th>
+											<th>Chi nhánh</th>
+											<th>Phòng ban</th>
+											<th>Giải thưởng</th>
+										</tr>
+									</thead>
+									<tbody id="table_user_prize_body"></tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -312,43 +331,37 @@
 
 			<div id="user-join" class="user-join">
 				<div id="user-join-panel" class="user-join__panel">
-					<!-- HEADER GIỐNG HỆT INDEX.HTML -->
-					<div
-						style="
-							display: flex;
-							flex-direction: row;
-							gap: 5px;
-							align-items: flex-start;
-						"
-					>
-						<div style="flex: 1">
+					<div class="panel-inner">
+						<div class="panel-title-row">
 							<h1 class="settings__title">
-								Nhân sự tham gia <span id="user-join-count"></span>
+								<span class="panel-icon"><i class="fas fa-users"></i></span>
+								Danh sách tham gia
+								<span id="user-join-count" class="panel-count"></span>
 							</h1>
+							<button id="user-join-close" class="panel-close-btn">
+								<i class="fas fa-times"></i>
+							</button>
 						</div>
-						<div
-							id="user-join-close"
-							style="flex: 0; color: #3b82f6; margin: 0; cursor: pointer"
-						>
-							<i class="far fa-window-close" style="font-size: 2.3rem"></i>
-						</div>
-					</div>
 
-					<div class="user-join__panel__group" style="overflow: auto">
-						<div id="modal_user_join_container">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Email/Mã NV</th>
-										<th scope="col">Họ tên</th>
-										<th scope="col">Chi nhánh</th>
-										<th scope="col">Phòng ban</th>
-										<th scope="col">Trạng thái</th>
-									</tr>
-								</thead>
-								<tbody id="table_user_join_body"></tbody>
-							</table>
+						<div
+							class="user-join__panel__group"
+							style="overflow: auto; flex: 1"
+						>
+							<div class="table_scroll">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Mã nhân viên / Email</th>
+											<th>Họ tên</th>
+											<th>Chi nhánh</th>
+											<th>Phòng ban</th>
+											<th>Trạng thái</th>
+										</tr>
+									</thead>
+									<tbody id="table_user_join_body"></tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -128,29 +128,29 @@ const start = () => {
 		'table_prize_select_body',
 	);
 	// !! STATISTICAL
-	// const chartStatisticalWrapper = document.getElementById('chart-statistical');
-	// const checkinChartStatisticalWrapper = document.getElementById(
-	// 	'checkin-chart-statistical',
-	// );
-	// const chartStatisticalContent = document.getElementById(
-	// 	'chart-statistical-panel',
-	// );
-	// const checkinChartStatisticalContent = document.getElementById(
-	// 	'checkin-chart-statistical-panel',
-	// );
-	// const chartStatisticalCloseButton = document.getElementById(
-	// 	'chart-statistical-close',
-	// );
-	// const checkinChartStatisticalCloseButton = document.getElementById(
-	// 	'checkin-chart-statistical-close',
-	// );
-	// const sunmaryChart = document.getElementById('summary_chart');
-	// const ctxChartDeparment = document
-	// 	.getElementById('departmentChart')
-	// 	.getContext('2d');
-	// const ctxCheckinChartDeparment = document
-	// 	.getElementById('departmentChartAndCheckin')
-	// 	.getContext('2d');
+	const chartStatisticalWrapper = document.getElementById('chart-statistical');
+	const checkinChartStatisticalWrapper = document.getElementById(
+		'checkin-chart-statistical',
+	);
+	const chartStatisticalContent = document.getElementById(
+		'chart-statistical-panel',
+	);
+	const checkinChartStatisticalContent = document.getElementById(
+		'checkin-chart-statistical-panel',
+	);
+	const chartStatisticalCloseButton = document.getElementById(
+		'chart-statistical-close',
+	);
+	const checkinChartStatisticalCloseButton = document.getElementById(
+		'checkin-chart-statistical-close',
+	);
+	const sunmaryChart = document.getElementById('summary_chart');
+	const ctxChartDeparment = document
+		.getElementById('departmentChart')
+		.getContext('2d');
+	const ctxCheckinChartDeparment = document
+		.getElementById('departmentChartAndCheckin')
+		.getContext('2d');
 	//! ============================
 
 	// !SET BACKGROUND IMAGE
@@ -468,290 +468,290 @@ const start = () => {
 	getListPrize();
 
 	// !! STATISTICAL
-	// function clearChart() {
-	// 	if (MY_CHART) {
-	// 		MY_CHART.destroy();
-	// 		MY_CHART = null; // Important reset
-	// 	}
-	// 	// Clear both canvases to be safe
-	// 	[ctxChartDeparment, ctxCheckinChartDeparment].forEach((ctx) => {
-	// 		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	// 		ctx.beginPath();
-	// 	});
-	// }
+	function clearChart() {
+		if (MY_CHART) {
+			MY_CHART.destroy();
+			MY_CHART = null; // Important reset
+		}
+		// Clear both canvases to be safe
+		[ctxChartDeparment, ctxCheckinChartDeparment].forEach((ctx) => {
+			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+			ctx.beginPath();
+		});
+	}
 
-	// const titleColors = {
-	// 	'CHIẾN BINH SỨC MẠNH': '#6d94b8',
-	// 	'CHIẾN BINH KẾT NỐI': '#0563cf',
-	// 	'CHIẾN BINH NHIỆT HUYẾT': '#b44015',
-	// 	'CHIẾN BINH TỐC ĐỘ': '#cf9a2a',
-	// 	'CHIẾN BINH TRÍ TUỆ': '#d5a5e7',
-	// 	'CHIẾN BINH SÁNG TẠO': '#ee2334',
-	// };
+	const titleColors = {
+		'CHIẾN BINH SỨC MẠNH': '#6d94b8',
+		'CHIẾN BINH KẾT NỐI': '#0563cf',
+		'CHIẾN BINH NHIỆT HUYẾT': '#b44015',
+		'CHIẾN BINH TỐC ĐỘ': '#cf9a2a',
+		'CHIẾN BINH TRÍ TUỆ': '#d5a5e7',
+		'CHIẾN BINH SÁNG TẠO': '#ee2334',
+	};
 
-	// // Function helpers for Chart styling
-	// function getGradientColor(ctx, color) {
-	// 	const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-	// 	gradient.addColorStop(0, color); // Solid color at top
-	// 	gradient.addColorStop(0.8, color + '80'); // Semitransparent
-	// 	gradient.addColorStop(1, color + '10'); // Very transparent at bottom
-	// 	return gradient;
-	// }
+	// Function helpers for Chart styling
+	function getGradientColor(ctx, color) {
+		const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+		gradient.addColorStop(0, color); // Solid color at top
+		gradient.addColorStop(0.8, color + '80'); // Semitransparent
+		gradient.addColorStop(1, color + '10'); // Very transparent at bottom
+		return gradient;
+	}
 
-	// const getStatisticalChart = async (isUpdate = false) => {
-	// 	if (PROGRAM_ID) {
-	// 		await fetch(
-	// 			`${ENDPOINT_BACKEND}/thong-ke-so-luong-quay-so/${PROGRAM_ID}`,
-	// 			{
-	// 				method: 'GET',
-	// 			},
-	// 		)
-	// 			.then((response) => response.json())
-	// 			.then((data) => {
-	// 				const { success, errors, payload } = { ...data };
-	// 				if (!success) {
-	// 					console.error(
-	// 						errors?.[0]?.message ||
-	// 							errors?.[0]?.msg ||
-	// 							'Lấy danh sách giải thưởng không thành công',
-	// 					);
-	// 					return;
-	// 				}
+	const getStatisticalChart = async (isUpdate = false) => {
+		if (PROGRAM_ID) {
+			await fetch(
+				`${ENDPOINT_BACKEND}/thong-ke-so-luong-quay-so/${PROGRAM_ID}`,
+				{
+					method: 'GET',
+				},
+			)
+				.then((response) => response.json())
+				.then((data) => {
+					const { success, errors, payload } = { ...data };
+					if (!success) {
+						console.error(
+							errors?.[0]?.message ||
+								errors?.[0]?.msg ||
+								'Lấy danh sách giải thưởng không thành công',
+						);
+						return;
+					}
 
-	// 				// Process Data
-	// 				const sortedData = Object.entries(payload)
-	// 					.map(([label, values]) => ({ label, ...values }))
-	// 					.sort((a, b) => b.total - a.total);
+					// Process Data
+					const sortedData = Object.entries(payload)
+						.map(([label, values]) => ({ label, ...values }))
+						.sort((a, b) => b.total - a.total);
 
-	// 				const sortedLabels = sortedData.map((item) =>
-	// 					item.label.toUpperCase(),
-	// 				);
-	// 				const sortedTotalValues = sortedData.map((item) => item.total);
-	// 				const sortedCheckedInValues = sortedData.map(
-	// 					(item) => item.checkedIn,
-	// 				);
+					const sortedLabels = sortedData.map((item) =>
+						item.label.toUpperCase(),
+					);
+					const sortedTotalValues = sortedData.map((item) => item.total);
+					const sortedCheckedInValues = sortedData.map(
+						(item) => item.checkedIn,
+					);
 
-	// 				const totalAllTeams = sortedTotalValues.reduce(
-	// 					(sum, val) => sum + val,
-	// 					0,
-	// 				);
-	// 				const totalCheckedInAllTeams = sortedCheckedInValues.reduce(
-	// 					(sum, val) => sum + val,
-	// 					0,
-	// 				);
-	// 				const percentageCheckedInAllTeams = totalAllTeams
-	// 					? ((totalCheckedInAllTeams / totalAllTeams) * 100).toFixed(2)
-	// 					: 0;
+					const totalAllTeams = sortedTotalValues.reduce(
+						(sum, val) => sum + val,
+						0,
+					);
+					const totalCheckedInAllTeams = sortedCheckedInValues.reduce(
+						(sum, val) => sum + val,
+						0,
+					);
+					const percentageCheckedInAllTeams = totalAllTeams
+						? ((totalCheckedInAllTeams / totalAllTeams) * 100).toFixed(2)
+						: 0;
 
-	// 				sunmaryChart.innerHTML = `
-	// 					<div style="font-size: 1.2rem; margin-bottom: 5px;">Tổng số: <b style="color: #fbbf24; font-size: 1.5rem;">${totalAllTeams?.toLocaleString()}</b> chiến binh</div>
-	// 					<div style="font-size: 1.2rem;">Phần trăm đã checkin: <b style="color: #34d399; font-size: 1.5rem;">${percentageCheckedInAllTeams}</b>%</div>
-	// 				`;
+					sunmaryChart.innerHTML = `
+						<div style="font-size: 1.2rem; margin-bottom: 5px;">Tổng số: <b style="color: #fbbf24; font-size: 1.5rem;">${totalAllTeams?.toLocaleString()}</b> chiến binh</div>
+						<div style="font-size: 1.2rem;">Phần trăm đã checkin: <b style="color: #34d399; font-size: 1.5rem;">${percentageCheckedInAllTeams}</b>%</div>
+					`;
 
-	// 				const targetCtx =
-	// 					chartStatisticalWrapper.style.display === 'block'
-	// 						? ctxChartDeparment
-	// 						: ctxCheckinChartDeparment;
+					const targetCtx =
+						chartStatisticalWrapper.style.display === 'block'
+							? ctxChartDeparment
+							: ctxCheckinChartDeparment;
 
-	// 				// --- CHART COLOR LOGIC ---
-	// 				// 1. Color for Total: Dynamic per team
-	// 				const totalColors = sortedLabels.map(
-	// 					(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
-	// 				);
-	// 				const totalGradients = totalColors.map((c) =>
-	// 					getGradientColor(targetCtx, c),
-	// 				);
+					// --- CHART COLOR LOGIC ---
+					// 1. Color for Total: Dynamic per team
+					const totalColors = sortedLabels.map(
+						(label) => titleColors[label.toUpperCase()] || '#FFFFFF',
+					);
+					const totalGradients = totalColors.map((c) =>
+						getGradientColor(targetCtx, c),
+					);
 
-	// 				// 2. Color for Check-in: UNIFORM NEON YELLOW (High Contrast)
-	// 				const checkInColor = '#FACC15'; // Neon Gold/Yellow
-	// 				const checkInBorder = '#FEF08A'; // Lighter border
+					// 2. Color for Check-in: UNIFORM NEON YELLOW (High Contrast)
+					const checkInColor = '#FACC15'; // Neon Gold/Yellow
+					const checkInBorder = '#FEF08A'; // Lighter border
 
-	// 				// --- CHART LOGIC START ---
-	// 				if (MY_CHART && MY_CHART.ctx.canvas === targetCtx.canvas) {
-	// 					// UPDATE EXISTING CHART
-	// 					MY_CHART.data.labels = sortedLabels.map((item) =>
-	// 						item.toUpperCase(),
-	// 					);
-	// 					MY_CHART.data.datasets[0].data = sortedTotalValues;
-	// 					MY_CHART.data.datasets[1].data = sortedCheckedInValues;
+					// --- CHART LOGIC START ---
+					if (MY_CHART && MY_CHART.ctx.canvas === targetCtx.canvas) {
+						// UPDATE EXISTING CHART
+						MY_CHART.data.labels = sortedLabels.map((item) =>
+							item.toUpperCase(),
+						);
+						MY_CHART.data.datasets[0].data = sortedTotalValues;
+						MY_CHART.data.datasets[1].data = sortedCheckedInValues;
 
-	// 					MY_CHART.data.datasets[0].backgroundColor = totalGradients;
-	// 					MY_CHART.data.datasets[0].borderColor = totalColors;
-	// 					// Dataset 1 (Check-in) uses fixed colors, no need to update color array dynamically
-	// 					MY_CHART.update();
-	// 				} else {
-	// 					// DESTROY AND CREATE NEW CHART
-	// 					if (MY_CHART) {
-	// 						MY_CHART.destroy();
-	// 					}
+						MY_CHART.data.datasets[0].backgroundColor = totalGradients;
+						MY_CHART.data.datasets[0].borderColor = totalColors;
+						// Dataset 1 (Check-in) uses fixed colors, no need to update color array dynamically
+						MY_CHART.update();
+					} else {
+						// DESTROY AND CREATE NEW CHART
+						if (MY_CHART) {
+							MY_CHART.destroy();
+						}
 
-	// 					MY_CHART = new Chart(targetCtx, {
-	// 						type: 'bar',
-	// 						data: {
-	// 							labels: sortedLabels.map((item) => item.toUpperCase()),
-	// 							datasets: [
-	// 								{
-	// 									label: 'TỔNG SỐ CHIẾN BINH',
-	// 									data: sortedTotalValues,
-	// 									backgroundColor: totalGradients,
-	// 									borderColor: totalColors,
-	// 									borderWidth: 2,
-	// 									borderRadius: 8,
-	// 									barPercentage: 0.6,
-	// 									categoryPercentage: 0.8,
-	// 									// Data Labels Configuration
-	// 									datalabels: {
-	// 										anchor: 'end', // Anchor to top of bar
-	// 										align: 'end', // Push text upwards
-	// 										offset: -5, // Slight adjustment
-	// 										color: '#FFFFFF',
-	// 										font: {
-	// 											size: 14,
-	// 											weight: 'bold',
-	// 										},
-	// 										formatter: (value) => value.toLocaleString(),
-	// 									},
-	// 								},
-	// 								{
-	// 									label: 'TỶ LỆ CHECK-IN (%)',
-	// 									data: sortedCheckedInValues,
-	// 									// FIX: Use uniform high-contrast color
-	// 									backgroundColor: checkInColor,
-	// 									borderColor: checkInBorder,
-	// 									borderWidth: 2,
-	// 									borderRadius: 8,
-	// 									barPercentage: 0.6,
-	// 									categoryPercentage: 0.8,
-	// 									// Data Labels Configuration
-	// 									datalabels: {
-	// 										anchor: 'end', // Anchor to top of bar
-	// 										align: 'end', // Push text upwards
-	// 										offset: -5,
-	// 										color: checkInColor, // Match the bar color for text
-	// 										font: {
-	// 											size: 14,
-	// 											weight: 'bold',
-	// 										},
-	// 										formatter: (value, context) => {
-	// 											const total = sortedTotalValues[context.dataIndex];
-	// 											if (!total) return '0%';
-	// 											const percentage = (value / total) * 100;
-	// 											return percentage.toFixed(1) + '%';
-	// 										},
-	// 									},
-	// 								},
-	// 							],
-	// 						},
-	// 						options: {
-	// 							responsive: true,
-	// 							maintainAspectRatio: false,
-	// 							animation: {
-	// 								duration: 1000,
-	// 								easing: 'easeOutQuart',
-	// 							},
-	// 							layout: {
-	// 								// Add padding top so labels don't get cut off
-	// 								padding: { top: 50, bottom: 20, left: 10, right: 10 },
-	// 							},
-	// 							plugins: {
-	// 								legend: {
-	// 									display: true,
-	// 									position: 'bottom',
-	// 									labels: {
-	// 										font: {
-	// 											size: 14,
-	// 											weight: 'bold',
-	// 											family:
-	// 												"'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-	// 										},
-	// 										color: '#e2e8f0',
-	// 										padding: 20,
-	// 										usePointStyle: true,
-	// 										pointStyle: 'circle',
-	// 									},
-	// 								},
-	// 								tooltip: {
-	// 									enabled: true,
-	// 									backgroundColor: 'rgba(15, 23, 42, 0.95)',
-	// 									titleColor: '#fbbf24',
-	// 									bodyColor: '#fff',
-	// 									titleFont: { size: 14, weight: 'bold' },
-	// 									bodyFont: { size: 13 },
-	// 									padding: 12,
-	// 									cornerRadius: 8,
-	// 									borderColor: 'rgba(255,255,255,0.1)',
-	// 									borderWidth: 1,
-	// 									displayColors: true,
-	// 								},
-	// 								datalabels: {
-	// 									// Global settings if not overridden
-	// 									display: true,
-	// 								},
-	// 							},
-	// 							scales: {
-	// 								x: {
-	// 									ticks: {
-	// 										font: {
-	// 											size: (context) => {
-	// 												const width = context.chart.width;
-	// 												return width < 768 ? 9 : 12;
-	// 											},
-	// 											weight: 'bold',
-	// 										},
-	// 										color: (context) => {
-	// 											const label = context.tick.label.toUpperCase();
-	// 											return titleColors[label] || '#e2e8f0';
-	// 										},
-	// 										autoSkip: false,
-	// 										maxRotation: 45,
-	// 										minRotation: 0,
-	// 									},
-	// 									grid: { display: false },
-	// 									border: {
-	// 										display: true,
-	// 										color: 'rgba(255,255,255,0.2)',
-	// 									},
-	// 								},
-	// 								y: {
-	// 									ticks: {
-	// 										font: { size: 12, weight: 'bold' },
-	// 										color: '#94a3b8',
-	// 										callback: (value) => Math.round(value),
-	// 									},
-	// 									grid: {
-	// 										color: 'rgba(255, 255, 255, 0.05)',
-	// 										drawBorder: false,
-	// 									},
-	// 									beginAtZero: true,
-	// 								},
-	// 							},
-	// 						},
-	// 					});
-	// 				}
-	// 				// --- CHART LOGIC END ---
-	// 			});
-	// 	}
-	// };
-	// getStatisticalChart();
+						MY_CHART = new Chart(targetCtx, {
+							type: 'bar',
+							data: {
+								labels: sortedLabels.map((item) => item.toUpperCase()),
+								datasets: [
+									{
+										label: 'TỔNG SỐ CHIẾN BINH',
+										data: sortedTotalValues,
+										backgroundColor: totalGradients,
+										borderColor: totalColors,
+										borderWidth: 2,
+										borderRadius: 8,
+										barPercentage: 0.6,
+										categoryPercentage: 0.8,
+										// Data Labels Configuration
+										datalabels: {
+											anchor: 'end', // Anchor to top of bar
+											align: 'end', // Push text upwards
+											offset: -5, // Slight adjustment
+											color: '#FFFFFF',
+											font: {
+												size: 14,
+												weight: 'bold',
+											},
+											formatter: (value) => value.toLocaleString(),
+										},
+									},
+									{
+										label: 'TỶ LỆ CHECK-IN (%)',
+										data: sortedCheckedInValues,
+										// FIX: Use uniform high-contrast color
+										backgroundColor: checkInColor,
+										borderColor: checkInBorder,
+										borderWidth: 2,
+										borderRadius: 8,
+										barPercentage: 0.6,
+										categoryPercentage: 0.8,
+										// Data Labels Configuration
+										datalabels: {
+											anchor: 'end', // Anchor to top of bar
+											align: 'end', // Push text upwards
+											offset: -5,
+											color: checkInColor, // Match the bar color for text
+											font: {
+												size: 14,
+												weight: 'bold',
+											},
+											formatter: (value, context) => {
+												const total = sortedTotalValues[context.dataIndex];
+												if (!total) return '0%';
+												const percentage = (value / total) * 100;
+												return percentage.toFixed(1) + '%';
+											},
+										},
+									},
+								],
+							},
+							options: {
+								responsive: true,
+								maintainAspectRatio: false,
+								animation: {
+									duration: 1000,
+									easing: 'easeOutQuart',
+								},
+								layout: {
+									// Add padding top so labels don't get cut off
+									padding: { top: 50, bottom: 20, left: 10, right: 10 },
+								},
+								plugins: {
+									legend: {
+										display: true,
+										position: 'bottom',
+										labels: {
+											font: {
+												size: 14,
+												weight: 'bold',
+												family:
+													"'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+											},
+											color: '#e2e8f0',
+											padding: 20,
+											usePointStyle: true,
+											pointStyle: 'circle',
+										},
+									},
+									tooltip: {
+										enabled: true,
+										backgroundColor: 'rgba(15, 23, 42, 0.95)',
+										titleColor: '#fbbf24',
+										bodyColor: '#fff',
+										titleFont: { size: 14, weight: 'bold' },
+										bodyFont: { size: 13 },
+										padding: 12,
+										cornerRadius: 8,
+										borderColor: 'rgba(255,255,255,0.1)',
+										borderWidth: 1,
+										displayColors: true,
+									},
+									datalabels: {
+										// Global settings if not overridden
+										display: true,
+									},
+								},
+								scales: {
+									x: {
+										ticks: {
+											font: {
+												size: (context) => {
+													const width = context.chart.width;
+													return width < 768 ? 9 : 12;
+												},
+												weight: 'bold',
+											},
+											color: (context) => {
+												const label = context.tick.label.toUpperCase();
+												return titleColors[label] || '#e2e8f0';
+											},
+											autoSkip: false,
+											maxRotation: 45,
+											minRotation: 0,
+										},
+										grid: { display: false },
+										border: {
+											display: true,
+											color: 'rgba(255,255,255,0.2)',
+										},
+									},
+									y: {
+										ticks: {
+											font: { size: 12, weight: 'bold' },
+											color: '#94a3b8',
+											callback: (value) => Math.round(value),
+										},
+										grid: {
+											color: 'rgba(255, 255, 255, 0.05)',
+											drawBorder: false,
+										},
+										beginAtZero: true,
+									},
+								},
+							},
+						});
+					}
+					// --- CHART LOGIC END ---
+				});
+		}
+	};
+	getStatisticalChart();
 
-	// let intervalId = null;
+	let intervalId = null;
 
-	// function startUpdatingChart(noClearChart = false) {
-	// 	if (intervalId) return; // Tránh tạo nhiều interval
+	function startUpdatingChart(noClearChart = false) {
+		if (intervalId) return; // Tránh tạo nhiều interval
 
-	// 	intervalId = setInterval(() => {
-	// 		if (
-	// 			chartStatisticalWrapper.style.display === 'block' ||
-	// 			checkinChartStatisticalWrapper.style.display === 'block'
-	// 		) {
-	// 			// Pass true to indicate an update, preventing full redraw flicker
-	// 			getStatisticalChart(true);
-	// 		} else {
-	// 			clearInterval(intervalId);
-	// 			intervalId = null;
-	// 		}
-	// 	}, 5000);
-	// }
+		intervalId = setInterval(() => {
+			if (
+				chartStatisticalWrapper.style.display === 'block' ||
+				checkinChartStatisticalWrapper.style.display === 'block'
+			) {
+				// Pass true to indicate an update, preventing full redraw flicker
+				getStatisticalChart(true);
+			} else {
+				clearInterval(intervalId);
+				intervalId = null;
+			}
+		}, 5000);
+	}
 
 	programSelectList.addEventListener('change', async (e) => {
 		PROGRAM_ID = e.target.value;
@@ -992,38 +992,38 @@ const start = () => {
 	};
 
 	// !! STATISTICAL
-	// const onChartStatisticalOpen = () => {
-	// 	// Clear old chart if switching contexts to ensure clean render
-	// 	clearChart();
-	// 	getStatisticalChart();
-	// 	startUpdatingChart(true);
-	// 	chartStatisticalWrapper.style.display = 'block';
-	// };
+	const onChartStatisticalOpen = () => {
+		// Clear old chart if switching contexts to ensure clean render
+		clearChart();
+		getStatisticalChart();
+		startUpdatingChart(true);
+		chartStatisticalWrapper.style.display = 'block';
+	};
 
-	// const onCheckinChartStatisticalOpen = () => {
-	// 	clearChart();
-	// 	getStatisticalChart();
-	// 	startUpdatingChart(true);
-	// 	checkinChartStatisticalWrapper.style.display = 'block';
-	// };
+	const onCheckinChartStatisticalOpen = () => {
+		clearChart();
+		getStatisticalChart();
+		startUpdatingChart(true);
+		checkinChartStatisticalWrapper.style.display = 'block';
+	};
 
-	// const onChartStatisticalClose = (e) => {
-	// 	e.stopPropagation();
-	// 	clearChart();
-	// 	chartStatisticalContent.scrollTop = 0;
-	// 	chartStatisticalWrapper.style.display = 'none';
-	// 	clearInterval(intervalId);
-	// 	intervalId = null;
-	// };
+	const onChartStatisticalClose = (e) => {
+		e.stopPropagation();
+		clearChart();
+		chartStatisticalContent.scrollTop = 0;
+		chartStatisticalWrapper.style.display = 'none';
+		clearInterval(intervalId);
+		intervalId = null;
+	};
 
-	// const onCheckinChartStatisticalClose = (e) => {
-	// 	e.stopPropagation();
-	// 	clearChart();
-	// 	checkinChartStatisticalContent.scrollTop = 0;
-	// 	checkinChartStatisticalWrapper.style.display = 'none';
-	// 	clearInterval(intervalId);
-	// 	intervalId = null;
-	// };
+	const onCheckinChartStatisticalClose = (e) => {
+		e.stopPropagation();
+		clearChart();
+		checkinChartStatisticalContent.scrollTop = 0;
+		checkinChartStatisticalWrapper.style.display = 'none';
+		clearInterval(intervalId);
+		intervalId = null;
+	};
 	//! ============================
 
 	const onUserPrizesOpen = async () => {
@@ -1199,19 +1199,19 @@ const start = () => {
 	prizesCloseButton.addEventListener('click', onPrizesClose);
 	prizesSelectCloseButton.addEventListener('click', onPrizesSelectClose);
 	// !! STATISTICAL
-	// chartStatisticalButton.addEventListener('click', onChartStatisticalOpen);
-	// checkinChartStatisticalButton.addEventListener(
-	// 	'click',
-	// 	onCheckinChartStatisticalOpen,
-	// );
-	// chartStatisticalCloseButton.addEventListener(
-	// 	'click',
-	// 	onChartStatisticalClose,
-	// );
-	// checkinChartStatisticalCloseButton.addEventListener(
-	// 	'click',
-	// 	onCheckinChartStatisticalClose,
-	// );
+	chartStatisticalButton.addEventListener('click', onChartStatisticalOpen);
+	checkinChartStatisticalButton.addEventListener(
+		'click',
+		onCheckinChartStatisticalOpen,
+	);
+	chartStatisticalCloseButton.addEventListener(
+		'click',
+		onChartStatisticalClose,
+	);
+	checkinChartStatisticalCloseButton.addEventListener(
+		'click',
+		onCheckinChartStatisticalClose,
+	);
 	//! ============================
 	userSettingsCloseButton.addEventListener('click', onUserPrizesClose);
 	userJoinCloseButton.addEventListener('click', onUserJoinClose);
@@ -1242,6 +1242,16 @@ const start = () => {
 		userJoinWrapper.style.display = 'none';
 	});
 
+	chartStatisticalWrapper.addEventListener('click', (e) => {
+		e.stopPropagation();
+		onChartStatisticalClose(e);
+	});
+
+	checkinChartStatisticalWrapper.addEventListener('click', (e) => {
+		e.stopPropagation();
+		onCheckinChartStatisticalClose(e);
+	});
+
 	settingsContent.addEventListener('click', (e) => {
 		e.stopPropagation();
 		settingsWrapper.style.display = 'block';
@@ -1265,6 +1275,16 @@ const start = () => {
 	userJoinContent.addEventListener('click', (e) => {
 		e.stopPropagation();
 		userJoinWrapper.style.display = 'block';
+	});
+
+	chartStatisticalContent.addEventListener('click', (e) => {
+		e.stopPropagation();
+		chartStatisticalWrapper.style.display = 'block';
+	});
+
+	checkinChartStatisticalContent.addEventListener('click', (e) => {
+		e.stopPropagation();
+		checkinChartStatisticalWrapper.style.display = 'block';
 	});
 
 	// ! HANDLE PRIZE SELECT

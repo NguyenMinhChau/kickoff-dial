@@ -3,7 +3,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 	position: relative;
 	z-index: 10;
 	transition: all 0.3s ease;
@@ -11,31 +11,50 @@
 
 .digit-inputs {
 	display: flex;
-	gap: 14px;
+	gap: 18px;
+	padding: 16px 24px;
+	background: rgba(255, 255, 255, 0.88) !important; /* Bright premium white glass */
+	border: 1.5px solid rgba(255, 255, 255, 0.6) !important;
+	border-radius: 28px;
+	box-shadow: 
+		0 24px 60px rgba(0, 0, 0, 0.15),
+		0 8px 16px rgba(0, 0, 0, 0.05),
+		inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
 }
 
-/* --- Ô NHẬP SỐ (INPUT) --- */
+/* --- Ô NHẬP SỐ (INPUT) — BRIGHT & PROFESSIONAL --- */
 .digit-input {
-	width: 100px;
-	height: 100px;
-	font-size: 4.5rem;
-	font-weight: 900;
+	width: 90px;
+	height: 125px;
+	font-size: 5rem;
+	font-weight: 800;
 	text-align: center;
-	background: #ffffff;
-	border: 2px solid rgba(0, 0, 0, 0.15);
-	border-radius: 20px;
-	color: #1d4ed8;
-	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	background: #ffffff !important; /* Clean bright white */
+	border: 2px solid rgba(37, 99, 235, 0.2) !important; /* Soft blue border */
+	border-radius: 18px;
+	color: #1e3a8a !important; /* Vibrant dark blue text */
+	box-shadow: 
+		0 8px 20px rgba(0, 0, 0, 0.08),
+		inset 0 2px 4px rgba(0, 0, 0, 0.03) !important;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+	transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 	outline: none;
 	font-family: 'Outfit', sans-serif;
+	caret-color: #2563eb;
 }
 
 .digit-input:focus {
-	border-color: #fbbf24;
-	background: #ffffff;
-	transform: translateY(-4px) scale(1.04);
-	box-shadow: 0 14px 30px rgba(251, 191, 36, 0.35);
+	border-color: #fbbf24 !important; /* Glowing gold border */
+	transform: translateY(-8px) scale(1.05);
+	box-shadow: 
+		0 20px 40px rgba(251, 191, 36, 0.3),
+		0 0 15px rgba(251, 191, 36, 0.2),
+		inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+	color: #fbbf24 !important; /* Gold text when focused */
+	text-shadow: 0 0 12px rgba(251, 191, 36, 0.5) !important;
+	caret-color: #fbbf24;
 }
 
 /* --- HIỆU ỨNG ẨN/HIỆN INPUT --- */
@@ -63,22 +82,26 @@
 	}
 }
 
-/* --- CARD KẾT QUẢ (BRIGHT & COMPACT) --- */
+/* --- CARD KẾT QUẢ (PREMIUM DARK GLASSMORPHISM) --- */
 .lucky-result-card {
-	background: linear-gradient(160deg, #ffffff 0%, #eff6ff 60%, #dbeafe 100%);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border: 2px solid rgba(59, 130, 246, 0.25);
+	background: linear-gradient(
+		135deg,
+		rgba(8, 20, 55, 0.94) 0%,
+		rgba(29, 78, 216, 0.4) 100%
+	) !important;
+	backdrop-filter: blur(28px);
+	-webkit-backdrop-filter: blur(28px);
+	border: 1px solid rgba(96, 165, 250, 0.38) !important;
 	border-radius: 24px;
-	padding: 28px 36px;
+	padding: 24px 36px;
 	text-align: center;
 	box-shadow:
-		0 8px 32px rgba(30, 64, 175, 0.18),
-		0 2px 8px rgba(0, 0, 0, 0.08),
-		inset 0 1px 0 rgba(255, 255, 255, 0.9);
-	max-width: 480px;
+		0 20px 50px rgba(0, 0, 0, 0.6),
+		0 0 30px rgba(59, 130, 246, 0.2),
+		inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
+	max-width: 500px;
 	width: 100%;
-	margin: 0 auto 20px auto;
+	margin: 0 auto 24px auto;
 	animation: zoomInCard 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 	position: relative;
 	overflow: hidden;
@@ -91,26 +114,32 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	height: 5px;
-	background: linear-gradient(90deg, #1d4ed8, #06b6d4, #1d4ed8);
+	height: 3px;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		var(--primary-400),
+		var(--accent-gold),
+		var(--primary-400),
+		transparent
+	);
 	background-size: 200% auto;
 	animation: borderRun 2.5s linear infinite;
-	border-radius: 24px 24px 0 0;
 }
 
 @keyframes borderRun {
 	0% {
-		background-position: 0% center;
+		background-position: -100% 0;
 	}
 	100% {
-		background-position: 200% center;
+		background-position: 200% 0;
 	}
 }
 
 @keyframes zoomInCard {
 	from {
 		opacity: 0;
-		transform: scale(0.85) translateY(20px);
+		transform: scale(0.82) translateY(12px);
 	}
 	to {
 		opacity: 1;
@@ -123,75 +152,75 @@
 /* Icon trang trí trên cùng */
 .lucky-result-card .res-icon-top {
 	font-size: 2.2rem;
-	margin-bottom: 8px;
+	margin-bottom: 4px;
 	display: block;
 }
 
 .res-label {
-	font-size: 0.78rem;
-	letter-spacing: 3px;
-	text-transform: uppercase;
-	color: #2563eb;
-	margin-bottom: 6px;
-	font-weight: 700;
-	font-family: 'Outfit', sans-serif;
-	opacity: 0.85;
+	font-size: 0.9rem !important;
+	letter-spacing: 3px !important;
+	text-transform: uppercase !important;
+	color: var(--primary-300) !important;
+	margin-bottom: 4px !important;
+	font-weight: 600 !important;
+	font-family: 'Outfit', sans-serif !important;
 }
 
 .res-name {
-	font-size: 2rem;
-	font-weight: 900;
-	line-height: 1.2;
-	margin: 10px 0 14px;
-	color: #1e3a8a;
-	text-transform: uppercase;
-	font-family: 'Outfit', sans-serif;
-	letter-spacing: 0.5px;
-	word-break: break-word;
+	font-size: 2rem !important;
+	font-weight: 900 !important;
+	line-height: 1.2 !important;
+	margin: 8px 0 !important;
+	color: #ffffff !important;
+	text-transform: uppercase !important;
+	text-shadow:
+		0 0 20px rgba(255, 255, 255, 0.4),
+		0 2px 8px rgba(0, 0, 0, 0.5) !important;
+	font-family: 'Outfit', sans-serif !important;
 }
 
 .res-info {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-	align-items: center;
-	font-family: 'Outfit', sans-serif;
+	display: flex !important;
+	flex-direction: column !important;
+	gap: 5px !important;
+	align-items: center !important;
+	color: #fff !important;
+	font-family: 'Outfit', sans-serif !important;
+	margin-top: 6px !important;
 }
 
 /* Badge Mã NV */
 .res-badge {
-	background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
-	color: #ffffff;
-	padding: 7px 22px;
-	border-radius: 100px;
-	font-size: 1rem;
-	font-weight: 700;
-	display: inline-block;
-	margin-bottom: 4px;
-	width: auto;
-	min-width: auto;
-	max-width: 100%;
-	letter-spacing: 1.5px;
-	box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);
+	background: rgba(59, 130, 246, 0.2) !important;
+	padding: 4px 18px !important;
+	border-radius: 100px !important;
+	font-size: 1rem !important;
+	font-weight: 800 !important;
+	border: 1px solid rgba(96, 165, 250, 0.45) !important;
+	display: inline-block !important;
+	margin-bottom: 4px !important;
+	color: var(--primary-200) !important;
+	box-shadow: 0 2px 12px rgba(59, 130, 246, 0.15) !important;
+	letter-spacing: 1px !important;
 }
 
 /* Phòng ban */
 .res-dept {
-	font-size: 1.1rem;
-	font-weight: 700;
-	color: #1e40af;
-	background: rgba(59, 130, 246, 0.1);
-	padding: 5px 16px;
-	border-radius: 8px;
-	display: inline-block;
-	border: 1px solid rgba(59, 130, 246, 0.2);
+	font-size: 1.1rem !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.3px !important;
+	color: #e0f0ff !important;
+	background: rgba(59, 130, 246, 0.15) !important;
+	padding: 4px 14px !important;
+	border-radius: 8px !important;
+	display: inline-block !important;
+	border: 1px solid rgba(59, 130, 246, 0.3) !important;
 }
 
 /* Email / thông tin phụ */
 .res-sub {
-	font-size: 0.88rem;
-	color: #64748b;
-	font-weight: 500;
+	font-size: 0.9rem !important;
+	color: rgba(191, 219, 254, 0.8) !important;
 }
 
 #reset-button {
@@ -487,4 +516,111 @@
 
 .hiddenElement {
 	display: none !important;
+}
+
+/* Order definitions for manual mode (matching the order of lucky draw) */
+.persion-lucky {
+	order: 1 !important;
+	margin-bottom: 2rem;
+}
+
+.manual-input-container {
+	order: 2 !important;
+	margin-bottom: 2rem !important;
+}
+
+#manual-button-container {
+	order: 3 !important;
+	margin-top: 1rem;
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+}
+
+#reset-button {
+	width: auto !important;
+	min-width: 220px;
+}
+
+/* ── BUTTON STYLING OVERRIDES FOR MANUAL MODE ── */
+#draw-button {
+	width: 280px !important;
+	max-width: 90vw;
+	font-family: 'Outfit', sans-serif !important;
+	font-size: 1.5rem !important;
+	font-weight: 800 !important;
+	letter-spacing: 2px !important;
+	text-transform: uppercase !important;
+	border-radius: 18px !important;
+	padding: 1rem 2rem !important;
+	background: linear-gradient(
+		135deg,
+		var(--primary-500) 0%,
+		var(--primary-700) 60%,
+		var(--primary-800) 100%
+	) !important;
+	box-shadow:
+		0 0 0 1px rgba(255, 255, 255, 0.15),
+		0 8px 28px rgba(37, 99, 235, 0.45),
+		inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+	transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+	color: #ffffff !important;
+}
+
+#draw-button:hover:not(:disabled) {
+	background: linear-gradient(
+		135deg,
+		var(--primary-400) 0%,
+		var(--primary-600) 60%,
+		var(--primary-700) 100%
+	) !important;
+	transform: translateY(-3px) scale(1.03) !important;
+	box-shadow:
+		0 0 0 1px rgba(255, 255, 255, 0.2),
+		0 14px 36px rgba(37, 99, 235, 0.55),
+		inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+#reset-button {
+	font-family: 'Outfit', sans-serif !important;
+	font-size: 1.5rem !important;
+	font-weight: 800 !important;
+	letter-spacing: 2px !important;
+	text-transform: uppercase !important;
+	border-radius: 18px !important;
+	padding: 1rem 2.5rem !important;
+	transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+	text-align: center !important;
+	cursor: pointer !important;
+	border: none !important;
+}
+
+/* Gold variant when it is TIẾP TỤC */
+#reset-button.btn-continue {
+	background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold2)) !important;
+	color: #1a1a1a !important;
+	box-shadow: 
+		0 8px 25px rgba(245, 158, 11, 0.35),
+		inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+#reset-button.btn-continue:hover {
+	background: linear-gradient(135deg, #fcd34d, var(--accent-gold)) !important;
+	transform: translateY(-3px) scale(1.03) !important;
+	box-shadow: 0 14px 36px rgba(245, 158, 11, 0.45) !important;
+}
+
+/* Grey variant when it is THỬ LẠI */
+#reset-button.btn-retry {
+	background: linear-gradient(135deg, #64748b, #475569) !important;
+	color: #ffffff !important;
+	box-shadow: 
+		0 8px 25px rgba(71, 85, 105, 0.35),
+		inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+#reset-button.btn-retry:hover {
+	background: linear-gradient(135deg, #94a3b8, #64748b) !important;
+	transform: translateY(-3px) scale(1.03) !important;
+	box-shadow: 0 14px 36px rgba(71, 85, 105, 0.45) !important;
 }
