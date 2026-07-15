@@ -237,9 +237,13 @@ const start = () => {
 						tabelUserJoinPrizeBody.innerHTML = noPrize
 							.map(
 								(i, x) =>
-									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${
+									`<tr><td>${x + 1}</td><td class="col-email">${(
+										i.maNV ||
+										i.email ||
+										''
+									).toUpperCase()}</td><td>${
 										i.fullName
-									}</td><td>${i.donVi}</td></tr>`,
+									}</td><td class="col-chinhanh">${i.donVi}</td></tr>`,
 							)
 							.join('');
 
@@ -248,9 +252,13 @@ const start = () => {
 						tabelUserJoinBody.innerHTML = all
 							.map(
 								(i, x) =>
-									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${
+									`<tr><td>${x + 1}</td><td class="col-email">${(
+										i.maNV ||
+										i.email ||
+										''
+									).toUpperCase()}</td><td>${
 										i.fullName
-									}</td><td>${i.donVi}</td><td>${
+									}</td><td class="col-chinhanh">${i.donVi}</td><td>${
 										i.status === 'PRIZED'
 											? '<b style="color:blue">TRÚNG THƯỞNG</b>'
 											: i.status
@@ -264,9 +272,13 @@ const start = () => {
 						tabelUserPrizeBody.innerHTML = prize
 							.map(
 								(i, x) =>
-									`<tr><td>${x + 1}</td><td>${i.maNV || i.email}</td><td>${
+									`<tr><td>${x + 1}</td><td class="col-email">${(
+										i.maNV ||
+										i.email ||
+										''
+									).toUpperCase()}</td><td>${
 										i.fullName
-									}</td><td>${i.donVi}</td><td>${i.phongBan}</td><td>${
+									}</td><td class="col-chinhanh">${i.donVi}</td><td>${i.phongBan}</td><td>${
 										i.prize?.prizeName || '-'
 									}</td></tr>`,
 							)
@@ -411,12 +423,11 @@ const start = () => {
 		elementResult.innerHTML = `
             <div class="lucky-result-card">
                 <span class="res-icon-top">🏆</span>
-                <div class="res-label">XIN CHÚC MỪNG${code ? ` · MÃ SỐ ${code}` : ''}</div>
+                <div class="res-label">XIN CHÚC MỪNG</div>
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
                 <div class="res-info">
-                    <span class="res-badge"><i class="fas fa-id-badge" style="margin-right:6px"></i>${user.maNV || user.email}</span>
-                    <div class="res-dept"><i class="fas fa-building" style="margin-right:6px"></i>${user.bienChe ? user.bienChe.toUpperCase() : ''}</div>
-                    <div class="res-sub"><i class="fas fa-envelope" style="margin-right:6px"></i>${user.email || ''}</div>
+                    <span class="res-badge">Mã số dự thưởng: ${(user.maNV || user.email || '').toUpperCase()}</span>
+                    <div class="res-dept">Phòng ban: ${user.phongBan || user.donVi || ''}</div>
                 </div>
             </div>
         `;

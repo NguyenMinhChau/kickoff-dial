@@ -326,11 +326,11 @@ const start = () => {
 							return `
 								<tr>
 										<th scope="row">${_idx + 1}</th>
-										<td>${email || '-'}</td>
+										<td class="col-email">${(email || '-').toUpperCase()}</td>
 										<td>${fullName || '-'}</td>
-										<td>${donVi || '-'}</td>
+										<td class="col-chinhanh">${donVi || '-'}</td>
 										<td>${phongBan || '-'}</td>
-										<td>${group || '-'}</td>
+										<td class="col-nhom">${group || '-'}</td>
 										<td>${
 											isPrized
 												? `<div>
@@ -351,11 +351,11 @@ const start = () => {
 						return `
 								<tr>
 										<th scope="row">${_idx + 1}</th>
-										<td>${email || '-'}</td>
+										<td class="col-email">${(email || '-').toUpperCase()}</td>
 										<td>${fullName || '-'}</td>
-										<td>${donVi || '-'}</td>
+										<td class="col-chinhanh">${donVi || '-'}</td>
 										<td>${phongBan || '-'}</td>
-										<td>${group || '-'}</td>
+										<td class="col-nhom">${group || '-'}</td>
 									</tr>
 							`;
 					}).join('');
@@ -910,9 +910,8 @@ const start = () => {
 						<div class="res-label">XIN CHÚC MỪNG</div>
 						<h1 class="res-name">${_userPrize?.fullName || 'UNKNOWN'}</h1>
 						<div class="res-info">
-							<span class="res-badge">${_userPrize?.maNV || _userPrize?.email || ''}</span>
-							<div class="res-sub">Email: ${_userPrize?.email || ''}</div>
-							<div class="res-dept">Đơn vị: ${_userPrize?.donVi || ''} ${dataJSON[luckyNumber.toString()] ? ` - ${dataJSON[luckyNumber.toString()]}` : ''}</div>
+							<span class="res-badge">Mã số dự thưởng: ${(_userPrize?.maNV || _userPrize?.email || '').toUpperCase()}</span>
+							<div class="res-dept">Phòng ban: ${_userPrize?.phongBan || _userPrize?.donVi || ''}</div>
 						</div>
 					</div>
 				`;
@@ -1060,11 +1059,11 @@ const start = () => {
 						};
 						return `<tr>
 										<th scope="row">${_idx + 1}</th>
-										<td>${email || '-'}</td>
+										<td class="col-email">${(email || '-').toUpperCase()}</td>
 										<td>${fullName || '-'}</td>
-										<td>${donVi || '-'}</td>
+										<td class="col-chinhanh">${donVi || '-'}</td>
 										<td>${phongBan || '-'}</td>
-										<td>${group || '-'}</td>
+										<td class="col-nhom">${group || '-'}</td>
 										<td>${prize?.prizeName || '-'}</td>
 									</tr>
 							`;

@@ -918,6 +918,7 @@ body {
 	z-index: var(--z-panel);
 	display: flex;
 	flex-direction: column;
+	min-width: min(500px, 100vw - 28px);
 	max-width: var(--setting-panel-max-width);
 	padding: 0; /* padding handled by inner sections */
 	background: #ffffff !important;
@@ -1872,4 +1873,11 @@ a:active {
 	flex-direction: column;
 	justify-content: center;
 	padding: 1.5rem;
+}
+
+/* Temporarily hide Email/Mã NV, Chi nhánh and Nhóm columns */
+.col-email,
+.col-chinhanh,
+.col-nhom {
+	display: none !important;
 }
