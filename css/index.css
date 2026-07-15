@@ -3,7 +3,7 @@
    Tone màu chủ đạo: Xanh dương (dễ thay đổi qua CSS vars)
    ======================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 /* ── CSS VARIABLES ─────────────────────────────────────── */
 :root {
@@ -96,7 +96,7 @@ body {
 	width: 100%;
 	height: 100%;
 	min-height: 100vh;
-	font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 16px;
 	line-height: 1.5;
 	/* background dark fallback */
@@ -179,7 +179,7 @@ body {
 	.formbold-form-wrapper-index {
 		text-align: center;
 		color: #fff;
-		font-family: 'Outfit', sans-serif;
+		font-family: 'Inter', sans-serif;
 	}
 }
 @media only screen and (max-width: 600px) {
@@ -200,7 +200,7 @@ body {
 	font-weight: 700;
 	color: var(--primary-300);
 	margin-top: 1.5rem;
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 }
 
 /* ── CONTROL GROUP (top-right buttons) ─────────────────── */
@@ -408,7 +408,7 @@ body {
 }
 
 .loader-text {
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 1.15rem;
 	font-weight: 700;
 	letter-spacing: 2.5px;
@@ -536,7 +536,7 @@ body {
 	color: var(--primary-300) !important;
 	margin-bottom: 4px !important;
 	font-weight: 600 !important;
-	font-family: 'Outfit', sans-serif !important;
+	font-family: 'Inter', sans-serif !important;
 }
 
 .res-name {
@@ -549,7 +549,7 @@ body {
 	text-shadow:
 		0 0 20px rgba(255, 255, 255, 0.4),
 		0 2px 8px rgba(0, 0, 0, 0.5) !important;
-	font-family: 'Outfit', sans-serif !important;
+	font-family: 'Inter', sans-serif !important;
 }
 
 .res-info {
@@ -558,7 +558,7 @@ body {
 	gap: 5px !important;
 	align-items: center !important;
 	color: #fff !important;
-	font-family: 'Outfit', sans-serif !important;
+	font-family: 'Inter', sans-serif !important;
 	margin-top: 6px !important;
 }
 
@@ -686,7 +686,7 @@ body {
 
 .reel {
 	width: 100%;
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 }
 
 .reel > div,
@@ -761,7 +761,7 @@ body {
 	margin: 0.8rem 0 0;
 	position: relative;
 	z-index: var(--z-draw-button);
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 1.7rem;
 	font-weight: 800;
 	letter-spacing: 3px;
@@ -995,7 +995,7 @@ body {
 	letter-spacing: 1px;
 	color: var(--primary-800) !important;
 	text-transform: uppercase;
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 	text-shadow: none !important;
 	display: flex;
 	align-items: center;
@@ -1057,7 +1057,7 @@ body {
 	margin: 0;
 	display: block;
 	width: auto;
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 }
 
 /* ── PANEL CLOSE BUTTON (new premium style) ──────────────── */
@@ -1243,7 +1243,7 @@ body {
 	border-radius: 12px !important;
 	color: var(--primary-900) !important;
 	padding: 10px 16px !important;
-	font-family: 'Outfit', sans-serif !important;
+	font-family: 'Inter', sans-serif !important;
 	font-size: 1rem !important;
 	transition: all 0.25s ease !important;
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04) !important;
@@ -1272,7 +1272,7 @@ body {
 	border-bottom-left-radius: 12px !important;
 	border-right: none !important;
 	color: var(--primary-700) !important;
-	font-family: 'Outfit', sans-serif !important;
+	font-family: 'Inter', sans-serif !important;
 	font-weight: 600 !important;
 	padding: 10px 16px !important;
 	font-size: 0.95rem !important;
@@ -1292,7 +1292,7 @@ body {
 	color: var(--primary-700);
 	text-transform: uppercase;
 	letter-spacing: 0.8px;
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 }
 
 /* Textarea */
@@ -1301,7 +1301,7 @@ body {
 	border-radius: 10px;
 	border: 1.5px solid rgba(37, 99, 235, 0.18);
 	padding: 0.6rem;
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 1.1rem;
 	line-height: 1.4em;
 	color: var(--primary-900);
@@ -1437,7 +1437,7 @@ body {
 	vertical-align: middle !important;
 	background: rgba(37, 99, 235, 0.04) !important;
 	border: none !important;
-	font-family: 'Outfit', sans-serif !important;
+	font-family: 'Inter', sans-serif !important;
 	color: var(--primary-900) !important;
 }
 
@@ -1755,13 +1755,13 @@ a:active {
 	letter-spacing: 2.5px;
 	text-transform: uppercase;
 	color: var(--primary-200);
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 	margin-bottom: 8px;
 	backdrop-filter: blur(6px);
 }
 
 .lucky-header__title {
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: clamp(1.6rem, 3.5vw, 2.8rem);
 	font-weight: 900;
 	letter-spacing: 3px;
@@ -1799,7 +1799,7 @@ a:active {
 	font-size: 0.9rem;
 	color: rgba(191, 219, 254, 0.7);
 	font-weight: 500;
-	font-family: 'Outfit', sans-serif;
+	font-family: 'Inter', sans-serif;
 	letter-spacing: 1px;
 	margin: 0;
 }
