@@ -32,8 +32,11 @@ body {
 	width: 100%;
 	height: 100%;
 	z-index: -1;
-	background-image: var(--bg-image, url('../assets/og/HOLIDAY_INF_2026.png'));
-	background-size: cover;
+	background-image: var(
+		--bg-image,
+		url('../assets/og/HOLIDAY_INF_2026_02.png')
+	);
+	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-position: center;
 }

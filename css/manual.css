@@ -13,10 +13,15 @@
 	display: flex;
 	gap: 18px;
 	padding: 16px 24px;
-	background: rgba(255, 255, 255, 0.88) !important; /* Bright premium white glass */
+	background: rgba(
+		255,
+		255,
+		255,
+		0.88
+	) !important; /* Bright premium white glass */
 	border: 1.5px solid rgba(255, 255, 255, 0.6) !important;
 	border-radius: 28px;
-	box-shadow: 
+	box-shadow:
 		0 24px 60px rgba(0, 0, 0, 0.15),
 		0 8px 16px rgba(0, 0, 0, 0.05),
 		inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
@@ -35,7 +40,7 @@
 	border: 2px solid rgba(37, 99, 235, 0.2) !important; /* Soft blue border */
 	border-radius: 18px;
 	color: #1e3a8a !important; /* Vibrant dark blue text */
-	box-shadow: 
+	box-shadow:
 		0 8px 20px rgba(0, 0, 0, 0.08),
 		inset 0 2px 4px rgba(0, 0, 0, 0.03) !important;
 	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
@@ -48,7 +53,7 @@
 .digit-input:focus {
 	border-color: #fbbf24 !important; /* Glowing gold border */
 	transform: translateY(-8px) scale(1.05);
-	box-shadow: 
+	box-shadow:
 		0 20px 40px rgba(251, 191, 36, 0.3),
 		0 0 15px rgba(251, 191, 36, 0.2),
 		inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
@@ -313,7 +318,8 @@
 		padding: 5px 14px !important;
 		font-size: 0.9rem !important;
 	}
-	.res-dept, .res-sub {
+	.res-dept,
+	.res-sub {
 		font-size: 0.85rem !important;
 	}
 }
@@ -597,9 +603,13 @@
 
 /* Gold variant when it is TIẾP TỤC */
 #reset-button.btn-continue {
-	background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold2)) !important;
+	background: linear-gradient(
+		135deg,
+		var(--accent-gold),
+		var(--accent-gold2)
+	) !important;
 	color: #1a1a1a !important;
-	box-shadow: 
+	box-shadow:
 		0 8px 25px rgba(245, 158, 11, 0.35),
 		inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
 }
@@ -614,7 +624,7 @@
 #reset-button.btn-retry {
 	background: linear-gradient(135deg, #64748b, #475569) !important;
 	color: #ffffff !important;
-	box-shadow: 
+	box-shadow:
 		0 8px 25px rgba(71, 85, 105, 0.35),
 		inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
 }
