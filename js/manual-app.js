@@ -10,7 +10,7 @@ var SPIN_DURATION = 5; // Mặc định 5 giây
 var PRIZE = null;
 var PRIZE_DATA = null;
 
-const URL_BACKGROUND = 'url(./assets/og/HOLIDAY_INF_2026_02.png)';
+const URL_BACKGROUND = 'url(./assets/og/HOLIDAY_INF_2026_04.webp)';
 const CONFETTI_COLORS = [
 	'#26ccff',
 	'#a25afd',
@@ -310,6 +310,77 @@ const start = () => {
 		});
 	}
 
+	// !! LIGHTBOX FUNCTIONS
+	const showLightbox = (src, captionText) => {
+		const lightbox = document.getElementById('image-lightbox');
+		const lightboxImg = document.getElementById('lightbox-img');
+		const lightboxCaption = document.getElementById('lightbox-caption');
+		if (!lightbox || !lightboxImg || !lightboxCaption) return;
+
+		lightboxImg.src = src;
+		lightboxCaption.textContent = captionText || '';
+		lightbox.style.display = 'flex';
+		lightbox.offsetHeight;
+		lightbox.classList.add('show');
+	};
+
+	const hideLightbox = () => {
+		const lightbox = document.getElementById('image-lightbox');
+		const lightboxImg = document.getElementById('lightbox-img');
+		if (!lightbox || !lightboxImg) return;
+
+		lightbox.classList.remove('show');
+		setTimeout(() => {
+			if (!lightbox.classList.contains('show')) {
+				lightbox.style.display = 'none';
+				lightboxImg.src = '';
+			}
+		}, 300);
+	};
+
+	const updatePrizePreview = (name, code, image) => {
+		const previewContainer = document.getElementById('prize-preview-container');
+		if (!previewContainer) return;
+		if (!name) {
+			previewContainer.innerHTML = `
+				<div class="prize-preview-placeholder">
+					<i class="fas fa-image"></i>
+					<p>Chọn giải thưởng để xem chi tiết</p>
+				</div>
+			`;
+			return;
+		}
+
+		previewContainer.innerHTML = `
+			<div class="prize-preview-card">
+				<div class="prize-preview-img-wrapper">
+					${
+						image
+							? `<img class="prize-preview-img" src="${image}" alt="${name}" />
+						   <button class="img-zoom-btn" data-src="${image}" data-caption="${name}" title="Phóng to ảnh">
+						       <i class="fas fa-search-plus"></i>
+						   </button>`
+							: `<div class="prize-preview-fallback"><i class="fas fa-gift"></i></div>`
+					}
+				</div>
+				<div class="prize-preview-info">
+					<h4 class="prize-preview-name">${name}</h4>
+					<span class="prize-preview-code">Mã giải: ${code || '-'}</span>
+				</div>
+			</div>
+		`;
+
+		// Attach zoom click listener directly to the button inside preview card
+		const zoomBtn = previewContainer.querySelector('.img-zoom-btn');
+		if (zoomBtn) {
+			zoomBtn.addEventListener('click', (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				showLightbox(zoomBtn.dataset.src, zoomBtn.dataset.caption);
+			});
+		}
+	};
+
 	const getListPrize = async () => {
 		if (PROGRAM_ID) {
 			try {
@@ -318,24 +389,87 @@ const start = () => {
 				).then((r) => r.json());
 				if (res.success) {
 					tabelPrizeSelectBody.innerHTML = res.payload
-						.map(
-							(i, x) =>
-								`<tr><td>${x + 1}</td><td>${
-									i.prizeName
-								}</td><td><input type="radio" name="pz" value="${
-									i._id
-								}" data-n="${i.prizeName}" data-c="${i.prizeCode}" data-i="${
-									i._id
-								}" class="pz-radio"></td></tr>`,
-						)
+						.map((i, x) => {
+							const isSelected = PRIZE_DATA && PRIZE_DATA.prizeId === i._id;
+							return `
+								<tr class="prize-row ${isSelected ? 'selected-row' : ''}" data-prize-id="${i._id}" style="cursor: pointer;">
+									<th scope="row" style="vertical-align: middle;">${x + 1}</th>
+									<td>
+										<div class="prize-thumb-container">
+											${
+												i.image
+													? `<img class="prize-thumb-img" src="${i.image}" alt="${i.prizeName}" />`
+													: `<div class="prize-thumb-fallback"><i class="fas fa-gift"></i></div>`
+											}
+										</div>
+									</td>
+									<td class="prize-name-cell" style="vertical-align: middle;">${i.prizeName || '-'}</td>
+									<td style="text-align: center; vertical-align: middle;">
+										<input 
+											type="radio" 
+											name="pz" 
+											value="${i._id}" 
+											${isSelected ? 'checked' : ''}
+											data-n="${i.prizeName}" 
+											data-c="${i.prizeCode}" 
+											data-i="${i._id}" 
+											data-img="${i.image || ''}" 
+											class="pz-radio prize_select"
+										/>
+									</td>
+								</tr>
+							`;
+						})
 						.join('');
 					prizesSelectCount.innerHTML = `(${res.payload.length})`;
+
+					// Update preview on load if prize is already selected
+					if (PRIZE_DATA) {
+						updatePrizePreview(
+							PRIZE_DATA.prizeName,
+							PRIZE_DATA.prizeCode,
+							PRIZE_DATA.prizeImage,
+						);
+					} else {
+						updatePrizePreview(null);
+					}
+
+					// Click on row selects the radio button
+					const prizeRows = document.querySelectorAll('.prize-row');
+					prizeRows.forEach((row) => {
+						row.addEventListener('click', function (e) {
+							if (e.target.tagName === 'INPUT') return;
+
+							const radio = this.querySelector('input[type="radio"].pz-radio');
+							if (radio) {
+								radio.checked = true;
+								radio.dispatchEvent(new Event('change'));
+							}
+						});
+					});
+
 					document.querySelectorAll('.pz-radio').forEach((el) =>
 						el.addEventListener('change', (e) => {
 							PRIZE_DATA = {
 								prizeId: e.target.dataset.i,
 								prizeName: e.target.dataset.n,
+								prizeCode: e.target.dataset.c,
+								prizeImage: e.target.dataset.img,
 							};
+
+							// Toggle class selected-row
+							document
+								.querySelectorAll('.prize-row')
+								.forEach((r) => r.classList.remove('selected-row'));
+							const row = e.target.closest('.prize-row');
+							if (row) row.classList.add('selected-row');
+
+							// Update preview
+							updatePrizePreview(
+								PRIZE_DATA.prizeName,
+								PRIZE_DATA.prizeCode,
+								PRIZE_DATA.prizeImage,
+							);
 						}),
 					);
 				}
@@ -535,8 +669,68 @@ const start = () => {
 		prizesSelectWrapper.style.display = 'none';
 	});
 	settingsSavePrizeSelectButton.addEventListener('click', () => {
-		if (PRIZE_DATA) prizesSelectWrapper.style.display = 'none';
-		else alert('Chọn giải!');
+		if (PRIZE_DATA) {
+			prizesSelectWrapper.style.display = 'none';
+
+			// Show selection on the main screen
+			const currentPrizeDisplay = document.getElementById(
+				'current-prize-display',
+			);
+			const currentPrizeImg = document.getElementById('current-prize-img');
+			const currentPrizeName = document.getElementById('current-prize-name');
+			const currentPrizeCode = document.getElementById('current-prize-code');
+
+			if (currentPrizeDisplay) {
+				currentPrizeName.textContent = PRIZE_DATA.prizeName;
+				currentPrizeCode.textContent = `Mã giải: ${PRIZE_DATA.prizeCode || '-'}`;
+
+				const currentPrizeZoomBtn = document.getElementById(
+					'current-prize-zoom-btn',
+				);
+
+				if (PRIZE_DATA.prizeImage) {
+					currentPrizeImg.src = PRIZE_DATA.prizeImage;
+					currentPrizeImg.style.display = 'block';
+					if (currentPrizeZoomBtn) {
+						currentPrizeZoomBtn.dataset.src = PRIZE_DATA.prizeImage;
+						currentPrizeZoomBtn.dataset.caption = PRIZE_DATA.prizeName;
+						currentPrizeZoomBtn.style.display = 'flex';
+					}
+					const imgWrapper = currentPrizeImg.closest(
+						'.current-prize-img-wrapper',
+					);
+					if (imgWrapper) {
+						const fallback = imgWrapper.querySelector(
+							'.current-prize-fallback',
+						);
+						if (fallback) fallback.remove();
+					}
+				} else {
+					currentPrizeImg.style.display = 'none';
+					if (currentPrizeZoomBtn) {
+						currentPrizeZoomBtn.style.display = 'none';
+					}
+					const imgWrapper = currentPrizeImg.closest(
+						'.current-prize-img-wrapper',
+					);
+					if (imgWrapper) {
+						let fallback = imgWrapper.querySelector('.current-prize-fallback');
+						if (!fallback) {
+							fallback = document.createElement('div');
+							fallback.className = 'current-prize-fallback';
+							fallback.style.fontSize = '2rem';
+							fallback.style.color = '#94a3b8';
+							fallback.innerHTML = '<i class="fas fa-gift"></i>';
+							imgWrapper.appendChild(fallback);
+						}
+					}
+				}
+
+				currentPrizeDisplay.style.display = 'block';
+			}
+		} else {
+			alert('Chọn giải!');
+		}
 	});
 
 	userPrizesButton.addEventListener('click', () => {
@@ -591,6 +785,40 @@ const start = () => {
 			if (e.target === m) m.style.display = 'none';
 		}),
 	);
+
+	// !! LIGHTBOX FUNCTIONALITY
+	const setupLightbox = () => {
+		const lightbox = document.getElementById('image-lightbox');
+		const lightboxClose = lightbox?.querySelector('.lightbox-close');
+		if (!lightbox) return;
+
+		lightboxClose?.addEventListener('click', hideLightbox);
+		lightbox.addEventListener('click', (e) => {
+			if (
+				e.target === lightbox ||
+				e.target.classList.contains('lightbox-close') ||
+				e.target.closest('.lightbox-close')
+			) {
+				hideLightbox();
+			}
+		});
+
+		// Attach zoom click listener directly to the main screen button
+		const currentPrizeZoomBtn = document.getElementById(
+			'current-prize-zoom-btn',
+		);
+		if (currentPrizeZoomBtn) {
+			currentPrizeZoomBtn.addEventListener('click', (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				showLightbox(
+					currentPrizeZoomBtn.dataset.src,
+					currentPrizeZoomBtn.dataset.caption,
+				);
+			});
+		}
+	};
+	setupLightbox();
 
 	const confettiAnimation = () => {
 		if (!customConfetti) return;

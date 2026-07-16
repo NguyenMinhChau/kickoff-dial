@@ -93,6 +93,34 @@
 					<div id="name-persion-lucky" class="hiddenElement"></div>
 				</div>
 
+				<!-- Selected Prize Display -->
+				<div
+					id="current-prize-display"
+					class="current-prize-display"
+					style="display: none"
+				>
+					<div class="current-prize-badge">GIẢI THƯỞNG ĐANG QUAY</div>
+					<div class="current-prize-card">
+						<div class="current-prize-img-wrapper">
+							<img id="current-prize-img" src="" alt="Prize Image" />
+							<button
+								id="current-prize-zoom-btn"
+								class="img-zoom-btn"
+								title="Phóng to ảnh"
+								style="display: none"
+							>
+								<i class="fas fa-search-plus"></i>
+							</button>
+						</div>
+						<div class="current-prize-info">
+							<h3 id="current-prize-name">Xiaomi Mi Band 10</h3>
+							<span id="current-prize-code" class="badge bg-primary"
+								>Mã giải: 01</span
+							>
+						</div>
+					</div>
+				</div>
+
 				<!-- INPUT CONTAINER -->
 				<div class="manual-input-container" id="manual-input-area">
 					<div class="digit-inputs" id="digit-inputs-container">
@@ -268,12 +296,19 @@
 									<thead>
 										<tr>
 											<th>#</th>
+											<th>Ảnh</th>
 											<th>Tên giải thưởng</th>
-											<th>Chọn</th>
+											<th style="text-align: center; width: 70px">Chọn</th>
 										</tr>
 									</thead>
 									<tbody id="table_prize_select_body"></tbody>
 								</table>
+							</div>
+						</div>
+						<div id="prize-preview-container" class="prize-preview-container">
+							<div class="prize-preview-placeholder">
+								<i class="fas fa-image"></i>
+								<p>Chọn giải thưởng để xem chi tiết</p>
 							</div>
 						</div>
 
@@ -384,6 +419,18 @@
 			defer
 			src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"
 		></script>
+
+		<!-- Image Lightbox Modal -->
+		<div id="image-lightbox" class="image-lightbox" style="display: none">
+			<span class="lightbox-close"><i class="fas fa-times"></i></span>
+			<img
+				id="lightbox-img"
+				class="lightbox-content"
+				src=""
+				alt="Zoomed Prize Image"
+			/>
+			<div id="lightbox-caption" class="lightbox-caption"></div>
+		</div>
 
 		<script defer src="./js/general.js"></script>
 		<script defer src="./js/SoundEffects.js"></script>

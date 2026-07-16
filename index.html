@@ -167,6 +167,34 @@
 					</div>
 				</div>
 
+				<!-- Selected Prize Display -->
+				<div
+					id="current-prize-display"
+					class="current-prize-display"
+					style="display: none"
+				>
+					<div class="current-prize-badge">GIẢI THƯỞNG ĐANG QUAY</div>
+					<div class="current-prize-card">
+						<div class="current-prize-img-wrapper">
+							<img id="current-prize-img" src="" alt="Prize Image" />
+							<button
+								id="current-prize-zoom-btn"
+								class="img-zoom-btn"
+								title="Phóng to ảnh"
+								style="display: none"
+							>
+								<i class="fas fa-search-plus"></i>
+							</button>
+						</div>
+						<div class="current-prize-info">
+							<h3 id="current-prize-name">Xiaomi Mi Band 10</h3>
+							<span id="current-prize-code" class="badge bg-primary"
+								>Mã giải: 01</span
+							>
+						</div>
+					</div>
+				</div>
+
 				<!-- Draw Button -->
 				<button id="draw-button" class="solid-button">
 					<i class="fas fa-play-circle" style="margin-right: 10px"></i>BẮT ĐẦU
@@ -226,12 +254,21 @@
 									<thead>
 										<tr>
 											<th scope="col">#</th>
+											<th scope="col">Ảnh</th>
 											<th scope="col">Tên giải thưởng</th>
-											<th scope="col">Chọn</th>
+											<th scope="col" style="text-align: center; width: 70px">
+												Chọn
+											</th>
 										</tr>
 									</thead>
 									<tbody id="table_prize_select_body"></tbody>
 								</table>
+							</div>
+						</div>
+						<div id="prize-preview-container" class="prize-preview-container">
+							<div class="prize-preview-placeholder">
+								<i class="fas fa-image"></i>
+								<p>Chọn giải thưởng để xem chi tiết</p>
 							</div>
 						</div>
 					</div>
@@ -632,6 +669,18 @@
 			src="./js/constants/pianoKeys.constant.js"
 			crossorigin="anonymous"
 		></script>
+
+		<!-- Image Lightbox Modal -->
+		<div id="image-lightbox" class="image-lightbox" style="display: none">
+			<span class="lightbox-close"><i class="fas fa-times"></i></span>
+			<img
+				id="lightbox-img"
+				class="lightbox-content"
+				src=""
+				alt="Zoomed Prize Image"
+			/>
+			<div id="lightbox-caption" class="lightbox-caption"></div>
+		</div>
 
 		<!-- Script chính của ứng dụng (nên là `defer`) -->
 		<script

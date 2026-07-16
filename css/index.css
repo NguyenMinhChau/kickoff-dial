@@ -1881,3 +1881,354 @@ a:active {
 .col-nhom {
 	display: none !important;
 }
+
+/* ── PRIZE PREVIEW & SELECTION NEW STYLES ── */
+.prize-row {
+	transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.prize-row:hover {
+	background-color: rgba(37, 99, 235, 0.05) !important;
+	transform: translateX(4px);
+}
+.prize-row.selected-row {
+	background-color: rgba(37, 99, 235, 0.08) !important;
+	box-shadow: inset 3px 0 0 var(--primary-600);
+}
+
+/* Image Thumbnails inside table */
+.prize-thumb-container {
+	width: 50px;
+	height: 50px;
+	border-radius: 8px;
+	overflow: hidden;
+	background: #f1f5f9;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+	margin: 0 auto;
+}
+.prize-thumb-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.3s ease;
+}
+.prize-row:hover .prize-thumb-img {
+	transform: scale(1.1);
+}
+.prize-thumb-fallback {
+	font-size: 1.25rem;
+	color: #94a3b8;
+}
+.prize-name-cell {
+	vertical-align: middle;
+	font-weight: 600;
+	color: var(--text-on-light);
+}
+
+/* Large Preview Area at bottom of Select Prize Panel */
+.prize-preview-container {
+	margin: 15px 24px 0 24px;
+	padding: 15px;
+	border-radius: 12px;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	min-height: 140px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	overflow: hidden;
+}
+.prize-preview-placeholder {
+	text-align: center;
+	color: #94a3b8;
+}
+.prize-preview-placeholder i {
+	font-size: 2.5rem;
+	margin-bottom: 8px;
+	opacity: 0.7;
+}
+.prize-preview-placeholder p {
+	font-size: 0.9rem;
+	margin: 0;
+	font-weight: 500;
+}
+
+/* Beautiful Animated Card for selected prize details */
+.prize-preview-card {
+	display: flex;
+	width: 100%;
+	gap: 15px;
+	align-items: center;
+	animation: fadeInUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.prize-preview-img-wrapper {
+	width: 100px;
+	height: 100px;
+	border-radius: 10px;
+	overflow: hidden;
+	background: #fff;
+	border: 1px solid #cbd5e1;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.prize-preview-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.prize-preview-fallback {
+	font-size: 2.5rem;
+	color: #94a3b8;
+}
+.prize-preview-info {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+.prize-preview-name {
+	font-size: 1.15rem;
+	font-weight: 800;
+	color: var(--primary-800);
+	margin: 0;
+	line-height: 1.3;
+}
+.prize-preview-code {
+	font-size: 0.8rem;
+	font-weight: 700;
+	padding: 3px 8px;
+	background: var(--primary-100);
+	color: var(--primary-700);
+	border-radius: 6px;
+	display: inline-block;
+	align-self: flex-start;
+}
+
+/* Entrance Animation */
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(12px) scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+/* ── CURRENT SELECTED PRIZE BANNER ON MAIN DRAW SCREEN ── */
+.current-prize-display {
+	position: fixed;
+	bottom: 24px;
+	left: 24px;
+	z-index: 90;
+	margin: 0;
+	width: 320px;
+	background: rgba(10, 25, 65, 0.85);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid rgba(96, 165, 250, 0.28);
+	border-radius: 16px;
+	padding: 12px 16px;
+	text-align: center;
+	box-shadow:
+		0 12px 36px rgba(0, 0, 0, 0.45),
+		0 0 25px rgba(59, 130, 246, 0.15);
+	animation: slideInLeftDraw 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.current-prize-badge {
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 2px;
+	color: var(--accent-gold);
+	margin-bottom: 8px;
+	text-transform: uppercase;
+	text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+.current-prize-card {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	justify-content: flex-start;
+	text-align: left;
+}
+
+.current-prize-img-wrapper {
+	width: 60px;
+	height: 60px;
+	border-radius: 8px;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.95);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.current-prize-img-wrapper img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.current-prize-info {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.current-prize-info h3 {
+	font-size: 1.1rem;
+	font-weight: 800;
+	color: #ffffff;
+	margin: 0;
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.current-prize-info .badge {
+	font-size: 0.72rem;
+	font-weight: 700;
+	padding: 4px 8px;
+	border-radius: 4px;
+	width: max-content;
+}
+
+@keyframes slideInLeftDraw {
+	from {
+		opacity: 0;
+		transform: translateX(-30px) scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0) scale(1);
+	}
+}
+
+/* ── IMAGE LIGHTBOX MODAL ── */
+.image-lightbox {
+	position: fixed;
+	inset: 0;
+	z-index: 11000; /* Higher than other panels */
+	background: rgba(4, 12, 34, 0.88);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	cursor: zoom-out;
+}
+
+.image-lightbox.show {
+	opacity: 1;
+}
+
+.lightbox-content {
+	max-width: 85%;
+	max-height: 80vh;
+	border-radius: 16px;
+	box-shadow:
+		0 25px 60px rgba(0, 0, 0, 0.8),
+		0 0 40px rgba(96, 165, 250, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.1);
+	transform: scale(0.9);
+	transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+	object-fit: contain;
+	cursor: default;
+}
+
+.image-lightbox.show .lightbox-content {
+	transform: scale(1);
+}
+
+.lightbox-close {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	font-size: 2.2rem;
+	color: #ffffff;
+	cursor: pointer;
+	opacity: 0.7;
+	transition: all 0.2s ease;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.lightbox-close:hover {
+	opacity: 1;
+	transform: scale(1.1) rotate(90deg);
+	background: rgba(239, 68, 68, 0.2);
+	border-color: rgba(239, 68, 68, 0.4);
+}
+
+.lightbox-caption {
+	margin-top: 20px;
+	font-size: 1.3rem;
+	font-weight: 800;
+	color: #ffffff;
+	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+	letter-spacing: 0.5px;
+	text-align: center;
+	max-width: 80%;
+	animation: fadeInUp 0.4s ease-out;
+}
+
+/* Zoom Button Overlay */
+.prize-preview-img-wrapper,
+.current-prize-img-wrapper {
+	position: relative;
+}
+
+.img-zoom-btn {
+	position: absolute;
+	bottom: 6px;
+	right: 6px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: rgba(15, 23, 42, 0.85);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	color: #ffffff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.85rem;
+	cursor: pointer;
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+	z-index: 10;
+	padding: 0;
+}
+
+.img-zoom-btn:hover {
+	background: var(--primary-600) !important;
+	color: #ffffff !important;
+	transform: scale(1.15);
+	border-color: rgba(255, 255, 255, 0.5);
+	box-shadow: 0 6px 14px rgba(37, 99, 235, 0.45);
+}
+
+.img-zoom-btn:active {
+	transform: scale(0.95);
+}
