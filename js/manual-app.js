@@ -1,3 +1,6 @@
+import { TOKENS } from './constants/tokens.js';
+import { Dialog } from './utils/dialog.js';
+
 const ENDPOINT_BACKEND =
 	'https://icdpmobile.fpt.net/v1/icdp-backend-mobile/ct-tat-nien';
 
@@ -269,20 +272,29 @@ const start = () => {
 					const prize = all.filter((u) => u.status === 'PRIZED');
 					if (userPrizesCount) userPrizesCount.innerHTML = `(${prize.length})`;
 					if (tabelUserPrizeBody)
-						tabelUserPrizeBody.innerHTML = prize
-							.map(
-								(i, x) =>
-									`<tr><td>${x + 1}</td><td class="col-email">${(
-										i.maNV ||
-										i.email ||
-										''
-									).toUpperCase()}</td><td>${
-										i.fullName
-									}</td><td class="col-chinhanh">${i.donVi}</td><td>${i.phongBan}</td><td>${
-										i.prize?.prizeName || '-'
-									}</td></tr>`,
-							)
-							.join('');
+						tabelUserPrizeBody.innerHTML = prize.length > 0
+							? prize
+								.map(
+									(i, x) =>
+										`<tr><td>${x + 1}</td><td class="col-email">${(
+											i.maNV ||
+											i.email ||
+											''
+										).toUpperCase()}</td><td>${
+											i.fullName
+										}</td><td class="col-chinhanh">${i.donVi}</td><td>${i.phongBan}</td><td>${
+											i.prize?.prizeName || '-'
+										}</td>
+										<td style="text-align: center;">
+											<button class="btn-delete-winner btn-delete-winner-action" data-id="${i._id || i.id || ''}" data-name="${i.fullName || ''}" title="Hủy giải thưởng">
+												<i class="fas fa-trash-alt"></i>
+											</button>
+										</td></tr>`,
+								)
+								.join('')
+							: `<tr style="text-align: center">
+									<td style="padding: 12px" colspan="7">Không có dữ liệu</td>
+								</tr>`;
 				});
 		} catch (e) {}
 	};
@@ -556,6 +568,9 @@ const start = () => {
 
 		elementResult.innerHTML = `
             <div class="lucky-result-card">
+                <button class="btn-secret-delete-winner btn-delete-winner-main-action" data-id="${user._id || user.id || ''}" data-name="${user.fullName || ''}" title="Hủy kết quả khi nhân sự vắng mặt">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
                 <span class="res-icon-top">🏆</span>
                 <div class="res-label">XIN CHÚC MỪNG</div>
                 <h1 class="res-name">${user.fullName || 'UNKNOWN'}</h1>
@@ -741,6 +756,222 @@ const start = () => {
 		e.stopPropagation();
 		userPrizesWrapper.style.display = 'none';
 	});
+
+	// Event delegation to handle deleting winner
+	if (tabelUserPrizeBody) {
+		tabelUserPrizeBody.addEventListener('click', async (e) => {
+			const deleteBtn = e.target.closest('.btn-delete-winner-action');
+			if (!deleteBtn || deleteBtn.classList.contains('loading')) return;
+			
+			const id = deleteBtn.getAttribute('data-id');
+			const name = deleteBtn.getAttribute('data-name');
+			
+			if (!id) {
+				Dialog.showAlert('Thông báo', 'Không tìm thấy thông tin định danh của nhân sự.', 'warning');
+				return;
+			}
+			
+			if (!PROGRAM_ID) {
+				Dialog.showAlert('Thông báo', 'Không tìm thấy thông tin chương trình.', 'warning');
+				return;
+			}
+			
+			// Click lần 1: Kích hoạt trạng thái chờ xác nhận
+			if (!deleteBtn.classList.contains('confirm-pending')) {
+				deleteBtn.classList.add('confirm-pending');
+				deleteBtn.setAttribute('data-original-html', deleteBtn.innerHTML);
+				deleteBtn.innerHTML = '<i class="fas fa-question"></i>';
+				deleteBtn.setAttribute('title', 'Nhấn một lần nữa để xác nhận xóa');
+				
+				// Đặt tự động khôi phục về bình thường sau 3 giây nếu không nhấn tiếp
+				const resetTimeout = setTimeout(() => {
+					if (deleteBtn.classList.contains('confirm-pending')) {
+						deleteBtn.classList.remove('confirm-pending');
+						deleteBtn.innerHTML = deleteBtn.getAttribute('data-original-html') || '<i class="fas fa-trash-alt"></i>';
+						deleteBtn.setAttribute('title', 'Hủy giải thưởng');
+					}
+				}, 3000);
+				
+				deleteBtn.dataset.timeoutId = resetTimeout;
+				return; // Dừng lại ở click lần thứ nhất
+			}
+			
+			// Click lần 2: Thực thi cuộc gọi xóa thực tế
+			if (deleteBtn.dataset.timeoutId) {
+				clearTimeout(Number(deleteBtn.dataset.timeoutId));
+			}
+			deleteBtn.classList.remove('confirm-pending');
+			
+			// Thêm trạng thái loading
+			deleteBtn.classList.add('loading');
+			deleteBtn.disabled = true;
+			const originalIcon = deleteBtn.getAttribute('data-original-html') || deleteBtn.innerHTML;
+			deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+				
+				try {
+					const response = await fetch(`${ENDPOINT_BACKEND}/delete-user/${PROGRAM_ID}/${id}`, {
+						method: 'DELETE',
+						headers: {
+							'accept': 'application/json',
+							'token': TOKENS.token,
+							'tokenAPI': TOKENS.tokenAPI
+						}
+					});
+					
+					const data = await response.json();
+					if (data?.success) {
+						// Hiển thị tích xanh thành công trực tiếp trên nút
+						deleteBtn.classList.remove('loading');
+						deleteBtn.classList.add('success-state');
+						deleteBtn.innerHTML = '<i class="fas fa-check"></i>';
+						
+						// Đợi 1 giây rồi cập nhật bảng (dòng sẽ biến mất mượt mà)
+						setTimeout(() => {
+							if (typeof setSlotNames === 'function') {
+								setSlotNames();
+							}
+						}, 1000);
+					} else {
+						const errorMsg = data?.errors?.[0]?.message || data?.errors?.[0]?.msg || 'Thao tác xóa thất bại.';
+						
+						// Hiển thị dấu chéo đỏ thất bại trực tiếp trên nút và tooltip lỗi
+						deleteBtn.classList.remove('loading');
+						deleteBtn.classList.add('fail-state');
+						deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+						deleteBtn.setAttribute('title', `Lỗi: ${errorMsg}`);
+						
+						// Đợi 2 giây khôi phục lại nút như cũ
+						setTimeout(() => {
+							deleteBtn.classList.remove('fail-state');
+							deleteBtn.disabled = false;
+							deleteBtn.innerHTML = originalIcon;
+							deleteBtn.setAttribute('title', 'Hủy giải thưởng');
+						}, 2000);
+					}
+				} catch (error) {
+					console.error('Error deleting winner:', error);
+					
+					deleteBtn.classList.remove('loading');
+					deleteBtn.classList.add('fail-state');
+					deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+					deleteBtn.setAttribute('title', 'Lỗi hệ thống khi gọi API');
+					
+					setTimeout(() => {
+						deleteBtn.classList.remove('fail-state');
+						deleteBtn.disabled = false;
+						deleteBtn.innerHTML = originalIcon;
+						deleteBtn.setAttribute('title', 'Hủy giải thưởng');
+					}, 2000);
+				}
+		});
+	}
+
+	// Event delegation to handle deleting winner from the main screen result card
+	if (elementResult) {
+		elementResult.addEventListener('click', async (e) => {
+			const deleteBtn = e.target.closest('.btn-delete-winner-main-action');
+			if (!deleteBtn || deleteBtn.classList.contains('loading')) return;
+			
+			const id = deleteBtn.getAttribute('data-id');
+			const name = deleteBtn.getAttribute('data-name');
+			
+			if (!id) {
+				Dialog.showAlert('Thông báo', 'Không tìm thấy thông tin định danh của nhân sự.', 'warning');
+				return;
+			}
+			
+			if (!PROGRAM_ID) {
+				Dialog.showAlert('Thông báo', 'Không tìm thấy thông tin chương trình.', 'warning');
+				return;
+			}
+			
+			// Click lần 1: Kích hoạt trạng thái chờ xác nhận
+			if (!deleteBtn.classList.contains('confirm-pending')) {
+				deleteBtn.classList.add('confirm-pending');
+				deleteBtn.setAttribute('data-original-html', deleteBtn.innerHTML);
+				deleteBtn.innerHTML = '<i class="fas fa-question"></i>';
+				deleteBtn.setAttribute('title', 'Nhấn một lần nữa để xác nhận xóa');
+				
+				// Đặt tự động khôi phục về bình thường sau 3 giây nếu không nhấn tiếp
+				const resetTimeout = setTimeout(() => {
+					if (deleteBtn.classList.contains('confirm-pending')) {
+						deleteBtn.classList.remove('confirm-pending');
+						deleteBtn.innerHTML = deleteBtn.getAttribute('data-original-html') || '<i class="fas fa-trash-alt"></i>';
+						deleteBtn.setAttribute('title', 'Hủy kết quả khi nhân sự vắng mặt');
+					}
+				}, 3000);
+				
+				deleteBtn.dataset.timeoutId = resetTimeout;
+				return; // Dừng lại ở click lần thứ nhất
+			}
+			
+			// Click lần 2: Thực thi cuộc gọi xóa thực tế
+			if (deleteBtn.dataset.timeoutId) {
+				clearTimeout(Number(deleteBtn.dataset.timeoutId));
+			}
+			deleteBtn.classList.remove('confirm-pending');
+			
+			deleteBtn.classList.add('loading');
+			deleteBtn.disabled = true;
+			const originalIcon = deleteBtn.getAttribute('data-original-html') || deleteBtn.innerHTML;
+				deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+				
+				try {
+					const response = await fetch(`${ENDPOINT_BACKEND}/delete-user/${PROGRAM_ID}/${id}`, {
+						method: 'DELETE',
+						headers: {
+							'accept': 'application/json',
+							'token': TOKENS.token,
+							'tokenAPI': TOKENS.tokenAPI
+						}
+					});
+					
+					const data = await response.json();
+					if (data?.success) {
+						// Hiển thị tích xanh thành công trực tiếp trên nút
+						deleteBtn.classList.remove('loading');
+						deleteBtn.classList.add('success-state');
+						deleteBtn.innerHTML = '<i class="fas fa-check"></i>';
+						
+						// Đợi 1 giây rồi xóa card kết quả trên màn hình chính
+						setTimeout(() => {
+							elementResult.innerHTML = '<div style="color: #64748b; font-size: 1.5rem; font-weight: 600; text-align: center; padding: 20px;">Đã hủy kết quả trúng thưởng</div>';
+						}, 1000);
+					} else {
+						const errorMsg = data?.errors?.[0]?.message || data?.errors?.[0]?.msg || 'Thao tác xóa thất bại.';
+						
+						// Hiển thị dấu chéo đỏ thất bại trực tiếp trên nút và tooltip lỗi
+						deleteBtn.classList.remove('loading');
+						deleteBtn.classList.add('fail-state');
+						deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+						deleteBtn.setAttribute('title', `Lỗi: ${errorMsg}`);
+						
+						// Đợi 2 giây khôi phục lại nút như cũ
+						setTimeout(() => {
+							deleteBtn.classList.remove('fail-state');
+							deleteBtn.disabled = false;
+							deleteBtn.innerHTML = originalIcon;
+							deleteBtn.setAttribute('title', 'Hủy kết quả khi nhân sự vắng mặt');
+						}, 2000);
+					}
+				} catch (error) {
+					console.error('Error deleting winner from main screen:', error);
+					
+					deleteBtn.classList.remove('loading');
+					deleteBtn.classList.add('fail-state');
+					deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+					deleteBtn.setAttribute('title', 'Lỗi hệ thống khi gọi API');
+					
+					setTimeout(() => {
+						deleteBtn.classList.remove('fail-state');
+						deleteBtn.disabled = false;
+						deleteBtn.innerHTML = originalIcon;
+						deleteBtn.setAttribute('title', 'Hủy kết quả khi nhân sự vắng mặt');
+					}, 2000);
+				}
+		});
+	}
+
 
 	userJoinButton.addEventListener('click', () => {
 		setSlotNames();
