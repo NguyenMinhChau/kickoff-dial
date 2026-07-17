@@ -1,4 +1,3 @@
-import { TOKENS } from './constants/tokens.js';
 import { Dialog } from './utils/dialog.js';
 
 //? DATA LIST: ../js/constants/dataSG1Kickoff.json
@@ -1408,8 +1407,8 @@ const start = () => {
 						method: 'DELETE',
 						headers: {
 							'accept': 'application/json',
-							'token': TOKENS.token,
-							'tokenAPI': TOKENS.tokenAPI
+							// 'token': TOKENS.token,
+							// 'tokenAPI': TOKENS.tokenAPI
 						}
 					});
 					
@@ -1516,8 +1515,8 @@ const start = () => {
 						method: 'DELETE',
 						headers: {
 							'accept': 'application/json',
-							'token': TOKENS.token,
-							'tokenAPI': TOKENS.tokenAPI
+							// 'token': TOKENS.token,
+							// 'tokenAPI': TOKENS.tokenAPI
 						}
 					});
 					

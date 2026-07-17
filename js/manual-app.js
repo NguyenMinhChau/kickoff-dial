@@ -1,4 +1,3 @@
-import { TOKENS } from './constants/tokens.js';
 import { Dialog } from './utils/dialog.js';
 
 const ENDPOINT_BACKEND =
@@ -813,8 +812,8 @@ const start = () => {
 						method: 'DELETE',
 						headers: {
 							'accept': 'application/json',
-							'token': TOKENS.token,
-							'tokenAPI': TOKENS.tokenAPI
+							// 'token': TOKENS.token,
+							// 'tokenAPI': TOKENS.tokenAPI
 						}
 					});
 					
@@ -921,8 +920,8 @@ const start = () => {
 						method: 'DELETE',
 						headers: {
 							'accept': 'application/json',
-							'token': TOKENS.token,
-							'tokenAPI': TOKENS.tokenAPI
+							// 'token': TOKENS.token,
+							// 'tokenAPI': TOKENS.tokenAPI
 						}
 					});
 					
