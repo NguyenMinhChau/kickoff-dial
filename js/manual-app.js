@@ -567,7 +567,7 @@ const start = () => {
 
 		elementResult.innerHTML = `
             <div class="lucky-result-card">
-                <button class="btn-secret-delete-winner btn-delete-winner-main-action" data-id="${user._id || user.id || ''}" data-name="${user.fullName || ''}" title="Hủy kết quả khi nhân sự vắng mặt">
+                <button style="display: none!important" class="btn-secret-delete-winner btn-delete-winner-main-action" data-id="${user._id || user.id || ''}" data-name="${user.fullName || ''}" title="Hủy kết quả khi nhân sự vắng mặt">
                     <i class="fas fa-trash-alt"></i>
                 </button>
                 <span class="res-icon-top">🏆</span>

@@ -1035,7 +1035,7 @@ const start = () => {
 
 				elementResult.innerHTML = `
 					<div class="lucky-result-card animate__animated animate__zoomIn">
-						<button class="btn-secret-delete-winner btn-delete-winner-main-action" data-id="${_userPrize?._id || _userPrize?.id || ''}" data-name="${_userPrize?.fullName || ''}" title="Hủy kết quả khi nhân sự vắng mặt">
+						<button style="display: none!important" class="btn-secret-delete-winner btn-delete-winner-main-action" data-id="${_userPrize?._id || _userPrize?.id || ''}" data-name="${_userPrize?.fullName || ''}" title="Hủy kết quả khi nhân sự vắng mặt">
 							<i class="fas fa-trash-alt"></i>
 						</button>
 						<div class="res-label">XIN CHÚC MỪNG</div>
