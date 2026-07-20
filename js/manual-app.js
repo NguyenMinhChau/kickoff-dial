@@ -12,7 +12,7 @@ var SPIN_DURATION = 5; // Mặc định 5 giây
 var PRIZE = null;
 var PRIZE_DATA = null;
 
-const URL_BACKGROUND = 'url(../assets/og/HOLIDAY_INF_2026_public_02.webp)';
+const URL_BACKGROUND = 'url(../assets/og/HOLIDAY_INF_2026_02.webp)';
 const CONFETTI_COLORS = [
 	'#26ccff',
 	'#a25afd',
