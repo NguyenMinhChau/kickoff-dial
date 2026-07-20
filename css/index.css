@@ -1448,7 +1448,7 @@ body {
 	font-size: 0.78rem !important;
 	letter-spacing: 1px !important;
 	color: var(--primary-700) !important;
-	background: rgba(37, 99, 235, 0.12) !important;
+	background: #e5ecfd !important;
 	position: sticky;
 	top: 0;
 	z-index: 10;
