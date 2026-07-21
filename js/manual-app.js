@@ -1,7 +1,5 @@
+import { ENDPOINT_BACKEND } from './constants/endpoints.js';
 import { Dialog } from './utils/dialog.js';
-
-const ENDPOINT_BACKEND =
-	'https://icdpmobile.fpt.net/v1/icdp-backend-mobile/ct-tat-nien';
 
 // ! VARIABLE
 var PROGRAM_ID = '';

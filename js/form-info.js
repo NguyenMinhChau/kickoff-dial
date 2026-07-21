@@ -1,10 +1,10 @@
-const ENDPOINT_BACKEND =
-	'https://icdpmobile.fpt.net/v1/icdp-backend-mobile/ct-tat-nien';
+import {
+	ENDPOINT_BACKEND,
+	URL_BACKGROUND_HEADER_FORM,
+} from './constants/endpoints.js';
 
 const ipAddressElement = document.getElementById('ip-address');
 
-const URL_BACKGROUND_HEADER_FORM =
-	'https://sf-static.upanhlaylink.com/img/image_20250826bb2383fa4c5c3fb975fc6130ddee0961.jpg';
 const URL_BACKGROUND = 'url(../assets/og/BACKGROUND_BLUR.png)';
 
 const checkIpWiFi = async () => {

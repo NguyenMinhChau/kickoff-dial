@@ -1,3 +1,7 @@
+import {
+	ENDPOINT_BACKEND,
+	URL_BACKGROUND_HEADER_FORM,
+} from './constants/endpoints.js';
 import { Dialog } from './utils/dialog.js';
 
 //? DATA LIST: ../js/constants/dataSG1Kickoff.json
@@ -9,8 +13,6 @@ import { Dialog } from './utils/dialog.js';
 // ?
 // https://icdpmobile.fpt.net/icdp-mobile-staging/v1/icdp-backend-mobile/ct-tat-nien
 Chart.register(ChartDataLabels);
-const ENDPOINT_BACKEND =
-	'https://icdpmobile.fpt.net/v1/icdp-backend-mobile/ct-tat-nien';
 // ! VARIABLE
 var PROGRAM_ID = '';
 var USER_NAME = '';
@@ -19,8 +21,6 @@ var PRIZE = null;
 var PRIZE_DATA = null;
 var MY_CHART = null;
 
-const URL_BACKGROUND_HEADER_FORM =
-	'https://sf-static.upanhlaylink.com/img/image_20250826bb2383fa4c5c3fb975fc6130ddee0961.jpg';
 const URL_BACKGROUND = 'url(../assets/og/HOLIDAY_INF_2026.webp)';
 
 let MAX_REEL_ITEMS = 111; // ! THỜI GIAN CỦA VÒNG QUAY
